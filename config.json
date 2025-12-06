@@ -1,13 +1,10 @@
 {
-    "sensors": 
-        {
-            "id": "temp01",
-            "name": "Temperature Sensor",
-            "type": "Analog",
-            "warn_low": 10.0,
-            "warn_high": 30.0,
-            "alarm_low": 5.0,
-            "alarm_high": 40.0
-        }
-    
+    "id_": "temp01",
+    "name_": "Temperature Sensor",
+    "type_": "Analog",
+    "warnHigh_": 30.0,
+    "warnLow_": 10.0,
+    "alarmHigh_": 40.0,
+    "alarmLow_": 5.0 
 }
+

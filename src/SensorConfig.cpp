@@ -1,5 +1,7 @@
 #include <SensorConfig.h>
 #include <iostream>
+#include <fstream>
+using json = nlohmann::json;
 
 SensorConfig::SensorConfig(const std::string &id, 
                             const std::string &name, 
@@ -17,22 +19,31 @@ SensorConfig::SensorConfig(const std::string &id,
       alarmLow_(alarmLow)
       {}
 
-SensorConfig::SensorConfig(const nlohmann::json &j)
-      {
+void SensorConfig::fromJson(const json &j)
+      {       
+        id_ = j.at("id_").get<std::string>();
+        name_ = j.at("name_").get<std::string>();
+        type_ = ParseType(j.at("type_").get<std::string>());
+        warnHigh_ = j.at("warnHigh_").get<double>();
+        warnLow_ = j.at("warnLow_").get<double>();
+        alarmHigh_ = j.at("alarmHigh_").get<double>();
+        alarmLow_ = j.at("alarmLow_").get<double>();
 
-        id_ = j.at("id").get<std::string>();
-        name_ = j.at("name").get<std::string>();
-        type_ = ParseType(j.at("type").get<std::string>());
-        warnHigh_ = j.at("warnHigh").get<double>();
-        warnLow_ = j.at("warnLow").get<double>();
-        alarmHigh_ = j.at("alarmHigh").get<double>();
-        alarmLow_ = j.at("alarmLow").get<double>();
       }
-
+void SensorConfig::fromJson(const std::string &path)
+      {
+        std::ifstream file(path);
+        if(!file){
+          throw std::runtime_error("cannot open config file" + path);
+        }
+        json j;
+        file >> j;
+        fromJson(j);
+      }
 bool SensorConfig::validate() const
-{
-    return alarmLow_ <= warnLow_ && warnLow_ <= warnHigh_ && warnHigh_ <= alarmHigh_;
-}
+      {
+          return alarmLow_ <= warnLow_ && warnLow_ <= warnHigh_ && warnHigh_ <= alarmHigh_;
+      }
 
 void SensorConfig::print() const
 {
