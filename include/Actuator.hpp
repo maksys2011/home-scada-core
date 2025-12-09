@@ -7,7 +7,7 @@ class Actuator
 {
 public:
     
-    explicit Actuator (const ActuatorConfig& config);
+    explicit Actuator (ActuatorConfig  config);
 
     //Управление
 

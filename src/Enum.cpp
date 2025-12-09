@@ -41,7 +41,7 @@ ActuatorType ParseActuatorType(const std::string &typeStr)
     return ActuatorType();
 }
 
-std::string ActuatorTypeToString(ActuatorType type)
+std::string ActuatorTypeToString(const ActuatorType type)
 {
     switch (type)
     {
@@ -57,5 +57,20 @@ std::string ActuatorTypeToString(ActuatorType type)
             return "Unknown";
     }
     return std::string();
+}
+
+std::string StateToString(State state) {
+    switch (state)
+    {
+        case State::OK:
+            return "OK";
+        case State::WARN:
+            return "WARN";
+        case State::ALARM:
+            return "ALARM";
+        case State::INVALID:
+            return "INVALID";
+    }
+        return std::string();
 }
 

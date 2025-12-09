@@ -48,6 +48,8 @@ class SensorConfig
 
         bool validate() const;
 
+        bool validateValue(double v) const;
+
         void print() const;
         
 };

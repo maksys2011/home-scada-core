@@ -13,6 +13,9 @@ find_package(nlohmann_json REQUIRED)
 # Исполняемый файл
 add_executable(home-scada
     app/main.cpp
+        include/SensorState.hpp
+        src/SensorState.cpp
+        src/Sensor.cpp
 )
 
 # Добавляем cpp-файлы из src/

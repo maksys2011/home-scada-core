@@ -3,12 +3,12 @@
 #include <fstream>
 using json = nlohmann::json;
 
-SensorConfig::SensorConfig(const std::string &id, 
-                            const std::string &name, 
-                            SensorType type, 
-                            double warnHigh, 
-                            double warnLow, 
-                            double alarmHigh, 
+SensorConfig::SensorConfig(const std::string &id,
+                            const std::string &name,
+                            SensorType type,
+                            double warnHigh,
+                            double warnLow,
+                            double alarmHigh,
                             double alarmLow)
     : id_(id),
       name_(name),
@@ -20,7 +20,7 @@ SensorConfig::SensorConfig(const std::string &id,
       {}
 
 void SensorConfig::fromJson(const json &j)
-{       
+{
     id_ = j.at("id_").get<std::string>();
     name_ = j.at("name_").get<std::string>();
     type_ = ParseSensorType(j.at("type_").get<std::string>());
@@ -28,7 +28,7 @@ void SensorConfig::fromJson(const json &j)
     warnLow_ = j.at("warnLow_").get<double>();
     alarmHigh_ = j.at("alarmHigh_").get<double>();
     alarmLow_ = j.at("alarmLow_").get<double>();
-}      
+}
 void SensorConfig::fromJson(const std::string &path)
 {
     std::ifstream file(path);
@@ -39,10 +39,16 @@ void SensorConfig::fromJson(const std::string &path)
     file >> j;
     fromJson(j);
 }
-      
+
 bool SensorConfig::validate() const
 {
     return alarmLow_ <= warnLow_ && warnLow_ <= warnHigh_ && warnHigh_ <= alarmHigh_;
+}
+
+bool SensorConfig::validateValue(double v) const
+{
+    if (!validate()) return false;
+    return  v <= alarmLow_ && v <= alarmHigh_;
 }
 
 void SensorConfig::print() const

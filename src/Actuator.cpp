@@ -1,8 +1,9 @@
 #include "Actuator.hpp"
+#include <utility>
 #include "Enum.hpp"
 
-Actuator::Actuator(const ActuatorConfig &config):
-            config_(config)
+Actuator::Actuator(ActuatorConfig config):
+            config_(std::move(config))
             {}
 void Actuator::turnOn()
 {
