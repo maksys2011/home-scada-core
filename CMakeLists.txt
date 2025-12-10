@@ -16,6 +16,8 @@ add_executable(home-scada
         include/SensorState.hpp
         src/SensorState.cpp
         src/Sensor.cpp
+        src/RandomSource.cpp
+        include/RandomSource.hpp
 )
 
 # Добавляем cpp-файлы из src/

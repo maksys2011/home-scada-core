@@ -6,6 +6,7 @@
 #include "ActuatorConfig.hpp"
 #include "Actuator.hpp"
 #include "Sensor.hpp"
+#include "RandomSource.hpp"
 using json = nlohmann::json;
 
 int main() {
@@ -31,6 +32,10 @@ int main() {
     sensor.updateValue(55);
     sensor.print();
 
+    RandomSource scr(0, 100);
+    for (int i = 0; i < 10; i++) {
+        std::cout << scr.readValue() << std::endl;
+    }
 
     std::cout << "TEST 7" << std::endl;
 
