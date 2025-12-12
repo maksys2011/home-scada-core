@@ -11,10 +11,12 @@ class SensorConfig
         std::string id_;
         std::string name_;
         SensorType type_;
-        double warnHigh_ = 0.0;
-        double warnLow_ = 0.0;
-        double alarmHigh_ = 0.0;
-        double alarmLow_ = 0.0;
+        double warnHigh_;
+        double warnLow_;
+        double alarmHigh_;
+        double alarmLow_;
+        double deadband_;
+        double hysteresis_;
 
         public:
 
@@ -26,7 +28,9 @@ class SensorConfig
                          double warnHigh,
                          double warnLow,
                          double alarmHigh,
-                         double alarmLow);
+                         double alarmLow,
+                         double deadband,
+                         double hysteresis);
 
         void fromJson(const json &j);
 
@@ -45,6 +49,10 @@ class SensorConfig
         double getAlarmHigh() const { return alarmHigh_; };
 
         double getAlarmLow() const { return alarmLow_; };
+
+        double deadband() const {return deadband_;}
+
+        double hysteresis() const {return hysteresis_;}
 
         bool validate() const;
 

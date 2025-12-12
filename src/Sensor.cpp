@@ -14,9 +14,9 @@ const SensorConfig & Sensor::config() const
 {
     return config_;
 }
-State Sensor::state() const
+SensorState Sensor::state() const
 {
-    return state_.status();
+    return state_;
 }
 void Sensor::print() const
 {

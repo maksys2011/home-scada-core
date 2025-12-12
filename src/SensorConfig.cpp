@@ -9,14 +9,18 @@ SensorConfig::SensorConfig(const std::string &id,
                             double warnHigh,
                             double warnLow,
                             double alarmHigh,
-                            double alarmLow)
+                            double alarmLow,
+                            double deadband,
+                            double hysteresis)
     : id_(id),
       name_(name),
       type_(type),
       warnHigh_(warnHigh),
       warnLow_(warnLow),
       alarmHigh_(alarmHigh),
-      alarmLow_(alarmLow)
+      alarmLow_(alarmLow),
+      deadband_(deadband),
+      hysteresis_(hysteresis)
       {}
 
 void SensorConfig::fromJson(const json &j)
@@ -28,6 +32,8 @@ void SensorConfig::fromJson(const json &j)
     warnLow_ = j.at("warnLow_").get<double>();
     alarmHigh_ = j.at("alarmHigh_").get<double>();
     alarmLow_ = j.at("alarmLow_").get<double>();
+    deadband_ = j.at("deadband_").get<double>();
+    hysteresis_ = j.at("hysteresis_").get<double>();
 }
 void SensorConfig::fromJson(const std::string &path)
 {
@@ -65,5 +71,7 @@ void SensorConfig::print() const
     std::cout << "  warnLow: " << warnLow_ << std::endl;
     std::cout << "  alarmHigh: " << alarmHigh_ << std::endl;
     std::cout << "  alarmLow: " << alarmLow_ << std::endl;
+    std::cout << " deadband: " << deadband_ << std::endl;
+    std::cout << " hysteresis: " << hysteresis_ << std::endl;
     std::cout << "}" << std::endl;
 }

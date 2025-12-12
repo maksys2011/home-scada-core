@@ -5,6 +5,8 @@
     "warnHigh_": 80.0,
     "warnLow_": 10.0,
     "alarmHigh_": 99.0,
-    "alarmLow_": 1.0
+    "alarmLow_": 1.0,
+    "deadband_" : 1,
+    "hysteresis_" : 2
 }
 

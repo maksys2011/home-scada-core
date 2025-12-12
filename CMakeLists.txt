@@ -13,11 +13,13 @@ find_package(nlohmann_json REQUIRED)
 # Исполняемый файл
 add_executable(home-scada
     app/main.cpp
-        include/SensorState.hpp
-        src/SensorState.cpp
-        src/Sensor.cpp
-        src/RandomSource.cpp
-        include/RandomSource.hpp
+    src/Sensor.cpp
+    src/SensorConfig.cpp
+    src/SensorState.cpp
+    src/RandomSource.cpp
+    src/Actuator.cpp
+    src/ActuatorConfig.cpp
+    src/Enum.cpp
 )
 
 # Добавляем cpp-файлы из src/

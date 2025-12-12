@@ -13,7 +13,7 @@ public:
 
     const SensorConfig& config() const;
 
-    State state() const;
+    SensorState state() const;
 
     void print() const;
 

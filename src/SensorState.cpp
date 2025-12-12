@@ -8,8 +8,53 @@ SensorState::SensorState(const SensorConfig &config)
 {}
 void SensorState::processValue(double raw)
 {
+    if(lastValue_.has_value()){
+        double diff = std::abs(raw - lastValue_.value());
+        if(diff < config_.deadband()){
+            return;
+        }
+    }
     lastValue_ = raw;
-    currentState = classify(raw);
+    State newState = classify(raw);
+    // Как это работает (на примере температуры):
+
+    /*Заданная температура (Уставка): Например, 25°C.
+    Гистерезис: Допустим, 2°C.
+    Включение: Нагреватель включится, когда температура упадет до 23°C (25°C - 2°C).
+    Выключение: Нагреватель выключится, когда температура достигнет 25°C (уставки).
+    Результат: Система не будет постоянно включаться и выключаться при малейших колебаниях,
+    а будет работать в заданном диапазоне, экономя энергию и ресурс реле */
+
+    if (currentState == State::WARN && newState == State::OK) {
+        if (raw >= (config_.getWarnHigh() - config_.hysteresis()) ||
+            raw <= (config_.getWarnLow() + config_.hysteresis())) {
+            newState = State::WARN;
+        }
+    }
+
+    if (currentState == State::ALARM && newState == State::WARN) {
+        if (raw >= (config_.getAlarmHigh() - config_.hysteresis()) ||
+            raw <= (config_.getAlarmLow() + config_.hysteresis())) {
+            newState = State::ALARM;
+        }
+    }
+
+    if (newState == currentState) {
+        pendingState = currentState;
+        debounceCounter = 0;
+    }else {
+        if (pendingState != newState) {
+            pendingState = newState;
+            debounceCounter = 1;
+        }else {
+            debounceCounter++;
+            if (debounceCounter >= debounceLimit) {
+                currentState = newState;
+                pendingState = currentState;
+                debounceCounter = 0;
+            }
+        }
+    }
 }
 State SensorState::status() const
 {
@@ -20,7 +65,7 @@ std::optional<double> SensorState::lastValue() const
     return lastValue_;
 }
 
-void SensorState::print() const
+void SensorState::print() 
 {
     std::cerr << "SensorState::print()" << std::endl;
     std::cout << "State: " << StateToString(currentState);
