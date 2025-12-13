@@ -71,7 +71,7 @@ void SensorConfig::print() const
     std::cout << "  warnLow: " << warnLow_ << std::endl;
     std::cout << "  alarmHigh: " << alarmHigh_ << std::endl;
     std::cout << "  alarmLow: " << alarmLow_ << std::endl;
-    std::cout << " deadband: " << deadband_ << std::endl;
-    std::cout << " hysteresis: " << hysteresis_ << std::endl;
+    std::cout << "  deadband: " << deadband_ << std::endl;
+    std::cout << "  hysteresis: " << hysteresis_ << std::endl;
     std::cout << "}" << std::endl;
 }

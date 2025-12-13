@@ -3,10 +3,12 @@
 #include  "SensorState.hpp"
 #include  "Enum.hpp"
 
+class Logger;
+
 class Sensor {
 public:
 
-    explicit  Sensor(const SensorConfig& config);
+    explicit  Sensor(const SensorConfig& config, Logger* logger);
 
     // Обновление значения (приходит от Source)
     void updateValue(double rawValue);

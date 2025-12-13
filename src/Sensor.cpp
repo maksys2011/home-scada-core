@@ -1,10 +1,11 @@
 #include "Sensor.hpp"
 #include "Enum.hpp"
+#include "Logger.hpp"
 #include <iostream>
 
-Sensor::Sensor(const SensorConfig &config)
+Sensor::Sensor(const SensorConfig &config, Logger* logger)
     : config_(config),
-    state_(config)
+    state_(config, logger)
 {}
 void Sensor::updateValue(double rawValue)
 {

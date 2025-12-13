@@ -1,0 +1,15 @@
+{
+
+    "id_": "test_sensor",
+    "name_": "Test Sensor",
+    "type_": "Analog",
+    "warnHigh_": 30.0,
+    "warnLow_": 10.0,
+    "alarmHigh_": 40.0,
+    "alarmLow_": 5.0,
+    "deadband_" : 0.0,
+    "hysteresis_" : 2.0
+
+
+
+}

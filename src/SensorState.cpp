@@ -2,9 +2,15 @@
 #include  <SensorConfig.hpp>
 #include  <Enum.hpp>
 #include  <iostream>
+#include <Logger.hpp>
 
-SensorState::SensorState(const SensorConfig &config)
-    : config_(config)
+SensorState::SensorState(const SensorConfig &config, Logger* logger)
+    : config_(config),
+        currentState(State::OK),
+        pendingState(State::OK),
+        debounceCounter(0),
+        debounceLimit(1),
+        logger_(logger)
 {}
 void SensorState::processValue(double raw)
 {
@@ -55,6 +61,18 @@ void SensorState::processValue(double raw)
             }
         }
     }
+
+    if(debounceCounter >= debounceLimit){
+        if(logger_){
+            logger_->logStateChange(
+                config_.getId(),
+                currentState,
+                newState,
+                raw
+            );
+        }
+    }
+
 }
 State SensorState::status() const
 {
@@ -64,6 +82,8 @@ std::optional<double> SensorState::lastValue() const
 {
     return lastValue_;
 }
+
+
 
 void SensorState::print() 
 {
