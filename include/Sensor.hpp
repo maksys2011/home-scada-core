@@ -6,6 +6,7 @@
 class Logger;
 
 class Sensor {
+
 public:
 
     explicit  Sensor(const SensorConfig& config, Logger* logger);

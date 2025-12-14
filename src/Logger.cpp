@@ -2,11 +2,16 @@
 #include <iostream>
 #include <chrono>
 #include <iomanip>
+#include <filesystem>
 
 Logger::Logger(const std::string &filePath)
 {
+    /*std::filesystem::path p(filePath);
+    std::filesystem::create_directories(p.parent_path()); */
     file_.open(filePath, std::ios::app);
-
+    if(!file_.is_open()){
+        std::cerr << "Logger cannot open file: " << filePath << std::endl;
+    }
 }
 
 Logger::~Logger()
@@ -16,7 +21,7 @@ Logger::~Logger()
     }
 }
 
-void Logger::logStateChange(const std::string sensorId, State from, State to, double value)
+void Logger::logStateChange(const std::string& sensorId, State from, State to, double value)
 {
     if(!file_.is_open()) return;
     auto now = std::chrono::system_clock::now();

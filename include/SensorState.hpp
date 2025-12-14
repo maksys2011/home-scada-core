@@ -26,6 +26,7 @@ public:
 
 
 private:
+
     const SensorConfig& config_;
     std::optional<double> lastValue_;
     State currentState = State::INVALID;

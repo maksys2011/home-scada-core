@@ -6,7 +6,7 @@ using json = nlohmann::json;
 
 class ActuatorConfig
 {
-        public:
+private:
         
         std::string id_;
         std::string name_;
@@ -18,7 +18,7 @@ class ActuatorConfig
 
         bool inverted_ = false;
 
-        public:
+public:
 
         ActuatorConfig() = default;
 

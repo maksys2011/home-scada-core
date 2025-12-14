@@ -4,9 +4,9 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
-class SensorConfig
-{
-        public:
+class SensorConfig{
+
+public:
         
         std::string id_;
         std::string name_;
@@ -18,7 +18,7 @@ class SensorConfig
         double deadband_;
         double hysteresis_;
 
-        public:
+public:
 
         SensorConfig() = default;
 

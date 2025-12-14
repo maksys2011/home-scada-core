@@ -51,29 +51,33 @@ void SensorState::processValue(double raw)
     if (newState == currentState) {
         pendingState = currentState;
         debounceCounter = 0;
-    }else {
-        if (pendingState != newState) {
-            pendingState = newState;
-            debounceCounter = 1;
-        }else {
-            debounceCounter++;
-            if (debounceCounter >= debounceLimit) {
-                currentState = newState;
-                pendingState = currentState;
-                debounceCounter = 0;
-            }
-        }
+        return;
     }
 
-    if(debounceCounter >= debounceLimit){
-        if(logger_){
-            logger_->logStateChange(
-                config_.getId(),
-                currentState,
-                newState,
-                raw
-            );
-        }
+    if (pendingState != newState) {
+        pendingState = newState;
+        debounceCounter = 1;
+        return;
+    }
+
+    debounceCounter++;
+
+    if (debounceCounter < debounceLimit) {
+        return;
+    }
+
+    State oldState = currentState;
+    currentState = newState;
+    pendingState = currentState;
+    debounceCounter = 0;
+
+    if (logger_) {
+        logger_->logStateChange(
+            config_.getId(),
+            oldState,
+            currentState,
+            raw
+        );
     }
 
 }

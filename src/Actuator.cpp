@@ -38,9 +38,9 @@ const ActuatorConfig &Actuator::config() const
 
 void Actuator::print() const
 {
-    std::cout << "Actuator id: " << config_.id_  << std::endl
+    std::cout << "Actuator id: " << config_.getId()  << std::endl
                 << "Name: " << config_.getName() << std::endl
-                << "ActuratorType: " << ActuatorTypeToString(config_.type_) << std::endl
+                << "ActuratorType: " << ActuatorTypeToString(config_.getType()) << std::endl
                 << "State: " << (state_ ?  "ON" : "OFF") << std::endl
                 << "CurrentValue: " << getValue() << std::endl;
 
