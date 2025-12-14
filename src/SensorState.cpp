@@ -22,6 +22,9 @@ void SensorState::processValue(double raw)
     }
     lastValue_ = raw;
     State newState = classify(raw);
+
+    if(newState == State::INVALID) return;
+
     // Как это работает (на примере температуры):
 
     /*Заданная температура (Уставка): Например, 25°C.
@@ -82,9 +85,6 @@ std::optional<double> SensorState::lastValue() const
 {
     return lastValue_;
 }
-
-
-
 void SensorState::print() 
 {
     std::cerr << "SensorState::print()" << std::endl;

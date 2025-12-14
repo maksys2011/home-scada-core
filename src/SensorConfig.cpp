@@ -1,6 +1,7 @@
 #include <SensorConfig.hpp>
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using json = nlohmann::json;
 
 SensorConfig::SensorConfig(const std::string &id,
@@ -57,7 +58,7 @@ bool SensorConfig::validateValue(double v) const
         std::cout << "validate - false" << std::endl;
         return false;
     }
-    return  v >= alarmLow_ && v <= alarmHigh_;
+    return  std::isfinite(v);
 }
 
 void SensorConfig::print() const
