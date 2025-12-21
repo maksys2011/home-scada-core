@@ -3,17 +3,22 @@
 #include  "SensorState.hpp"
 #include  "Enum.hpp"
 
+class Source;
 class Logger;
 class Archive;
 
 class Sensor {
 
 public:
-
-    explicit  Sensor(const SensorConfig& config, Logger* logger, Archive* arch);
+    explicit  Sensor(const SensorConfig& config, 
+                    Logger* logger, 
+                    Archive* arch,
+                    Source* source);
 
     // Обновление значения (приходит от Source)
     void updateValue(double rawValue);
+
+    void update();
 
     const SensorConfig& config() const;
 
@@ -22,8 +27,8 @@ public:
     void print() const;
 
 private:
-
     const SensorConfig& config_;
     SensorState state_;
+    Source* source_;
 };
 

@@ -10,9 +10,11 @@ public:
 
     bool addSensor(const std::string& id, Sensor* sensor);
 
-    bool updateValue(const std::string& id, double value);
+    void tick();
 
 private:
 
     std::unordered_map<std::string, Sensor*> sensors_;
+    
+
 };

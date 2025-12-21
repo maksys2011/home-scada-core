@@ -7,13 +7,11 @@ bool SensorManager::addSensor(const std::string &id, Sensor *sensor)
     return sensors_.emplace(id, sensor).second;
 }
 
-bool SensorManager::updateValue(const std::string &id, double value)
+void SensorManager::tick()
 {
-    auto it = sensors_.find(id);
-    if(it == sensors_.end()){
-        return false;
+    for(auto& [id, sensor] : sensors_){
+        sensor->update();
     }
-
-    it->second->updateValue(value);
-    return true;
 }
+
+
