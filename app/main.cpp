@@ -28,7 +28,7 @@ int main() {
 
     for(int i = 0; i < 50; i++){
         state.processValue(source.readValue());
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     std::cout << "test 11 " << std::endl;

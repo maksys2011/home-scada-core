@@ -23,6 +23,8 @@ add_executable(home-scada
     src/Logger.cpp
     src/SensorManager.cpp
     src/Archive.cpp
+    tests/tester.cpp
+    tests/testSource.cpp
 )
 
 # Добавляем cpp-файлы из src/
