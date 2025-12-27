@@ -17,8 +17,6 @@ public:
         value_(value),
         state_(st)      
 {}            
-private:
-
     std::time_t timestamp_;
     std::string sensorId_;
     std::string sensorName_;

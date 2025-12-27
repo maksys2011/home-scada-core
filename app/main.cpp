@@ -15,6 +15,7 @@
 #include "SmoothRandomSource.hpp"
 #include "testSource.hpp"
 #include "ArchiveReader.hpp"
+#include "ArchiveReport.hpp"
 
 using json = nlohmann::json;
 
@@ -39,8 +40,9 @@ int main() {
 
     const std::string arch_path = "/home/maksys2011/home-scada/archive/archive.csv";
     ArchiveReader r(arch_path);
+
     auto records = r.readAll();
-    std::cout << records.size() << std::endl;
+    ArchiveRepotr::printSummary(records);
 
     
     return 0;
