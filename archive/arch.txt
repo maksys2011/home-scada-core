@@ -1,16 +1,1 @@
-============================================
-Sensor Id     : temp01
-Sensor Name   : Temperature Sensor
-Records       : 58
-Min value     : 49
-Max value     : 50
-Average       : 49.6897
-States        : 
- OK    : 58
- WARN  : 0
- ALARM : 0
-Last value    : 49 OK 
-Period : 
-Beginnig : 2025-12-27 11-58-28
-End      : 2025-12-27 19-52-06
-============================================
+Archove is empty 

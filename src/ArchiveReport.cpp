@@ -91,3 +91,7 @@ void ArchiveReport::writeSummaryToFile(const std::vector<ArchiveRecord> &records
     writeSummary(file, records);
 
 }
+
+
+
+

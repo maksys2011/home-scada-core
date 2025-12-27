@@ -32,9 +32,9 @@ int main() {
     SmothRandomSource source(50.0, 0.2, 48.0, 52.0);
     Sensor sensors(cfg, &log, &arch, &source);
     manager.addSensor(cfg.getId(), &sensors);
-    for(size_t i = 0; i < 10; i++){
+    for(size_t i = 0; i < 100; i++){
         manager.tick();
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(2));
     }
     std::cout << "<< STOP >>" << std::endl;
 
