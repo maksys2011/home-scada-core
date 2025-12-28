@@ -32,7 +32,7 @@ int main() {
 
     RuleThermostatConfig cfgT;
     cfgT.fromJson(fileCfgRuleThermostat);
-    cfgT.printInfo();
+    cfgT.print();
 
 
 

@@ -43,3 +43,8 @@ void Sensor::print() const
     }
     std::cout << std::endl;
 }
+
+Source *Sensor::getSourse() const
+{
+    return source_;
+}

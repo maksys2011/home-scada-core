@@ -26,6 +26,8 @@ public:
 
     void print() const;
 
+    Source* getSourse() const;
+
 private:
     const SensorConfig& config_;
     SensorState state_;
