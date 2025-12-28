@@ -46,12 +46,12 @@ bool ActuatorConfig::validate() const
 
 void ActuatorConfig::print() const
 {
-    std::cout << "ActuatorConfig {" << std::endl;
+    std::cout << "ActuatorConfig: " << std::endl;
     std::cout << "  id: " << id_ << std::endl;
     std::cout << "  name: " << name_ << std::endl;
     std::cout << "  type: ";
     std::cout << ActuatorTypeToString(type_) << std::endl;
+    std::cout << "  Default state: " << (defaultState_ ==  false ? "ON" : "OFF") << std::endl; 
     std::cout << "  minValue: " << minValue_ << std::endl;
     std::cout << "  maxValue: " << maxValue_ << std::endl;
-    std::cout << "}" << std::endl;
 }

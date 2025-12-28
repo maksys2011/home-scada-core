@@ -1,6 +1,6 @@
 {
-        "id" : "motor01",
-        "name" : "Main Motor",
+        "id" : "45001",
+        "name" : "Сurtain drive",
         "type" : "AnalogOut",
         "minValue" : 0.0,
         "maxValue" : 100.0

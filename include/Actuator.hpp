@@ -13,6 +13,7 @@ public:
 
     void turnOn();
     void turnOff();
+
     void setValue(double value);
 
     //Получение статуса
@@ -29,5 +30,11 @@ private:
     ActuatorConfig config_;
     bool state_ = false;
     double currentValue_ = 0.0;
+
+    // Уставки
+    double max_settings = 0.0;
+    double min_settings = 0.0;
+
+    // 
 
 };

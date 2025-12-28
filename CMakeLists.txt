@@ -25,6 +25,7 @@ add_executable(home-scada
     tests/testSource.cpp
     src/ArchiveReader.cpp
     src/ArchiveReport.cpp
+    src/RuleThermostatConfig.cpp
 )
 
 target_include_directories(home-scada PUBLIC
