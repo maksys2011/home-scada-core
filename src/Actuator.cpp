@@ -8,11 +8,13 @@ Actuator::Actuator(ActuatorConfig config):
 void Actuator::turnOn()
 {
     state_ = true;
+    std::cout << "ON" << std::endl;
 }
 
 void Actuator::turnOff()
 {
     state_ = false;
+    std::cout << "OFF" << std::endl;
 }
 
 void Actuator::setValue(double value)

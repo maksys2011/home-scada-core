@@ -19,8 +19,6 @@
 #include "RuleThermostatConfig.hpp"
 #include "RuleEngine.hpp"
 #include "RuleThermostat.hpp"
-
-
 using json = nlohmann::json;
 
 int main() {
@@ -33,7 +31,31 @@ int main() {
     const std::string& fileCfgActuator = "/home/maksys2011/home-scada/configTest.json/ActuatorConfig.json";
     const std::string& fileCfgRuleThermostat = "/home/maksys2011/home-scada/configTest.json/RuleThermostat.json";
 
-    
+    SensorConfig sensorCfg;
+    sensorCfg.fromJson(filePath);
+    Logger logger(fileLoggerPath);
+    Archive archiv(fileArchivePath);
+    std::vector<double>values_{18.0, 19.0, 20.0, 21.0, 22.0, 20.0, 18.0, 17.0};
+    testSource sourceTemp(values_);
+    ActuatorConfig cfgHeater;
+    cfgHeater.fromJson(fileCfgActuator);
+    Actuator actuator(cfgHeater);
+    RuleThermostatConfig thermoConfig;
+    thermoConfig.fromJson(fileCfgRuleThermostat);
+    Sensor sensor(sensorCfg, &logger, &archiv, &sourceTemp);
+    RuleThermostat thermoRule(sensor.state(), actuator, thermoConfig);
+
+    RuleEngine engine;
+    engine.addRule(&thermoRule);
+    for(auto it : values_){
+        
+        sensor.update();
+        engine.evaluateRules();
+    }
+
+
+
+
 
 
 

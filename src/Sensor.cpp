@@ -5,11 +5,9 @@
 #include "Source.hpp"
 #include <iostream>
 
-
-Sensor::Sensor(const SensorConfig &config, Logger *logger, Archive *arch, Source *source):
-                config_(config),
-                state_(config, logger, arch),
-                source_(source)
+Sensor::Sensor(const SensorConfig &config, Logger *logger, Archive *arch, Source *source) : config_(config),
+                                                                                            state_(config, logger, arch),
+                                                                                            source_(source)
 {}
 void Sensor::updateValue(double rawValue)
 {
@@ -30,7 +28,7 @@ const SensorConfig &Sensor::config() const
 {
     return config_;
 }
-SensorState Sensor::state() const
+SensorState& Sensor::state()
 {
     return state_;
 }
