@@ -22,7 +22,7 @@ Source → Sensor → SensorState → Rule → Actuator
    - выполнение правил автоматики
    - Завершение работы и освобождение ресурсов
 
-```text
+```
 App::run()
  └── while (running)
       ├── Sensor::update()
