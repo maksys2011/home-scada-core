@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 
 class Rule;
 
@@ -7,11 +8,11 @@ class RuleEngine
 {
 public:
     
-    void addRule(Rule* rule);
-    void evaluateRules();
+    void addRule(std::unique_ptr<Rule> rules);
+    void evaluate();
 
 private:
     
-    std::vector<Rule*> rules_;
+    std::vector<std::unique_ptr<Rule>> rules_;
 
 };

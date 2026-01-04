@@ -1,12 +1,12 @@
 #include "RuleEngine.hpp"
 #include "Rule.hpp"
 
-void RuleEngine::addRule(Rule *rule)
+void RuleEngine::addRule(std::unique_ptr<Rule> rules)
 {
-    rules_.push_back(rule);
+    rules_.push_back(std::move(rules));
 }
 
-void RuleEngine::evaluateRules()
+void RuleEngine::evaluate()
 {
     for (auto& rule : rules_)
     {

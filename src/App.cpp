@@ -62,13 +62,13 @@ void App::init()
     );
 
     engine_  = std::make_unique<RuleEngine>();
-    engine_->addRule(thermoRule_.get());
+    engine_->addRule(std::move(thermoRule_));
 }
 
 void App::tick()
 {
     sensor_->update();
-    engine_->evaluateRules();
+    engine_->evaluate();
 }
 
 void App::shutdown()
