@@ -42,6 +42,7 @@ const ActuatorConfig &Actuator::config() const
 
 void Actuator::print() const
 {
+    std::cout << "+++" << std::endl;
     std::cout << "Actuator id: " << config_.getId()  << std::endl
                 << "Name: " << config_.getName() << std::endl
                 << "ActuratorType: " << ActuatorTypeToString(config_.getType()) << std::endl

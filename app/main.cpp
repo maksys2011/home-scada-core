@@ -25,10 +25,7 @@ using json = nlohmann::json;
 int main() {
     App ap;
     ap.run();
-    std::string cmd;
-    std::cin >> cmd;
-    std::cout << cmd << std::endl;
-    ap.repl(cmd);
+    ap.printAllActuators();
     
     return 0;
 }

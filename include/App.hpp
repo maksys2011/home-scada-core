@@ -2,6 +2,16 @@
 #include <memory>
 #include "RuleThermostatConfig.hpp"
 
+struct FilePath
+{
+    std::string fileSensorConfigPath;
+    std::string fileLoggerPath;
+    std::string fileArchivePath;
+    std::string file;
+    std::string fileCfgActuator;
+    std::string fileCfgRuleThermostat;
+};
+
 class Sensor;
 class Actuator;
 class RuleEngine;
@@ -16,13 +26,17 @@ public:
     App();
     void run();
     bool repl(std::string& line);
+    void printAllActuators() const;
+    void printActuatorStatus(const std::string& id)const;
+    void turnOnActruator(const std::string& id);
+    void turnOffActuator(const std::string& id);
+    void listActurator()const;
 
-    private:
+private:
     void init();
     void tick();
     void shutdown();
     
-
     bool running_ = true;
     std::unique_ptr<Logger>                 logger_;
     std::unique_ptr<Archive>                archive_;
@@ -32,5 +46,6 @@ public:
     std::unique_ptr<testSource>             source_;
     std::unique_ptr<RuleThermostat>         thermoRule_;
     RuleThermostatConfig ruleCfg_;
-    std::unordered_map<std::string, Actuator*> actuatorById_;
+
+    std::unordered_map<std::string, std::unique_ptr<Actuator>> actuatorById_;
 };
