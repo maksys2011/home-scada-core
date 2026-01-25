@@ -35,7 +35,7 @@ void App::init()
     const std::string& fileCfgRuleThermostat = "/home/maksys2011/gitclone/home-scada-core/configTest.json/RuleThermostat.json";
     std::vector<double> values_ {10.0, 17.0, 16.0, 19.0, 22.0, 23.0, 23.0};
     
-    for(size_t i = 15; i < 50; i++){
+    for(size_t i = 15; i < 5; i++){
         values_.push_back(i);
     }
 
@@ -63,7 +63,6 @@ void App::init()
     ActuatorConfig actuatorCfg;
     actuatorCfg.fromJson(fileCfgActuator);
     actuator_ = std::make_unique<Actuator>(actuatorCfg);
-
     
     ruleCfg_.fromJson(fileCfgRuleThermostat);
 
@@ -75,6 +74,8 @@ void App::init()
 
     engine_  = std::make_unique<RuleEngine>();
     engine_->addRule(std::move(thermoRule_));
+
+    actuatorById_[actuatorCfg.getId()] = std::move(actuator_);
 }
 
 void App::tick()
@@ -87,38 +88,37 @@ void App::shutdown()
 {
 }
 
-
 bool App::repl(std::string& line)
 {
-    std::cout << "prov4" << std::endl;
-    if(line.empty()){
-        tick();
-        std::cout << "prov3" << std::endl;
-        return true;
-    }
-
-    std::istringstream data(line);
-    std::string id;
-    std::string command;
-    data >> id;
-    data >> command;
-
-    if(command == "exit") {
-        return false;
-    }
-    
-    auto it = actuatorById_.find(id);
-    if(it == actuatorById_.end()) return true;
-
-    if(command == "on") it->second->turnOn();
-    else if(command == "off") it->second->turnOff();
-    else if(command == "status"){    
-        std::cout << "Actuator id: " << id << " \n "
-        << "status: " << it->second->getStatus() << "\n";
-        std::cout << "Prov" << std::endl;
-        
-    }
-    std::cout << "prov 1 " << std::endl;
-
     return true;
+}
+
+void App::printAllActuators()const 
+{
+    if(!actuatorById_.empty()){
+        for(const auto& act : actuatorById_){
+            act.second->print();
+            std::cout << "\n";
+        }
+    }
+}
+
+void App::printActuatorStatus(const std::string& id)const
+{
+    if(actuatorById_.count(id)){
+        std::cout << "id : " << id << " \n";
+        std::cout << "status: " << actuatorById_.find(id)->second->getStatus() << "\n";
+    }
+}
+
+void App::turnOnActruator(const std::string &id)
+{
+}
+
+void App::turnOffActuator(const std::string &id)
+{
+}
+
+void App::listActurator() const
+{
 }
