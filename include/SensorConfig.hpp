@@ -6,7 +6,7 @@ using json = nlohmann::json;
 
 class SensorConfig{
 
-public:
+private:
         
         std::string id_;
         std::string name_;

@@ -15,6 +15,4 @@ public:
 private:
 
     std::unordered_map<std::string, Sensor*> sensors_;
-    
-
 };

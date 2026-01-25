@@ -15,11 +15,13 @@ class App
 public:
     App();
     void run();
+    bool repl(std::string& line);
 
-private:
+    private:
     void init();
     void tick();
     void shutdown();
+    
 
     bool running_ = true;
     std::unique_ptr<Logger>                 logger_;
@@ -30,4 +32,5 @@ private:
     std::unique_ptr<testSource>             source_;
     std::unique_ptr<RuleThermostat>         thermoRule_;
     RuleThermostatConfig ruleCfg_;
+    std::unordered_map<std::string, Actuator*> actuatorById_;
 };

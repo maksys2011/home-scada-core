@@ -1,4 +1,6 @@
 #include <vector>
+#include <sstream>
+
 #include "App.hpp"
 #include "Sensor.hpp"
 #include "SensorConfig.hpp"
@@ -24,15 +26,25 @@ void App::run()
 }
 
 void App::init()
-{   
-    const std::string& fileSensorConfigPath = "/home/maksys2011/home-scada/configTest.json/SensorConfig.json";
-    const std::string& fileLoggerPath = "/home/maksys2011/home-scada/logs/events.log";
-    const std::string& fileArchivePath = "/home/maksys2011/home-scada/archive/archive.csv";
-    const std::string& file = "/home/maksys2011/home-scada/archive/arch.txt";
-    const std::string& fileCfgActuator = "/home/maksys2011/home-scada/configTest.json/ActuatorConfig.json";
-    const std::string& fileCfgRuleThermostat = "/home/maksys2011/home-scada/configTest.json/RuleThermostat.json";
+{       ///home/maksys2011/gitclone/home-scada-core/configTest.json/SensorConfig.json
+    const std::string& fileSensorConfigPath = "/home/maksys2011/gitclone/home-scada-core/configTest.json/SensorConfig.json";
+    const std::string& fileLoggerPath = "/home/maksys2011/gitclone/home-scada-core/logs/events.log";
+    const std::string& fileArchivePath = "/home/maksys2011/gitclone/home-scada-core/archive/archive.csv";
+    const std::string& file = "/home/maksys2011/gitclone/home-scada-core/archive/arch.txt";
+    const std::string& fileCfgActuator = "/home/maksys2011/gitclone/home-scada-core/configTest.json/ActuatorConfig.json";
+    const std::string& fileCfgRuleThermostat = "/home/maksys2011/gitclone/home-scada-core/configTest.json/RuleThermostat.json";
     std::vector<double> values_ {10.0, 17.0, 16.0, 19.0, 22.0, 23.0, 23.0};
     
+    for(size_t i = 15; i < 50; i++){
+        values_.push_back(i);
+    }
+
+    values_.push_back(20);
+    values_.push_back(19);
+    values_.push_back(18);
+    values_.push_back(17);
+    values_.push_back(16);
+
     logger_  = std::make_unique<Logger>(fileLoggerPath);
     archive_ = std::make_unique<Archive>(fileArchivePath);
     
@@ -73,4 +85,40 @@ void App::tick()
 
 void App::shutdown()
 {
+}
+
+
+bool App::repl(std::string& line)
+{
+    std::cout << "prov4" << std::endl;
+    if(line.empty()){
+        tick();
+        std::cout << "prov3" << std::endl;
+        return true;
+    }
+
+    std::istringstream data(line);
+    std::string id;
+    std::string command;
+    data >> id;
+    data >> command;
+
+    if(command == "exit") {
+        return false;
+    }
+    
+    auto it = actuatorById_.find(id);
+    if(it == actuatorById_.end()) return true;
+
+    if(command == "on") it->second->turnOn();
+    else if(command == "off") it->second->turnOff();
+    else if(command == "status"){    
+        std::cout << "Actuator id: " << id << " \n "
+        << "status: " << it->second->getStatus() << "\n";
+        std::cout << "Prov" << std::endl;
+        
+    }
+    std::cout << "prov 1 " << std::endl;
+
+    return true;
 }
