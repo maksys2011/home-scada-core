@@ -22,10 +22,14 @@
 #include "App.hpp"
 using json = nlohmann::json;
 
-int main() {
-    App ap;
-    ap.run();
-    ap.printAllActuators();
+int main() { 
+    FilePath paths;
+    paths.fileSensorConfigPath =  "/home/maksys2011/scada-core/home-scada-core/configTest.json/SensorConfig.json";
+    paths.fileLoggerPath =        "/home/maksys2011/scada-core/home-scada-core/logs/events.log";
+    paths.fileArchivePath =       "/home/maksys2011/scada-core/home-scada-core/archive/archive.csv";
+    paths.fileCfgActuator =       "/home/maksys2011/scada-core/home-scada-core/configTest.json/ActuatorConfig.json";
+    paths.fileCfgRuleThermostat = "/home/maksys2011/scada-core/home-scada-core/configTest.json/RuleThermostat.json";
+
     
     return 0;
 }

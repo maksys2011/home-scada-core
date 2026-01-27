@@ -2,16 +2,6 @@
 #include <memory>
 #include "RuleThermostatConfig.hpp"
 
-struct FilePath
-{
-    std::string fileSensorConfigPath;
-    std::string fileLoggerPath;
-    std::string fileArchivePath;
-    std::string file;
-    std::string fileCfgActuator;
-    std::string fileCfgRuleThermostat;
-};
-
 class Sensor;
 class Actuator;
 class RuleEngine;
@@ -19,12 +9,13 @@ class Logger;
 class Archive;
 class testSource;
 class RuleThermostat;
+class FilePath;
 
 class App
 {
 public:
     App();
-    void run();
+    void run(const FilePath& paths);
     bool repl(std::string& line);
     void printAllActuators() const;
     void printActuatorStatus(const std::string& id)const;
@@ -33,7 +24,7 @@ public:
     void listActurator()const;
 
 private:
-    void init();
+    void init(const FilePath file);
     void tick();
     void shutdown();
     

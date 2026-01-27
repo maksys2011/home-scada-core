@@ -15,9 +15,9 @@
 
 App::App() = default;
 
-void App::run()
+void App::run(const FilePath& paths)
 {
-    init();
+    init(paths);
 
     for(size_t i = 0; i < source_->getValues().size(); i++){
         tick();
@@ -25,16 +25,15 @@ void App::run()
     shutdown();
 }
 
-void App::init()
-{       ///home/maksys2011/gitclone/home-scada-core/configTest.json/SensorConfig.json
-    const std::string& fileSensorConfigPath = "/home/maksys2011/gitclone/home-scada-core/configTest.json/SensorConfig.json";
+void App::init(const FilePath& paths)
+{   
+    const std::string& fileSensorConfigPath = "/home/maksys2011/scada-core/home-scada-core/configTest.json/SensorConfig.json";
     const std::string& fileLoggerPath = "/home/maksys2011/gitclone/home-scada-core/logs/events.log";
     const std::string& fileArchivePath = "/home/maksys2011/gitclone/home-scada-core/archive/archive.csv";
-    const std::string& file = "/home/maksys2011/gitclone/home-scada-core/archive/arch.txt";
     const std::string& fileCfgActuator = "/home/maksys2011/gitclone/home-scada-core/configTest.json/ActuatorConfig.json";
     const std::string& fileCfgRuleThermostat = "/home/maksys2011/gitclone/home-scada-core/configTest.json/RuleThermostat.json";
+
     std::vector<double> values_ {10.0, 17.0, 16.0, 19.0, 22.0, 23.0, 23.0};
-    
     for(size_t i = 15; i < 5; i++){
         values_.push_back(i);
     }
@@ -113,12 +112,22 @@ void App::printActuatorStatus(const std::string& id)const
 
 void App::turnOnActruator(const std::string &id)
 {
+    if(actuatorById_.count(id)){
+        actuatorById_[id]->turnOn();
+    }
 }
 
 void App::turnOffActuator(const std::string &id)
-{
+{   
+    if(actuatorById_.count(id)){
+        actuatorById_[id]->turnOn();
+    }
 }
 
 void App::listActurator() const
 {
+    for(const auto& it : actuatorById_){
+        it.second->print();
+        std::cout << "\n";
+    }
 }
