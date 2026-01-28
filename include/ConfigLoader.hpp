@@ -1,15 +1,16 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include <filesystem>
 #include <nlohmann/json.hpp>
+#include <memory>
 
 #include "SensorConfig.hpp"
+#include "ActuatorConfig.hpp"
+#include "RuleConfig.hpp"
 
 using json = nlohmann::json;
-
-class ActuatorConfig;
-class RuleConfig;
 
 struct AppPath
 {
@@ -23,10 +24,10 @@ struct AppPath
 class ConfigLoader
 {
 public:
-    ConfigLoader(const AppPath& paths);
+    ConfigLoader();
     std::vector<SensorConfig> loadSensors();
     std::vector<ActuatorConfig> loadActuators();
-    std::vector<RuleConfig> loadRules();
+    std::vector<std::unique_ptr<RuleConfig>> loadRules();
 
 private:
     AppPath paths_;

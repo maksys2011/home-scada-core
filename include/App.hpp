@@ -9,13 +9,12 @@ class Logger;
 class Archive;
 class testSource;
 class RuleThermostat;
-class FilePath;
 
 class App
 {
 public:
     App();
-    void run(const FilePath& paths);
+    void run();
     bool repl(std::string& line);
     void printAllActuators() const;
     void printActuatorStatus(const std::string& id)const;
@@ -24,7 +23,7 @@ public:
     void listActurator()const;
 
 private:
-    void init(const FilePath file);
+    void init();
     void tick();
     void shutdown();
     

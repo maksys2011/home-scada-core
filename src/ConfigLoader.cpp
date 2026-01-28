@@ -1,7 +1,12 @@
 #include "ConfigLoader.hpp"
 #include <fstream>
+#include <stdexcept>
 
-ConfigLoader::ConfigLoader(const AppPath &paths) : paths_(paths){}
+ConfigLoader::ConfigLoader()
+{
+    paths_.fileSensorConfigPath = "../config/SensorConfig.json";
+    paths_.fileCfgActuator = "../config/ActuatorConfig.json";
+}
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
 {
@@ -10,8 +15,8 @@ std::vector<SensorConfig> ConfigLoader::loadSensors()
     std::ifstream file(paths_.fileSensorConfigPath);
     if(!file.is_open()){
         throw std::runtime_error(
-            "ConfigLoader: cannot open sensors config file: " +
-                paths_.fileSensorConfigPath.string()
+            std::string("SensorConfigLoader: cannot open sensors config file: ")
+             + paths_.fileSensorConfigPath.string()
         );
     }
 
@@ -24,13 +29,13 @@ std::vector<SensorConfig> ConfigLoader::loadSensors()
             cfg.fromJson(item);
             result.push_back(cfg);
         }
-    }else if(j.object()){
+    }else if(j.is_object()){
         SensorConfig cfg;
         cfg.fromJson(j);
         result.push_back(cfg);
     }else{
         throw std::runtime_error(
-            "ConfigLoader: sensors config must be object or array"
+            "SensorConfigLoader: sensors config must be object or array"
         );
     }
 
@@ -39,10 +44,40 @@ std::vector<SensorConfig> ConfigLoader::loadSensors()
 
 std::vector<ActuatorConfig> ConfigLoader::loadActuators()
 {
-    return std::vector<ActuatorConfig>();
+    std::vector<ActuatorConfig> result;
+
+    std::ifstream file(paths_.fileCfgActuator);
+
+    if(!file.is_open()){
+        throw std::runtime_error(
+            std::string("ActuatorConfigLoader: cannot open actuator config file")
+            + paths_.fileCfgActuator.string());
+    }
+
+    json j;
+    file >> j;
+
+    if(j.is_array()){
+        for(const auto& item : j){
+            ActuatorConfig actCfg;
+            actCfg.fromJson(item);
+            result.push_back(actCfg);
+        }
+    }else if(j.is_object()){
+        ActuatorConfig actCfg;
+        actCfg.fromJson(j);
+        result.push_back(actCfg);
+    }else{
+        throw std::runtime_error(
+            "ActuatorConfigLoader: actuator config must be object or array"
+        );
+    }
+
+    return result;
 }
 
-std::vector<RuleConfig> ConfigLoader::loadRules()
+std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
 {
-    return std::vector<RuleConfig>();
+    std::vector<std::unique_ptr<RuleConfig>> result;
+    return result;
 }

@@ -15,9 +15,9 @@
 
 App::App() = default;
 
-void App::run(const FilePath& paths)
+void App::run()
 {
-    init(paths);
+    init();
 
     for(size_t i = 0; i < source_->getValues().size(); i++){
         tick();
@@ -25,7 +25,7 @@ void App::run(const FilePath& paths)
     shutdown();
 }
 
-void App::init(const FilePath& paths)
+void App::init()
 {   
     const std::string& fileSensorConfigPath = "/home/maksys2011/scada-core/home-scada-core/configTest.json/SensorConfig.json";
     const std::string& fileLoggerPath = "/home/maksys2011/gitclone/home-scada-core/logs/events.log";

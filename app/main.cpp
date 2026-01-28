@@ -20,16 +20,15 @@
 #include "RuleEngine.hpp"
 #include "RuleThermostat.hpp"
 #include "App.hpp"
+#include "ConfigLoader.hpp"
+
 using json = nlohmann::json;
 
 int main() { 
-    FilePath paths;
-    paths.fileSensorConfigPath =  "/home/maksys2011/scada-core/home-scada-core/configTest.json/SensorConfig.json";
-    paths.fileLoggerPath =        "/home/maksys2011/scada-core/home-scada-core/logs/events.log";
-    paths.fileArchivePath =       "/home/maksys2011/scada-core/home-scada-core/archive/archive.csv";
-    paths.fileCfgActuator =       "/home/maksys2011/scada-core/home-scada-core/configTest.json/ActuatorConfig.json";
-    paths.fileCfgRuleThermostat = "/home/maksys2011/scada-core/home-scada-core/configTest.json/RuleThermostat.json";
+    std::cout << "Hello === SCADA === \n";
 
-    
+    ConfigLoader cfg;
+
+    std::cout << "BYE === SCADA === \n";
     return 0;
 }
