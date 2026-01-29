@@ -28,6 +28,12 @@ int main() {
     std::cout << "Hello === SCADA === \n";
 
     ConfigLoader cfg;
+    auto configS = cfg.loadSensors();
+    auto configA = cfg.loadActuators();
+    auto configR = cfg.loadRules();
+    for(const auto&it : configR){
+        it->print();
+    }
 
     std::cout << "BYE === SCADA === \n";
     return 0;

@@ -1,0 +1,8 @@
+{
+    "sensor_name": "thermostat",
+    "sensor_id" : "00001",
+    "actuator_name:": "split_system",
+    "actuator_id" : "00002",
+    "minTemp" : 18.0,
+    "maxTemp" : 21.0 
+}

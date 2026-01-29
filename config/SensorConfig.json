@@ -1,4 +1,5 @@
-{
+[
+    {
     "id_": "temp01",
     "name_": "Temperature Sensor",
     "type_": "Analog",
@@ -8,5 +9,18 @@
     "alarmLow_": 5.0,
     "deadband_" : 0.1,
     "hysteresis_" : 0.2
-}
+    },
+
+    {
+    "id_": "temp02",
+    "name_": "Temperature Sensor",
+    "type_": "Analog",
+    "warnHigh_": 50.5,
+    "warnLow_": 10,
+    "alarmHigh_": 95.0,
+    "alarmLow_": 5.0,
+    "deadband_" : 0.1,
+    "hysteresis_" : 0.2
+    }
+]
 

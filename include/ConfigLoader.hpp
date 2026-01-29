@@ -9,16 +9,15 @@
 #include "SensorConfig.hpp"
 #include "ActuatorConfig.hpp"
 #include "RuleConfig.hpp"
+#include "RuleThermostatConfig.hpp"
 
 using json = nlohmann::json;
 
 struct AppPath
 {
     std::filesystem::path fileSensorConfigPath;
-    std::filesystem::path fileLoggerPath;
-    std::filesystem::path fileArchivePath;
     std::filesystem::path fileCfgActuator;
-    std::filesystem::path fileCfgRuleThermostat;
+    std::filesystem::path fileRuleConfig;
 };
 
 class ConfigLoader
