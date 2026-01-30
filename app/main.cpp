@@ -35,6 +35,9 @@ int main() {
         it->print();
     }
 
+    std::cout << std::endl;
+    
+
     std::cout << "BYE === SCADA === \n";
     return 0;
 }

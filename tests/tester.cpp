@@ -9,7 +9,7 @@
 
 void Tester::runBasicFlow()
 {
-    Logger log("../logs/events.log");
+    /*Logger log("../logs/events.log");
     Archive arch("../archive/archive.csv");
     SensorConfig cfg;
     const std::string pathFile = "../SensorConfig.json";
@@ -20,5 +20,5 @@ void Tester::runBasicFlow()
     SensorManager manager;
     manager.addSensor(cfg.getId(), &sensors);
     for(size_t i = 0; i < values.size(); i++){
-        manager.tick();}
+        manager.tick();} */
 }

@@ -3,12 +3,14 @@
 #include <Enum.hpp>
 #include <fstream>
 #include <chrono>
+#include <filesystem>
 
 class Archive
 {
 public:
 
     explicit Archive(const std::string& filePath);
+    explicit Archive(const std::filesystem::path& filePath);
     Archive (const Archive&) = delete;
     Archive& operator=(const Archive&) = delete;
     

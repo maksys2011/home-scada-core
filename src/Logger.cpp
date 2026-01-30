@@ -2,15 +2,18 @@
 #include <iostream>
 #include <chrono>
 #include <iomanip>
-#include <filesystem>
 
 Logger::Logger(const std::string &filePath)
+    : Logger::Logger(std::filesystem::path(filePath))
+{}
+
+Logger::Logger(const std::filesystem::path &filePath)
 {
-    /*std::filesystem::path p(filePath);
-    std::filesystem::create_directories(p.parent_path()); */
     file_.open(filePath, std::ios::app);
     if(!file_.is_open()){
-        std::cerr << "Logger cannot open file: " << filePath << std::endl;
+        throw std::runtime_error(
+            std::string("Logger: cannot open file: ") + filePath.string()
+        );
     }
 }
 

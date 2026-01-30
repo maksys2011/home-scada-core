@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "RuleThermostatConfig.hpp"
+#include "ConfigLoader.hpp"
 
 class Sensor;
 class Actuator;
@@ -23,6 +24,7 @@ public:
     void listActurator()const;
 
 private:
+    void init(const ConfigLoader& configs);
     void init();
     void tick();
     void shutdown();
@@ -38,4 +40,5 @@ private:
     RuleThermostatConfig ruleCfg_;
 
     std::unordered_map<std::string, std::unique_ptr<Actuator>> actuatorById_;
+    std::unordered_map<std::string, std::unique_ptr<Sensor>> sensorById;
 };

@@ -4,13 +4,19 @@
 #include <iomanip>
 #include <filesystem>
 
-Archive::Archive(const std::string &filePath)
+Archive::Archive(const std::string& filePath)
+    : Archive::Archive(std::filesystem::path(filePath))
+{}
+
+Archive::Archive(const std::filesystem::path& filePath)
 {
     file_.open(filePath, std::ios::app);
     if(!file_.is_open()){
-        std::cerr << "Archive cannot open file: " << filePath << std::endl;
+        throw std::runtime_error(
+            std::string("Archive cannot open file: ") +
+            filePath.string()
+        );
     }
-
 }
 
 Archive::~Archive()

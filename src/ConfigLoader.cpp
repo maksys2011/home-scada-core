@@ -4,20 +4,23 @@
 
 ConfigLoader::ConfigLoader()
 {
-    paths_.fileSensorConfigPath = "../config/SensorConfig.json";
+    paths_.fileCfgSensorPath = "../config/SensorConfig.json";
     paths_.fileCfgActuator = "../config/ActuatorConfig.json";
-    paths_.fileRuleConfig = "../rule/ruleConfigThermostat.json";
+    paths_.fileCfgRule = "../rule/ruleConfigThermostat.json";
+    paths_.fileArhivePath = "../logs/events.log";
+    paths_.fileArhivePath = "../archive/archive.csv";
+
 }
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
 {
     std::vector<SensorConfig> result;
 
-    std::ifstream file(paths_.fileSensorConfigPath);
+    std::ifstream file(paths_.fileCfgSensorPath);
     if(!file.is_open()){
         throw std::runtime_error(
             std::string("SensorConfigLoader: cannot open sensors config file: ")
-             + paths_.fileSensorConfigPath.string());
+             + paths_.fileCfgSensorPath.string());
     }
 
     json j;
@@ -80,11 +83,11 @@ std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
 {
     std::vector<std::unique_ptr<RuleConfig>> result;
 
-    std::ifstream file(paths_.fileRuleConfig);
+    std::ifstream file(paths_.fileCfgRule);
     if(!file.is_open()){
         throw std::runtime_error(
             (std::string)"RuleConfigLoaders: cannot open rule config file"
-            +paths_.fileRuleConfig.string());
+            +paths_.fileCfgRule.string());
     }
 
     json j;
@@ -108,4 +111,9 @@ std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
     }
 
     return result;
+}
+
+AppPath ConfigLoader::getPaths() const
+{
+    return paths_;
 }

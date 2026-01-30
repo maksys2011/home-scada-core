@@ -15,9 +15,11 @@ using json = nlohmann::json;
 
 struct AppPath
 {
-    std::filesystem::path fileSensorConfigPath;
+    std::filesystem::path fileCfgSensorPath;
     std::filesystem::path fileCfgActuator;
-    std::filesystem::path fileRuleConfig;
+    std::filesystem::path fileCfgRule;
+    std::filesystem::path fileLoggerPath;
+    std::filesystem::path fileArhivePath; 
 };
 
 class ConfigLoader
@@ -27,6 +29,7 @@ public:
     std::vector<SensorConfig> loadSensors();
     std::vector<ActuatorConfig> loadActuators();
     std::vector<std::unique_ptr<RuleConfig>> loadRules();
+    AppPath getPaths() const;
 
 private:
     AppPath paths_;

@@ -25,6 +25,12 @@ void App::run()
     shutdown();
 }
 
+void App::init(const ConfigLoader& cfg)
+{
+    logger_ = std::make_unique<Logger>(cfg.getPaths().fileLoggerPath.string());
+    archive_ = std::make_unique<Archive>(cfg.getPaths().fileArhivePath.string());
+}
+
 void App::init()
 {   
     const std::string& fileSensorConfigPath = "/home/maksys2011/scada-core/home-scada-core/configTest.json/SensorConfig.json";
