@@ -23,6 +23,7 @@ public:
     const ActuatorConfig& config() const;
 
     //Отладка
+    
     void print() const;
 
 private:

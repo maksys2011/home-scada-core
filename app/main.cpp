@@ -26,18 +26,12 @@ using json = nlohmann::json;
 
 int main() { 
     std::cout << "Hello === SCADA === \n";
+    App ap;
+    AppConfig cfg;
+    ap.run(std::move(cfg));
 
-    ConfigLoader cfg;
-    auto configS = cfg.loadSensors();
-    auto configA = cfg.loadActuators();
-    auto configR = cfg.loadRules();
-    for(const auto&it : configR){
-        it->print();
-    }
 
-    std::cout << std::endl;
     
-
     std::cout << "BYE === SCADA === \n";
     return 0;
 }

@@ -4,6 +4,7 @@
 
 void RuleThermostatConfig::fromJson(const json &j)
 {
+    id_ = j.at("rule_id").get<std::string>();
     minTemp_ = j.at("minTemp").get<double>();
     maxTemp_ = j.at("maxTemp").get<double>();
     if(!validate()){
@@ -31,6 +32,7 @@ bool RuleThermostatConfig::validate() const
 void RuleThermostatConfig::print() const
 {
     std::cout << "Type : Thermostat" << std::endl;
+    std::cout << "Rule id: "  << getId() << std::endl;
     std::cout << "MinValue: " << getMinTemp() << std::endl;
     std::cout << "MaxValue: " << getMaxTemp() << std::endl;
 }
@@ -43,4 +45,9 @@ double RuleThermostatConfig::getMinTemp() const
 double RuleThermostatConfig::getMaxTemp() const
 {
     return maxTemp_;
+}
+
+std::string RuleThermostatConfig::getId() const
+{
+    return id_;
 }

@@ -1,7 +1,16 @@
-{
-        "id" : "45001",
-        "name" : "Heater Actuator",
-        "type" : "AnalogOut",
-        "minValue" : 0.0,
-        "maxValue" : 100.0
-}
+[
+        {
+                "id" : "45001",
+                "name" : "kitchen Actuator",
+                "type" : "AnalogOut",
+                "minValue" : 0.0,
+                "maxValue" : 100.0
+        },
+        {
+                "id" : "45002",
+                "name" : "bathroom Actuator",
+                "type" : "AnalogOut",
+                "minValue" : 0.0,
+                "maxValue" : 100.0
+        }
+]

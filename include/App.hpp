@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "RuleThermostatConfig.hpp"
+
 #include "ConfigLoader.hpp"
 
 class Sensor;
@@ -10,12 +10,15 @@ class Logger;
 class Archive;
 class testSource;
 class RuleThermostat;
+class RandomSource;
+class RuleConfig;
+class RuleThermostatConfig;
 
 class App
 {
 public:
     App();
-    void run();
+    void run(AppConfig&& cfg);
     bool repl(std::string& line);
     void printAllActuators() const;
     void printActuatorStatus(const std::string& id)const;
@@ -24,7 +27,7 @@ public:
     void listActurator()const;
 
 private:
-    void init(const ConfigLoader& configs);
+    void init(AppConfig&& cfg);
     void init();
     void tick();
     void shutdown();
@@ -37,8 +40,12 @@ private:
     std::unique_ptr<RuleEngine>             engine_; 
     std::unique_ptr<testSource>             source_;
     std::unique_ptr<RuleThermostat>         thermoRule_;
+    std::unique_ptr<RandomSource>           sourse2_;
+    std::unique_ptr<RuleThermostatConfig>   ruleConfig_;
     RuleThermostatConfig ruleCfg_;
+    ConfigLoader cfg_;
 
     std::unordered_map<std::string, std::unique_ptr<Actuator>> actuatorById_;
     std::unordered_map<std::string, std::unique_ptr<Sensor>> sensorById;
+    std::unordered_map<std::string, std::unique_ptr<RuleConfig>> ruleConfigById;
 };

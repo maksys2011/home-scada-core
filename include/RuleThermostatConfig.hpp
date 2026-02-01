@@ -9,6 +9,7 @@ using json = nlohmann::json;
 class RuleThermostatConfig : public RuleConfig
 {
 private:
+    std::string id_;
     double minTemp_;
     double maxTemp_;
 
@@ -20,4 +21,5 @@ public:
 
     double getMinTemp() const;
     double getMaxTemp() const;
+    std::string getId() const;
 };

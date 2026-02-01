@@ -25,6 +25,17 @@ void ActuatorConfig::fromJson(const json &j)
     maxValue_ = j.at("maxValue").get<double>();
 }
 
+void ActuatorConfig::fromJson(const std::filesystem::path &path)
+{   
+    std::ifstream file(path);
+    if(!file){
+        throw std::runtime_error("cannot open config file" + path.string());
+    }
+    json j;
+    file >> j;
+    fromJson(j);
+}
+
 void ActuatorConfig::fromJson(const std::string &path)
 {
     std::ifstream file(path);

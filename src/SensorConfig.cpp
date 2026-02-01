@@ -36,6 +36,19 @@ void SensorConfig::fromJson(const json &j)
     deadband_ = j.at("deadband_").get<double>();
     hysteresis_ = j.at("hysteresis_").get<double>();
 }
+
+//void SensorConfig::fromJson(const std::string &path)
+void SensorConfig::fromJson(const std::filesystem::path& path)
+{
+    std::ifstream file(path);
+    if(!file){
+        throw std::runtime_error("cannot open config file" + path.string());
+    }
+    json j;
+    file >> j;
+    fromJson(j);
+}
+
 void SensorConfig::fromJson(const std::string &path)
 {
     std::ifstream file(path);

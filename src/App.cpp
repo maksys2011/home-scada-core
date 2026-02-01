@@ -12,24 +12,63 @@
 #include "RuleThermostatConfig.hpp"
 #include "Logger.hpp"
 #include "Archive.hpp"
+#include "RandomSource.hpp"
 
 App::App() = default;
 
-void App::run()
+void App::run(AppConfig&& cfg)
 {
-    init();
+    init(std::move(cfg));
+    for(size_t i = 0; i < 25; ++i){
+        for(const auto& sensor : sensorById){
+            std::cout << sensor.first << "\n";
+            sensor.second->update();
+        }
+    }
+    /*init();
 
     for(size_t i = 0; i < source_->getValues().size(); i++){
         tick();
     }
-    shutdown();
+    shutdown();*/
 }
 
-void App::init(const ConfigLoader& cfg)
+void App::init(AppConfig&& cfg)
 {
-    logger_ = std::make_unique<Logger>(cfg.getPaths().fileLoggerPath.string());
-    archive_ = std::make_unique<Archive>(cfg.getPaths().fileArhivePath.string());
-}
+    logger_  = std::make_unique<Logger>(cfg_.getPaths().fileLoggerPath);
+    archive_ = std::make_unique<Archive>(cfg_.getPaths().fileArhivePath);
+    sourse2_ = std::make_unique<RandomSource>(15.0, 25.0);
+    std::cout << "1" << "\n";
+    cfg = cfg_.load();
+    std::cout << "2" << "\n";
+    
+    for(const auto& config : cfg.sensorConfigs_){
+        std::cout << "3" << "\n";
+        sensor_ = std::make_unique<Sensor>(
+            config,
+            logger_.get(),
+            archive_.get(),
+            sourse2_.get()
+        );
+        sensorById.emplace(config.getId(), std::move(sensor_));
+    }
+
+    for(const auto& actConfig : cfg.actuatorConfigs_){
+        actuator_ = std::make_unique<Actuator>(
+            actConfig
+        );
+        actuatorById_.emplace(actConfig.getId(), std::move(actuator_));
+    } 
+
+    /*for(const auto& ruleConfig : cfg.ruleConfigs_){
+        ruleCfg_.fromJson()
+        
+        = std::make_unique<RuleThermostatConfig>(
+            ruleConfig
+        );
+        ruleConfigById.emplace(ruleCfg_.getId(), std::move(ruleCfg_));
+    }*/
+}   
 
 void App::init()
 {   

@@ -7,9 +7,19 @@ ConfigLoader::ConfigLoader()
     paths_.fileCfgSensorPath = "../config/SensorConfig.json";
     paths_.fileCfgActuator = "../config/ActuatorConfig.json";
     paths_.fileCfgRule = "../rule/ruleConfigThermostat.json";
-    paths_.fileArhivePath = "../logs/events.log";
+    paths_.fileLoggerPath = "../logs/events.log";
     paths_.fileArhivePath = "../archive/archive.csv";
+    
+}
 
+AppConfig ConfigLoader::load()
+{
+    AppConfig cfg;
+    cfg.sensorConfigs_   = loadSensors();
+    cfg.actuatorConfigs_ = loadActuators();
+    cfg.ruleConfigs_     = loadRules();
+
+    return cfg;
 }
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
@@ -41,7 +51,6 @@ std::vector<SensorConfig> ConfigLoader::loadSensors()
             "SensorConfigLoader: sensors config must be object or array"
         );
     }
-
     return result;
 }
 
@@ -75,7 +84,6 @@ std::vector<ActuatorConfig> ConfigLoader::loadActuators()
             "ActuatorConfigLoader: actuator config must be object or array"
         );
     }
-
     return result;
 }
 
@@ -109,7 +117,6 @@ std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
         throw std::runtime_error(
             (std::string)"RuleConfigLoader: rule config must be object or array");
     }
-
     return result;
 }
 
@@ -117,3 +124,5 @@ AppPath ConfigLoader::getPaths() const
 {
     return paths_;
 }
+
+
