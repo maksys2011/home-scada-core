@@ -9,14 +9,14 @@ void Actuator::turnOn()
 {
     if(state_) return;
     state_ = true;
-    std::cout << config_.getName() << ": ON" << "\n";
+    std::cout << "[ACTUATOR]=" << config_.getId() << " -> ON\n";
 }
 
 void Actuator::turnOff()
 {
     if(!state_) return;
     state_ = false;
-    std::cout << config_.getName() << ": OFF" << "\n";
+    std::cout << "[ACTUATOR]=" << config_.getId() << " -> OFF\n";
 }
 
 void Actuator::setValue(double value)
@@ -47,5 +47,9 @@ void Actuator::print() const
                 << "ActuratorType: " << ActuatorTypeToString(config_.getType()) << std::endl
                 << "State: " << (state_ ?  "ON" : "OFF") << std::endl
                 << "CurrentValue: " << getValue() << std::endl;
+}
 
+bool Actuator::getStateActuator()
+{
+    return state_;
 }

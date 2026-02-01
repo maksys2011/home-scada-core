@@ -15,17 +15,11 @@ public:
                     Archive* arch,
                     Source* source);
 
-    // Обновление значения (приходит от Source)
     void updateValue(double rawValue);
-
     void update();
-
     const SensorConfig& config() const;
-
     SensorState& state();
-
     void print() const;
-
     Source* getSourse() const;
 
 private:

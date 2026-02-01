@@ -17,14 +17,8 @@ void Sensor::updateValue(double rawValue)
 void Sensor::update()
 {
     if(!source_) return;
-
     double value = source_->readValue();
-
-    std::cout <<  config_.getName() << " ";
-    std::cout << "val: " << value << std::endl;
-
     state_.processValue(value);
-
 }
 const SensorConfig &Sensor::config() const
 {
@@ -48,3 +42,4 @@ Source *Sensor::getSourse() const
 {
     return source_;
 }
+

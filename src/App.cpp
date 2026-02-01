@@ -1,6 +1,7 @@
 #include <vector>
 #include <sstream>
 #include <thread>
+#include <iomanip>
 
 #include "App.hpp"
 #include "Sensor.hpp"
@@ -80,8 +81,14 @@ void App::tick()
 {
     for(auto& [id, sensor] : sensorById_){
         sensor->update();
+        auto val = sensor->state().lastValue();
+        if(val){
+            std::cout << "[SENSOR] id=" << id  <<
+            " value= " << std::fixed << std::setprecision(2) <<
+            *val << "\n";
+        }
     }
-    engine_->evaluate();
+    engine_->evaluate(); 
 }
 
 void App::shutdown()

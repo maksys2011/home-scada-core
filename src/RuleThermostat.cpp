@@ -21,9 +21,9 @@ void RuleThermostat::evaluate()
 
     double value = *valueOpt;
     
-    if(value < ruleCfg_.getMinTemp()){
+    if(value < ruleCfg_.getMinTemp() && !actuator_.getStatus()){
         actuator_.turnOn();
-    }else if(value > ruleCfg_.getMaxTemp()){
+    }else if(value > ruleCfg_.getMaxTemp() && actuator_.getStatus()){
         actuator_.turnOff();
     }else{
         return;
