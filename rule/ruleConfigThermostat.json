@@ -1,5 +1,6 @@
-
+[
     {
+        "type" : "termostat",
         "rule_id" : "1", 
         "sensor_name": "temperature sensor kitchen",
         "sensor_id" : "35001",
@@ -7,7 +8,15 @@
         "actuator_id" : "45001",
         "minTemp" : 18.0,
         "maxTemp" : 21.0 
+    },
+    {
+        "type" : "termostat",
+        "rule_id" : "2",
+        "sensor_name": "temperature sensor bathroom",
+        "sensor_id" : "35002",
+        "actuator_name:": "bathroom Actuator",
+        "actuator_id" : "45002",
+        "minTemp" : 20.0,
+        "maxTemp" : 23.0 
     }
-
-
-
+] 

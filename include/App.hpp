@@ -28,7 +28,6 @@ public:
 
 private:
     void init(AppConfig&& cfg);
-    void init();
     void tick();
     void shutdown();
     
@@ -38,7 +37,6 @@ private:
     std::unique_ptr<Sensor>                 sensor_;
     std::unique_ptr<Actuator>               actuator_;
     std::unique_ptr<RuleEngine>             engine_; 
-    std::unique_ptr<testSource>             source_;
     std::unique_ptr<RuleThermostat>         thermoRule_;
     std::unique_ptr<RandomSource>           sourse2_;
     std::unique_ptr<RuleThermostatConfig>   ruleConfig_;
@@ -46,6 +44,6 @@ private:
     ConfigLoader cfg_;
 
     std::unordered_map<std::string, std::unique_ptr<Actuator>> actuatorById_;
-    std::unordered_map<std::string, std::unique_ptr<Sensor>> sensorById;
-    std::unordered_map<std::string, std::unique_ptr<RuleConfig>> ruleConfigById;
+    std::unordered_map<std::string, std::unique_ptr<Sensor>> sensorById_;
+    std::unordered_map<std::string, std::unique_ptr<RuleConfig>> ruleConfigById_;
 };

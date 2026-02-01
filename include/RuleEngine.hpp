@@ -10,6 +10,7 @@ public:
     
     void addRule(std::unique_ptr<Rule> rules);
     void evaluate();
+    size_t getSize();
 
 private:
     

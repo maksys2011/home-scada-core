@@ -5,9 +5,10 @@
 #include "Source.hpp"
 #include <iostream>
 
-Sensor::Sensor(const SensorConfig &config, Logger *logger, Archive *arch, Source *source) : config_(config),
-                                                                                            state_(config, logger, arch),
-                                                                                            source_(source)
+Sensor::Sensor(const SensorConfig &config, Logger *logger, Archive *arch, Source *source) 
+        : config_(config),
+        state_(config, logger, arch),
+        source_(source)
 {}
 void Sensor::updateValue(double rawValue)
 {
@@ -19,6 +20,7 @@ void Sensor::update()
 
     double value = source_->readValue();
 
+    std::cout <<  config_.getName() << " ";
     std::cout << "val: " << value << std::endl;
 
     state_.processValue(value);

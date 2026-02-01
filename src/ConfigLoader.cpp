@@ -1,6 +1,7 @@
 #include "ConfigLoader.hpp"
 #include <fstream>
 #include <stdexcept>
+#include <iostream>
 
 ConfigLoader::ConfigLoader()
 {
@@ -9,17 +10,6 @@ ConfigLoader::ConfigLoader()
     paths_.fileCfgRule = "../rule/ruleConfigThermostat.json";
     paths_.fileLoggerPath = "../logs/events.log";
     paths_.fileArhivePath = "../archive/archive.csv";
-    
-}
-
-AppConfig ConfigLoader::load()
-{
-    AppConfig cfg;
-    cfg.sensorConfigs_   = loadSensors();
-    cfg.actuatorConfigs_ = loadActuators();
-    cfg.ruleConfigs_     = loadRules();
-
-    return cfg;
 }
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
@@ -103,7 +93,7 @@ std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
 
     if(j.is_array()){
         for(const auto& item : j){
-            if("Thermostat" == item.at("name").get<std::string>()){
+            if("termostat" == item.at("type").get<std::string>()){
             RuleThermostatConfig cfg;
             cfg.fromJson(item);
             result.push_back(std::make_unique<RuleThermostatConfig>(cfg));
@@ -125,4 +115,12 @@ AppPath ConfigLoader::getPaths() const
     return paths_;
 }
 
-
+AppConfig ConfigLoader::load()
+{
+    AppConfig cfg;
+    cfg.sensorConfigs_   = loadSensors();
+    cfg.actuatorConfigs_ = loadActuators();
+    cfg.ruleConfigs_     = loadRules();
+    
+    return cfg;
+}

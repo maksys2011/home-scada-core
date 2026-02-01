@@ -1,6 +1,5 @@
 /build/
 *.exe
 *.o
-logs/*.log
 
 

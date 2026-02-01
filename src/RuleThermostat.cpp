@@ -5,8 +5,8 @@
 
 RuleThermostat::RuleThermostat(
     SensorState &sensor, 
-    Actuator* actuator, 
-    RuleThermostatConfig &ruleCfg):
+    Actuator& actuator, 
+    const RuleThermostatConfig &ruleCfg):
     sensor_(sensor),
     actuator_(actuator),
     ruleCfg_(ruleCfg)
@@ -22,9 +22,9 @@ void RuleThermostat::evaluate()
     double value = *valueOpt;
     
     if(value < ruleCfg_.getMinTemp()){
-        actuator_->turnOn();
+        actuator_.turnOn();
     }else if(value > ruleCfg_.getMaxTemp()){
-        actuator_->turnOff();
+        actuator_.turnOff();
     }else{
         return;
     }

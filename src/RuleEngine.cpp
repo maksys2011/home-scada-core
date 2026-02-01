@@ -1,3 +1,4 @@
+#include <iostream>
 #include "RuleEngine.hpp"
 #include "Rule.hpp"
 
@@ -12,4 +13,9 @@ void RuleEngine::evaluate()
     {
         rule->evaluate();
     }
+}
+
+size_t RuleEngine::getSize()
+{
+    return rules_.size();
 }

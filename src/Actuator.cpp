@@ -9,14 +9,14 @@ void Actuator::turnOn()
 {
     if(state_) return;
     state_ = true;
-    std::cout << "ON" << std::endl;
+    std::cout << config_.getName() << ": ON" << "\n";
 }
 
 void Actuator::turnOff()
 {
     if(!state_) return;
     state_ = false;
-    std::cout << "OFF" << std::endl;
+    std::cout << config_.getName() << ": OFF" << "\n";
 }
 
 void Actuator::setValue(double value)

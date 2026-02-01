@@ -4,9 +4,12 @@
 
 void RuleThermostatConfig::fromJson(const json &j)
 {
-    id_ = j.at("rule_id").get<std::string>();
-    minTemp_ = j.at("minTemp").get<double>();
-    maxTemp_ = j.at("maxTemp").get<double>();
+    id_ =         j.at("rule_id").get<std::string>();
+    id_sensor =   j.at("sensor_id").get<std::string>();
+    id_actuator = j.at("actuator_id").get<std::string>();
+    minTemp_ =    j.at("minTemp").get<double>();
+    maxTemp_ =    j.at("maxTemp").get<double>();
+    
     if(!validate()){
         throw std::runtime_error(
             "Invalid thermostat config: maxTemp must be greater than minTemp and delta must be sufficient");
@@ -22,6 +25,18 @@ void RuleThermostatConfig::fromJson(const std::string &path)
     json j;
     file >> j;
     fromJson(j);
+}
+
+void RuleThermostatConfig::fromJson(const std::filesystem::path &path)
+{
+    std::ifstream file(path);
+    if(!file){
+        throw std::runtime_error("cannot open ruleConfig file" + path.string());
+    }
+    json j;
+    file >> j;
+    fromJson(j);
+
 }
 
 bool RuleThermostatConfig::validate() const
@@ -50,4 +65,14 @@ double RuleThermostatConfig::getMaxTemp() const
 std::string RuleThermostatConfig::getId() const
 {
     return id_;
+}
+
+std::string RuleThermostatConfig::getIdSensor() const
+{
+    return id_sensor;
+}
+
+std::string RuleThermostatConfig::getIdActuator() const
+{
+    return id_actuator;
 }

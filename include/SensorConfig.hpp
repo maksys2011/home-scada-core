@@ -31,7 +31,6 @@ public:
                          double hysteresis);
 
         void fromJson(const json &j);
-        //void fromJson(const std::string& path);
         void fromJson(const std::filesystem::path& path);
         void fromJson(const std::string& path);
         const std::string& getId() const { return id_; };
