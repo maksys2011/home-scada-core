@@ -1,0 +1,8 @@
+{
+    "id_" : "50001",
+    "name_" : "light sensor",
+    "type_" : "Analog",
+    "room_" : "kitchen",
+    "enable_" : true,
+    "sensorId_" : "35001"
+}

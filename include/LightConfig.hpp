@@ -1,10 +1,8 @@
 #pragma once
 #include <string>
 #include <filesystem>
-#include <nlohmann.json/hpp>
-
+#include <nlohmann/json.hpp>
 #include "Enum.hpp"
-
 using json = nlohmann::json;
 
 class LightConfig
@@ -30,11 +28,13 @@ public:
 
     void fromJson(const std::string& path);
     void fromJson(const std::filesystem::path& path);
-    void fromJson(json j);
+    void fromJson(const json& j);
 
     const std::string& getId() const {return id_;};
     const std::string& getName() const {return name_;};
     SensorType getType() const {return type_;};
     const std::string& getRoom() const {return room_;};
     const std::string& getSensorId() const {return sensorId_;};
+
+    void print() const;
 };

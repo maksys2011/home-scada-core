@@ -22,7 +22,7 @@ void App::run(AppConfig&& cfg)
 {
     init(std::move(cfg));
 
-    for(size_t i = 0; i < 30; ++i){
+    for(size_t i = 0; i < 5; ++i){
         tick();
         std::this_thread::sleep_for(std::chrono::seconds(2));
     }

@@ -29,6 +29,7 @@ add_executable(home-scada
     src/RuleEngine.cpp
     src/App.cpp
     src/ConfigLoader.cpp
+    src/LightConfig.cpp
 )
 
 target_include_directories(home-scada PUBLIC

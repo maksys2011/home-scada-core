@@ -13,16 +13,17 @@ SensorConfig::SensorConfig(const std::string &id,
                             double alarmLow,
                             double deadband,
                             double hysteresis)
-    : id_(id),
-      name_(name),
-      type_(type),
-      warnHigh_(warnHigh),
-      warnLow_(warnLow),
-      alarmHigh_(alarmHigh),
-      alarmLow_(alarmLow),
-      deadband_(deadband),
-      hysteresis_(hysteresis)
-      {}
+    : 
+    id_(id),
+    name_(name),
+    type_(type),
+    warnHigh_(warnHigh),
+    warnLow_(warnLow),
+    alarmHigh_(alarmHigh),
+    alarmLow_(alarmLow),
+    deadband_(deadband),
+    hysteresis_(hysteresis)
+{}
 
 void SensorConfig::fromJson(const json &j)
 {

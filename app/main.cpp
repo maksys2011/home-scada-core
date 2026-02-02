@@ -4,6 +4,7 @@
 #include <nlohmann/json.hpp>
 #include <thread>
 #include <chrono>
+#include <filesystem>
 #include "SensorConfig.hpp"
 #include "ActuatorConfig.hpp"
 #include "Actuator.hpp"
@@ -21,14 +22,21 @@
 #include "RuleThermostat.hpp"
 #include "App.hpp"
 #include "ConfigLoader.hpp"
+#include "LightConfig.hpp"
 
 using json = nlohmann::json;
 
 int main() { 
+
     std::cout << "Hello === SCADA === \n";
     App ap;
     AppConfig cfg;
     ap.run(std::move(cfg));
+    std::cout << "Тест создания конфигураций датчика освещения" << "\n";
+    LightConfig lcfg;
+    const std::filesystem::path path = "../config/LightConfig.json";
+    lcfg.fromJson(path);
+    lcfg.print();
 
 
     
