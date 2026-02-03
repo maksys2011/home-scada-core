@@ -8,6 +8,7 @@ ConfigLoader::ConfigLoader()
     paths_.fileCfgSensorPath = "../config/SensorConfig.json";
     paths_.fileCfgActuator = "../config/ActuatorConfig.json";
     paths_.fileCfgRule = "../rule/RuleConfigThermostat.json";
+    paths_.fileCfgRuleLight = "../rule/RuleConfigLight.json";
     paths_.fileLoggerPath = "../logs/events.log";
     paths_.fileArhivePath = "../archive/archive.csv";
 }
@@ -77,7 +78,39 @@ std::vector<ActuatorConfig> ConfigLoader::loadActuators()
     return result;
 }
 
-std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
+std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules_2()
+{
+    std::vector<std::unique_ptr<RuleConfig>> result;
+
+    std::ifstream file(paths_.fileCfgRuleLight);
+    if(!file.is_open()){
+        throw std::runtime_error(
+            (std::string)"RuleConfigLoaders: cannot open rule config file"
+            +paths_.fileCfgRule.string());
+    }
+
+    json j;
+    file >> j;
+
+    if(j.is_array()){
+        for(const auto& item : j){
+                RuleConfigLight cfg;
+                cfg.fromJson(item);    
+                result.push_back(std::make_unique<RuleConfigLight>());
+        }
+    }else if(j.is_object()){
+                RuleConfigLight cfg;
+                cfg.fromJson(j);
+                result.push_back(std::make_unique<RuleConfigLight>(cfg));
+    }else{
+            throw std::runtime_error(
+            (std::string)"RuleConfigLoader: rule config must be object or array");
+    }
+    
+    return result;
+}
+
+std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules_1()
 {
     std::vector<std::unique_ptr<RuleConfig>> result;
 
@@ -93,18 +126,16 @@ std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
 
     if(j.is_array()){
         for(const auto& item : j){
-            if("termostat" == item.at("type").get<std::string>()){
-            RuleThermostatConfig cfg;
-            cfg.fromJson(item);
-            result.push_back(std::make_unique<RuleThermostatConfig>(cfg));
-            }
+                RuleThermostatConfig cfg;
+                cfg.fromJson(item);
+                result.push_back(std::make_unique<RuleThermostatConfig>(cfg));
         }
     }else if(j.is_object()){
-        RuleThermostatConfig cfg;
-        cfg.fromJson(j);
-        result.push_back(std::make_unique<RuleThermostatConfig>(cfg));
+                RuleThermostatConfig cfg;
+                cfg.fromJson(j);
+                result.push_back(std::make_unique<RuleThermostatConfig>(cfg));
     }else{
-        throw std::runtime_error(
+            throw std::runtime_error(
             (std::string)"RuleConfigLoader: rule config must be object or array");
     }
     return result;
@@ -115,12 +146,15 @@ AppPath ConfigLoader::getPaths() const
     return paths_;
 }
 
+
+
 AppConfig ConfigLoader::load()
 {
     AppConfig cfg;
     cfg.sensorConfigs_   = loadSensors();
     cfg.actuatorConfigs_ = loadActuators();
-    cfg.ruleConfigs_     = loadRules();
+    cfg.ruleConfigs_     = loadRules_1();
+    cfg.ruleConfigs_2    = loadRules_2();
     
     return cfg;
 }

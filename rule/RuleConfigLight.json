@@ -1,8 +1,37 @@
-{
-    "id_" : "50001",
-    "name_" : "light sensor",
-    "type_" : "Analog",
-    "room_" : "kitchen",
-    "enable_" : true,
-    "sensorId_" : "35001"
-}
+[
+    {
+        "type" : "lighting",
+        "rule_id" : "1",
+        "name_" : "light sensor",
+        "room_" : "kitchen",
+        "enable_" : false,
+        "id_sensor" : "10001",
+        "id_actuator" : "20001",
+        "minLux" : 150.0,
+        "maxLux" : 500.0
+    },
+
+    {
+        "type" : "lighting",
+        "rule_id" : "2",
+        "name_" : "light sensor",
+        "room_" : "bedroom",
+        "enable_" : false,
+        "id_sensor" : "10002",
+        "id_actuator" : "20002",
+        "minLux" : 150.0,
+        "maxLux" : 300.0
+    },
+
+    {
+        "type" : "lighting",
+        "rule_id" : "3",
+        "name_" : "light sensor",
+        "room_" : "living room",
+        "enable_" : false,
+        "id_sensor" : "10002",
+        "id_actuator" : "20003",
+        "minLux" : 50.0,
+        "maxLux" : 500.0
+    }
+]

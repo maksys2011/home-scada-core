@@ -5,7 +5,7 @@
 #include "Enum.hpp"
 using json = nlohmann::json;
 
-class LightConfig
+class LightConfig : public RuleConfig;
 {
 private:
 

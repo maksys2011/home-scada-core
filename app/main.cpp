@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 #include <filesystem>
+#include <memory>
 #include "SensorConfig.hpp"
 #include "ActuatorConfig.hpp"
 #include "Actuator.hpp"
@@ -22,6 +23,7 @@
 #include "RuleThermostat.hpp"
 #include "App.hpp"
 #include "ConfigLoader.hpp"
+#include "RuleConfigLight.hpp"
 
 using json = nlohmann::json;
 
@@ -31,9 +33,14 @@ int main() {
     App ap;
     AppConfig cfg;
     ap.run(std::move(cfg));
-    
 
+    // создание правил 
 
+    ConfigLoader configs;
+    AppConfig cfgRuleLight = configs.load();
+    for(const auto& it : cfgRuleLight.ruleConfigs_2){
+        it->print();
+    }
     
     std::cout << "BYE === SCADA === \n";
     return 0;
