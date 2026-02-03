@@ -7,7 +7,7 @@ ConfigLoader::ConfigLoader()
 {
     paths_.fileCfgSensorPath = "../config/SensorConfig.json";
     paths_.fileCfgActuator = "../config/ActuatorConfig.json";
-    paths_.fileCfgRule = "../rule/ruleConfigThermostat.json";
+    paths_.fileCfgRule = "../rule/RuleConfigThermostat.json";
     paths_.fileLoggerPath = "../logs/events.log";
     paths_.fileArhivePath = "../archive/archive.csv";
 }

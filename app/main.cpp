@@ -22,7 +22,6 @@
 #include "RuleThermostat.hpp"
 #include "App.hpp"
 #include "ConfigLoader.hpp"
-#include "LightConfig.hpp"
 
 using json = nlohmann::json;
 
@@ -32,11 +31,7 @@ int main() {
     App ap;
     AppConfig cfg;
     ap.run(std::move(cfg));
-    std::cout << "Тест создания конфигураций датчика освещения" << "\n";
-    LightConfig lcfg;
-    const std::filesystem::path path = "../config/LightConfig.json";
-    lcfg.fromJson(path);
-    lcfg.print();
+    
 
 
     

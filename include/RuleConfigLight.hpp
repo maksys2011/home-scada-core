@@ -5,7 +5,7 @@
 #include "Enum.hpp"
 using json = nlohmann::json;
 
-class LightConfig
+class RuleConfigLight
 {
 private:
 
@@ -14,13 +14,11 @@ private:
     std::string room_;
     bool enable_;
     std::string sensorId_;
-    double maxLux_;
-    double minLux_;
 
 public:
 
-    LightConfig() = default;
-    LightConfig(const std::string& id,
+    RuleConfigLight() = default;
+    RuleConfigLight(const std::string& id,
                 const std::string& name,
                 const std::string& room,
                 bool enable,
