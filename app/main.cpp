@@ -38,6 +38,8 @@ int main() {
 
     ConfigLoader configs;
     AppConfig cfgRuleLight = configs.load();
+    std::cout << cfgRuleLight.ruleConfigs_2.size() << std::endl;
+
     for(const auto& it : cfgRuleLight.ruleConfigs_2){
         it->print();
     }

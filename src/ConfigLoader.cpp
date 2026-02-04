@@ -96,7 +96,7 @@ std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules_2()
         for(const auto& item : j){
                 RuleConfigLight cfg;
                 cfg.fromJson(item);    
-                result.push_back(std::make_unique<RuleConfigLight>());
+                result.push_back(std::make_unique<RuleConfigLight>(cfg));
         }
     }else if(j.is_object()){
                 RuleConfigLight cfg;
