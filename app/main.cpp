@@ -35,14 +35,9 @@ int main() {
     ap.run(std::move(cfg));
 
     // создание правил 
-
     ConfigLoader configs;
     AppConfig cfgRuleLight = configs.load();
     std::cout << cfgRuleLight.ruleConfigs_2.size() << std::endl;
-
-    for(const auto& it : cfgRuleLight.ruleConfigs_2){
-        it->print();
-    }
     
     std::cout << "BYE === SCADA === \n";
     return 0;

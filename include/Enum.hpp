@@ -25,6 +25,12 @@ enum class State
     INVALID
 };
 
+enum class ControlMode
+{
+    Auto,
+    Manual
+};
+
 SensorType ParseSensorType(const std::string &typeStr);
 
 std::string SensorTypeToString(const SensorType type);

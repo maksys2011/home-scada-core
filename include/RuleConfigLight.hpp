@@ -11,15 +11,24 @@ using json = nlohmann::json;
 class RuleConfigLight : public RuleConfig
 {
 private:
-
     std::string id_;
     std::string name_;
     std::string room_;
     std::string id_sensor;
     std::string id_actuator;
+    size_t timer = 0;
+    const size_t DAY_DURATION = 100;
     bool enable_;
     double maxLux_;
     double minLux_;
+    int hysteresis_;
+    ControlMode selectes = ControlMode::Auto;
+    int currentPosition = 0;
+    int targetPosition = 0;
+    size_t luxTimerCountre = 0;
+    size_t morningTime = 0;
+    size_t dayTime = 6;
+    size_t eveningTime = 51;
 
 public:
 

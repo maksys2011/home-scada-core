@@ -1,23 +1,25 @@
 #pragma once
 
 #include "Rule.hpp"
+#include "Enum.hpp"
 
 class SensorState;
 class Actuator;
-class RuleThermostatConfig;
+class RuleConfigLight;
 
-class RuleThermostat : public Rule
+class RuleLighting : public Rule
 {
 public:
-    RuleThermostat(
+    RuleLighting(
         SensorState& sensor,
         Actuator& actuator,
-        const RuleThermostatConfig& ruleCfg);
+        const RuleConfigLight& config);
 
     void evaluate() override;
 
 private:
     SensorState& sensor_;
     Actuator& actuator_;
-    const RuleThermostatConfig& ruleCfg_;
+    const RuleConfigLight& config_;
+    ControlMode selected;
 };
