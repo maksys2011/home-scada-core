@@ -3,38 +3,40 @@
 #include <fstream>
 using json = nlohmann::json;
 
+
+
 RuleConfigLight::RuleConfigLight(
     const std::string &id, 
     const std::string &name, 
     const std::string &room, 
+
     const std::string &id_sensor, 
     const std::string &id_actuator, 
-    bool enable, 
+
     double maxLux, 
     double minLux, 
-    int hysteresis, 
-    int currentPosition, 
-    int targetPosition, 
-    size_t luxTimerCounte, 
-    size_t morningTime, 
-    size_t dayTime, 
-    size_t eveningTime)
+    size_t confirmTicks, 
+
+    TimeWindow night, 
+    TimeWindow day,
+
+    bool enabled)
     :
-    id_(std::move(id)),
-    name_(std::move(name)),
-    room_(std::move(room)),
-    id_sensor(std::move(id_sensor)),
-    id_actuator(std::move(id_actuator)),
-    enable_(enable),
+    id_(id),
+    name_(name),
+    room_(room),
+
+    id_sensor(id_sensor),
+    id_actuator(id_actuator),
+
     maxLux_(maxLux),
     minLux_(minLux),
-    hysteresis_(hysteresis),
-    currentPosition_(currentPosition),
-    targetPosition_(targetPosition),
-    luxTimerCounte_(luxTimerCounte),
-    morningTime_(morningTime),
-    dayTime_(dayTime),
-    eveningTime_(eveningTime)
+    confirmTicks_(confirmTicks),
+
+    night_(night),
+    day_(day),
+
+    enabled_(enabled)
 {}
 
 void RuleConfigLight::fromJson(const std::string &path)
@@ -61,14 +63,67 @@ void RuleConfigLight::fromJson(const std::filesystem::path &path)
 
 void RuleConfigLight::fromJson(const json& j)
 {
-    id_ = j.at("rule_id").get<std::string>();
-    name_ = j.at("name_").get<std::string>();
-    room_ = j.at("room_").get<std::string>();
-    id_sensor = j.at("id_sensor").get<std::string>();
-    id_actuator = j.at("id_actuator").get<std::string>();
-    enable_ = j.at("enable_").get<bool>();
-    minLux_ = j.at("minLux").get<double>();
-    maxLux_ = j.at("maxLux").get<double>();
+    if(j.contains("rule_id")){
+        id_ = j.at("rule_id").get<std::string>();
+    }else{
+        throw std::runtime_error(
+            "there is no required key= rule_id"
+        );
+    }
+    
+    if(j.contains("name_")){
+       name_ = j.at("name_").get<std::string>(); 
+    }else{
+        throw std::runtime_error(
+            "there is no required key= name_"
+        );
+    }
+
+    if(j.contains("room_")){
+       room_ = j.at("room_").get<std::string>();
+    }else{
+        throw std::runtime_error(
+            "there is no required key= room_"
+        );
+    }
+
+    if(j.contains("id_sensor")){
+        id_sensor = j.at("id_sensor").get<std::string>();
+    }else{
+        throw std::runtime_error(
+            "there is no required key= id_sensor"
+        );
+    }
+    
+    if(j.contains("id_actuator")){
+        id_actuator = j.at("id_actuator").get<std::string>();
+    }else{
+        throw std::runtime_error(
+            "there is no required key= id_actuator"
+        );
+    }
+    
+    if(j.contains("maxLux_")){
+        maxLux_ = j.at("maxLux_").get<double>();
+    }else{
+        throw std::runtime_error(
+            "there is no required key= maxLux"
+        );
+    }
+
+    if(j.contains("minLux_")){
+        minLux_ = j.at("minLux_").get<double>();
+    }else{
+        throw std::runtime_error(
+            "there is no required key= minLux"
+        );
+    }
+
+    if(j.contains("enabled_")){
+        enabled_ = j.at("enabled_").get<bool>();
+    }else{
+        enabled_ = true;
+    }
 }
 
 bool RuleConfigLight::validate() const
@@ -82,6 +137,6 @@ void RuleConfigLight::print() const
     std::cout << "  id: " << id_ << std::endl;
     std::cout << "  name: " << name_ << std::endl;
     std::cout << "  room: " << room_ << std::endl;
-    std::cout << "  enable: " << (enable_? "ON" : "OFF") << std::endl;
+    std::cout << "  enable: " << (enabled_? "ON" : "OFF") << std::endl;
     std::cout << "}" << std::endl;
 }

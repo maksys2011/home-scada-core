@@ -8,27 +8,30 @@
 
 using json = nlohmann::json;
 
+struct TimeWindow{
+    int fromHour;
+    int toHour;
+    int fixedPosition;
+};
+
 class RuleConfigLight : public RuleConfig
 {
 private:
     std::string id_;
     std::string name_;
     std::string room_;
+
     std::string id_sensor;
     std::string id_actuator;
-    size_t timer = 0;
-    const size_t DAY_DURATION = 100;
-    bool enable_;
+
     double maxLux_;
     double minLux_;
-    int hysteresis_;
-    ControlMode selectes_ = ControlMode::Auto;
-    int currentPosition_ = 0;
-    int targetPosition_ = 0;
-    size_t luxTimerCounte_ = 0;
-    size_t morningTime_ = 0;
-    size_t dayTime_ = 6;
-    size_t eveningTime_ = 51;
+    size_t confirmTicks_; // гистерезис - принимаем 3
+
+    TimeWindow night_;  // период с 9 до 7
+    TimeWindow day_;    // период с 7 до 9
+
+    bool enabled_;
 
 public:
     RuleConfigLight() = default;
@@ -36,18 +39,18 @@ public:
     const std::string& id,
     const std::string& name,
     const std::string& room,
+
     const std::string& id_sensor,
     const std::string& id_actuator,
-    bool enable,
+
     double maxLux,
     double minLux,
-    int hysteresis,
-    int currentPosition,
-    int targetPosition,
-    size_t luxTimerCounte,
-    size_t morningTime,
-    size_t dayTime,
-    size_t eveningTime 
+    size_t confirmTicks,
+
+    TimeWindow night,
+    TimeWindow day,
+    
+    bool enabled
     );
 
     void fromJson(const std::string& path) override;

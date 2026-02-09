@@ -80,7 +80,7 @@ void SensorConfig::fromJson(const json &j)
     }
 
     if(j.contains("physicalMax_")){
-        physicalMin_ = j.at("physicalMax_").get<double>();
+        physicalMax_ = j.at("physicalMax_").get<double>();
     }else{
         throw std::runtime_error(
             "there is no required key= physicalMax_"
@@ -184,11 +184,15 @@ void SensorConfig::print() const
     std::cout << "  name: " << name_ << std::endl;
     std::cout << "  type: ";
     std::cout << SensorTypeToString(type_) << std::endl;
+    std::cout << "  physicalMin: " << physicalMin_ << std::endl;
+    std::cout << "  physicalMax: " << physicalMax_ << std::endl;
+    std::cout << "  noiseEpsilon: " << noiseEpsilon_ << std::endl;
     std::cout << "  warnHigh: " << warnHigh_ << std::endl;
     std::cout << "  warnLow: " << warnLow_ << std::endl;
     std::cout << "  alarmHigh: " << alarmHigh_ << std::endl;
     std::cout << "  alarmLow: " << alarmLow_ << std::endl;
     std::cout << "  deadband: " << deadband_ << std::endl;
     std::cout << "  hysteresis: " << hysteresis_ << std::endl;
+    std::cout << "  current state: " << (enabled_? "ON" : "OFF") << std::endl;
     std::cout << "}" << std::endl;
 }

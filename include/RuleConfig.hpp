@@ -12,5 +12,4 @@ public:
     virtual void fromJson(const std::string& path) = 0;
     virtual bool validate()const = 0;
     virtual void print()const = 0;
-
 };

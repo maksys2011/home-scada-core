@@ -31,6 +31,14 @@
         "deadband_" : 0.1,
         "hysteresis_" : 0.5,
         "enabled_" : false
+    },
+    {
+        "id_": "35003",
+        "name_": "light sensor kitchen",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 30000.0,
+        "noiseEpsilon_" : 100
     }
 ]
 
