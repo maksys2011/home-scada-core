@@ -17,7 +17,8 @@ public:
     double getdebounceLimit() const {return debounceLimit;}
     void print();
     State classifyDataQuality(double raw) const;
-    
+    State classifyAlarmState(double raw) const;
+
 private:
     const SensorConfig& config_;
     std::optional<double> lastValue_;

@@ -50,6 +50,9 @@ public:
         const std::string& getId() const { return id_; };
         const std::string& getName() const { return name_; };
         SensorType getType() const { return type_; };
+        double getPhysicalMin() const {return physicalMin_;};
+        double getphysicalMax() const {return physicalMax_;};
+        double getNoiseEpsilon() const {return noiseEpsilon_;}; 
         double getWarnHigh() const { return warnHigh_; };
         double getWarnLow() const { return warnLow_; };
         double getAlarmHigh() const { return alarmHigh_; };

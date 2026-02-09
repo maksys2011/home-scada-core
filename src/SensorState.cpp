@@ -19,16 +19,17 @@ void SensorState::processValue(double raw)
     bool isFirst = !lastValue_.has_value();
     if(!isFirst){
         double diff = std::abs(raw - lastValue_.value());
-        if(diff < config_.deadband()){
+        if(diff < config_.getNoiseEpsilon()){
             return;
         }
     }
 
-    lastValue_ = raw;
-    State newState = classifyDataQuality(raw);
+    if(classifyDataQuality(raw) == State::INVALID){
+        return;
+    }
 
-    if(newState == State::INVALID) {
-        return;}
+    lastValue_ = raw;
+    State newState = classifyAlarmState(raw);
         
     if(arch_){
         arch_->appendArchive(
@@ -81,9 +82,9 @@ void SensorState::processValue(double raw)
             currentState,
             raw
         );
-    }
-    
+    }    
 }
+
 State SensorState::status() const
 {
     return currentState;
@@ -104,7 +105,13 @@ void SensorState::print()
 
 State SensorState::classifyDataQuality(double raw) const
 {
-    if (!config_.validateValue(raw)) return State::INVALID;
+    if(!config_.validateValue(raw)){
+        return State::INVALID;
+    }else return State::OK;
+}
+
+State SensorState::classifyAlarmState(double raw) const
+{
     if (raw < config_.getAlarmLow() || raw > config_.getAlarmHigh()) return State::ALARM;
     if (raw < config_.getWarnLow() || raw > config_.getWarnHigh()) return State::WARN;
     return State::OK;
