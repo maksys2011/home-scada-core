@@ -2,6 +2,7 @@
 
 #include "Rule.hpp"
 #include "Enum.hpp"
+#include "SensorState.hpp"
 
 class SensorState;
 class Actuator;

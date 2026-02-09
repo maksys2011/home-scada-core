@@ -18,10 +18,10 @@ private:
         double physicalMax_;
         double noiseEpsilon_;
         std::chrono::seconds staleTimeout_;
-        double warnHigh_;
-        double warnLow_;
-        double alarmHigh_;
-        double alarmLow_;        
+        double warnHigh_ = 0.0;
+        double warnLow_  = 0.0;
+        double alarmHigh_= 0.0;
+        double alarmLow_ = 0.0;        
         double deadband_;
         double hysteresis_;
         bool enabled_;

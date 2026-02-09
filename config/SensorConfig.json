@@ -3,24 +3,34 @@
         "id_": "35001",
         "name_": "temperature sensor kitchen",
         "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
         "warnHigh_": 50.5,
         "warnLow_": 10,
         "alarmHigh_": 95.0,
         "alarmLow_": 5.0,
-        "deadband_" : 0.1,
-        "hysteresis_" : 0.2
+        "deadband_" : 0.5,
+        "hysteresis_" : 0.2,
+        "enabled_" : false
     },
 
     {
         "id_": "35002",
         "name_": "temperature sensor bathroom",
         "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
         "warnHigh_": 50.5,
         "warnLow_": 10,
         "alarmHigh_": 95.0,
         "alarmLow_": 5.0,
         "deadband_" : 0.1,
-        "hysteresis_" : 0.2
+        "hysteresis_" : 0.5,
+        "enabled_" : false
     }
 ]
 
