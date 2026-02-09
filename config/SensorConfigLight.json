@@ -1,0 +1,11 @@
+    {
+        "id_": "35003",
+        "name_": "light sensor bedroom",
+        "type_": "Analog",
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 100,
+        "hysteresis_" : 3
+    }

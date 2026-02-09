@@ -1,6 +1,6 @@
-#include "RuleLighting.hpp"
+#include "RuleControlLight.hpp"
 
-RuleLighting::RuleLighting(
+RuleControlLight::RuleControlLight(
     SensorState &sensor, 
     Actuator &actuator, 
     const RuleConfigLight &config)
@@ -10,7 +10,7 @@ RuleLighting::RuleLighting(
     config_(config)
 {}
 
-void RuleLighting::evaluate()
+void RuleControlLight::evaluate()
 {
     auto valueOpt = sensor_.lastValue();
     if(!valueOpt) {

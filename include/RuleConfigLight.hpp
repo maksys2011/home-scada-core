@@ -22,25 +22,33 @@ private:
     double maxLux_;
     double minLux_;
     int hysteresis_;
-    ControlMode selectes = ControlMode::Auto;
-    int currentPosition = 0;
-    int targetPosition = 0;
-    size_t luxTimerCountre = 0;
-    size_t morningTime = 0;
-    size_t dayTime = 6;
-    size_t eveningTime = 51;
+    ControlMode selectes_ = ControlMode::Auto;
+    int currentPosition_ = 0;
+    int targetPosition_ = 0;
+    size_t luxTimerCounte_ = 0;
+    size_t morningTime_ = 0;
+    size_t dayTime_ = 6;
+    size_t eveningTime_ = 51;
 
 public:
-
     RuleConfigLight() = default;
-    RuleConfigLight(const std::string& id,
-                const std::string& name,
-                const std::string& room,
-                const std::string& idSensor,
-                const std::string& idActuator,
-                bool enable,
-                double maxLux,
-                double minLux);
+    RuleConfigLight(
+    const std::string& id,
+    const std::string& name,
+    const std::string& room,
+    const std::string& id_sensor,
+    const std::string& id_actuator,
+    bool enable,
+    double maxLux,
+    double minLux,
+    int hysteresis,
+    int currentPosition,
+    int targetPosition,
+    size_t luxTimerCounte,
+    size_t morningTime,
+    size_t dayTime,
+    size_t eveningTime 
+    );
 
     void fromJson(const std::string& path) override;
     void fromJson(const std::filesystem::path& path);

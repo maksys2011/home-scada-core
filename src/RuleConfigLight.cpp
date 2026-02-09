@@ -4,23 +4,38 @@
 using json = nlohmann::json;
 
 RuleConfigLight::RuleConfigLight(
-                        const std::string& id, 
-                        const std::string& name, 
-                        const std::string& room,
-                        const std::string& idSensor,
-                        const std::string& idActuator,
-                        bool enable, 
-                        double maxLux,
-                        double minLux)
+    const std::string &id, 
+    const std::string &name, 
+    const std::string &room, 
+    const std::string &id_sensor, 
+    const std::string &id_actuator, 
+    bool enable, 
+    double maxLux, 
+    double minLux, 
+    int hysteresis, 
+    int currentPosition, 
+    int targetPosition, 
+    size_t luxTimerCounte, 
+    size_t morningTime, 
+    size_t dayTime, 
+    size_t eveningTime)
     :
     id_(std::move(id)),
     name_(std::move(name)),
     room_(std::move(room)),
+    id_sensor(std::move(id_sensor)),
+    id_actuator(std::move(id_actuator)),
     enable_(enable),
-    id_sensor(std::move(idSensor)),
-    id_actuator(std::move(idActuator)),
     maxLux_(maxLux),
-    minLux_(minLux){}
+    minLux_(minLux),
+    hysteresis_(hysteresis),
+    currentPosition_(currentPosition),
+    targetPosition_(targetPosition),
+    luxTimerCounte_(luxTimerCounte),
+    morningTime_(morningTime),
+    dayTime_(dayTime),
+    eveningTime_(eveningTime)
+{}
 
 void RuleConfigLight::fromJson(const std::string &path)
 {

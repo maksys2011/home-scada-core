@@ -146,8 +146,6 @@ AppPath ConfigLoader::getPaths() const
     return paths_;
 }
 
-
-
 AppConfig ConfigLoader::load()
 {
     AppConfig cfg;

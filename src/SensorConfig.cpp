@@ -4,26 +4,46 @@
 #include <cmath>
 using json = nlohmann::json;
 
-SensorConfig::SensorConfig(const std::string &id,
-                            const std::string &name,
-                            SensorType type,
-                            double warnHigh,
-                            double warnLow,
-                            double alarmHigh,
-                            double alarmLow,
-                            double deadband,
-                            double hysteresis)
-    : 
+SensorConfig::SensorConfig(
+    const std::string &id,
+    const std::string &name,
+    SensorType type,
+
+    double physicalMin,
+    double physicalMax,
+    double noiseEpsilon,
+    std::chrono::seconds staleTimeout,
+
+    double warnHigh,
+    double warnLow,
+    double alarmHigh,
+    double alarmLow,
+
+    double deadband,
+    double hysteresis,
+
+    bool enabled): 
+
     id_(id),
     name_(name),
     type_(type),
+
+    physicalMin_(physicalMin),
+    physicalMax_(physicalMax),
+    noiseEpsilon_(noiseEpsilon),
+    staleTimeout_(staleTimeout),
+
     warnHigh_(warnHigh),
     warnLow_(warnLow),
     alarmHigh_(alarmHigh),
     alarmLow_(alarmLow),
+
     deadband_(deadband),
-    hysteresis_(hysteresis)
+    hysteresis_(hysteresis),
+    
+    enabled_(enabled)
 {}
+
 
 void SensorConfig::fromJson(const json &j)
 {
@@ -68,10 +88,6 @@ bool SensorConfig::validate() const
 
 bool SensorConfig::validateValue(double v) const
 {
-    /*if (!validate()) {
-        std::cout << "validate - false" << std::endl;
-        return false;
-    }*/
     return  std::isfinite(v);
 }
 

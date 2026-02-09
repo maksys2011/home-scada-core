@@ -7,10 +7,10 @@ class SensorState;
 class Actuator;
 class RuleConfigLight;
 
-class RuleLighting : public Rule
+class RuleControlLight : public Rule
 {
 public:
-    RuleLighting(
+    RuleControlLight(
         SensorState& sensor,
         Actuator& actuator,
         const RuleConfigLight& config);

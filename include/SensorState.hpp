@@ -10,24 +10,15 @@ class Archive;
 
 class SensorState {
 public:
-
     explicit SensorState(const SensorConfig& config, Logger* logger, Archive* arch);
-
     void processValue(double raw);
-
     State status() const;
-
     std::optional<double>lastValue() const;
-
     double getdebounceLimit() const {return debounceLimit;}
-
     void print();
-
-    State classify(double raw) const;
-
-
+    State classifyDataQuality(double raw) const;
+    
 private:
-
     const SensorConfig& config_;
     std::optional<double> lastValue_;
     State currentState = State::INVALID;

@@ -24,6 +24,12 @@ void SensorState::processValue(double raw)
         }
     }
 
+    lastValue_ = raw;
+    State newState = classifyDataQuality(raw);
+
+    if(newState == State::INVALID) {
+        return;}
+        
     if(arch_){
         arch_->appendArchive(
             config_.getId(),
@@ -32,21 +38,6 @@ void SensorState::processValue(double raw)
             currentState
         );
     }
-
-    lastValue_ = raw;
-    State newState = classify(raw);
-
-    if(newState == State::INVALID) {
-        return;}
-
-    // Как это работает (на примере температуры):
-
-    /*Заданная температура (Уставка): Например, 25°C.
-    Гистерезис: Допустим, 2°C.
-    Включение: Нагреватель включится, когда температура упадет до 23°C (25°C - 2°C).
-    Выключение: Нагреватель выключится, когда температура достигнет 25°C (уставки).
-    Результат: Система не будет постоянно включаться и выключаться при малейших колебаниях,
-    а будет работать в заданном диапазоне, экономя энергию и ресурс реле */
 
     if (currentState == State::WARN && newState == State::OK) {
         if (raw >= (config_.getWarnHigh() - config_.hysteresis()) ||
@@ -111,7 +102,7 @@ void SensorState::print()
     std::cout << std::endl;
 }
 
-State SensorState::classify(double raw) const
+State SensorState::classifyDataQuality(double raw) const
 {
     if (!config_.validateValue(raw)) return State::INVALID;
     if (raw < config_.getAlarmLow() || raw > config_.getAlarmHigh()) return State::ALARM;
