@@ -19,6 +19,30 @@ void RuleControlLight::evaluate()
     }
 
     double value = *valueOpt;
+
+    const auto& night = config_.getNinght();
+    const auto& day = config_.getDay();
+
+    if(currentTime_ > 21 && currentTime_ < 7){
+        currentPosition_ = 80;
+        targetPosition_ =  80;
+        return;
+    }
+    
+    if(selected_ == ControlMode::Manual){
+        return;
+    }
+
+    
+
+
+
+
+
+
+
+
+
     
     
     

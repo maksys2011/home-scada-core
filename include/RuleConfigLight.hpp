@@ -30,6 +30,7 @@ private:
 
     TimeWindow night_ {21, 7, 80};  // период с 9 до 7
     TimeWindow day_ {7, 21, -1};    // период с 7 до 9
+    size_t targetIlluminance_;
 
     bool enabled_;
 
@@ -61,8 +62,11 @@ public:
     const std::string& getRoom() const {return room_;};
     const std::string getIdSensor() const {return id_sensor;};
     const std::string getIdActuator() const {return id_actuator;};
-    double getMaxLux() {return maxLux_;};
-    double getMinLux() {return minLux_;};
+    double getMaxLux() const {return maxLux_;};
+    double getMinLux() const {return minLux_;};
+    size_t getConfirmTicks() const {return confirmTicks_;};
+    TimeWindow getNinght() const {return night_;};
+    TimeWindow getDay() const {return day_;};
     bool validate() const override;
     void print() const override;
 };

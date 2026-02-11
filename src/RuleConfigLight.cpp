@@ -141,6 +141,14 @@ void RuleConfigLight::fromJson(const json& j)
         day_ = {7, 21, -1};
     }
 
+    if(j.contains("targetIlluminance_")){
+        targetIlluminance_ = j.at("targetIlluminance_").get<size_t>();
+    }else{
+        throw std::runtime_error(
+            "there is no required key= targetIlluminance"
+        );
+    }
+
     if(j.contains("enabled_")){
         enabled_ = j.at("enabled_").get<bool>();
     }else{
@@ -173,4 +181,8 @@ void RuleConfigLight::print() const
     std::cout << "  fronHour: " << day_.fromHour << std::endl;
     std::cout << "  toHour  : " << day_.toHour << std::endl;
     std::cout << "  operiton mode: " << (day_.fixedPosition == 80 ? "AUTO" : "MANUAL") << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "  light_setpoint: " << targetIlluminance_ << std::endl;
 }

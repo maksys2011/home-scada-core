@@ -17,6 +17,7 @@
             "toHour" : 21,
             "fixedPosition" : -1
                 },
+        "targetIlluminance_" : 400,
         "confirmTicks_" : 3,
         "fromHour" : 7,
         "toHour" : 9,
@@ -42,6 +43,7 @@
             "toHour" : 21,
             "fixedPosition" : -1
                 },
+        "targetIlluminance_" : 150,
         "enable_" : false
     },
 
@@ -63,6 +65,7 @@
             "toHour" : 21,
             "fixedPosition" : -1
                 },
+        "targetIlluminance_" : 250,
         "fromHour" : 7,
         "toHour" : 9,
         "fixedPosition" : 10,

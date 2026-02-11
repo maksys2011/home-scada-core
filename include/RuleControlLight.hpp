@@ -22,5 +22,8 @@ private:
     SensorState& sensor_;
     Actuator& actuator_;
     const RuleConfigLight& config_;
-    ControlMode selected;
+    ControlMode selected_;
+    size_t currentPosition_;
+    size_t targetPosition_;
+    size_t currentTime_;
 };
