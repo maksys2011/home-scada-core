@@ -28,8 +28,8 @@ private:
     double minLux_;
     size_t confirmTicks_; // гистерезис - принимаем 3
 
-    TimeWindow night_;  // период с 9 до 7
-    TimeWindow day_;    // период с 7 до 9
+    TimeWindow night_ {21, 7, 80};  // период с 9 до 7
+    TimeWindow day_ {7, 21, -1};    // период с 7 до 9
 
     bool enabled_;
 

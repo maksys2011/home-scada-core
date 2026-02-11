@@ -31,10 +31,11 @@ int main() {
 
     std::cout << "Hello === SCADA === \n";
     
+    /*
     App ap;
     AppConfig cfg;
     ap.run(std::move(cfg));
-    
+    */
 
     ConfigLoader configPrice;
     configPrice.load();
@@ -42,6 +43,13 @@ int main() {
     for(const auto& sensorCfg : priceSensor.sensorConfigs_){
         sensorCfg.print();
     }
+
+    for(const auto& ruleCfg : priceSensor.ruleConfigs_2){
+        ruleCfg->print();
+    }
+
+
+
 
     std::cout << "BYE === SCADA === \n";
     return 0;

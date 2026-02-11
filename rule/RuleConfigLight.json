@@ -1,37 +1,71 @@
 [
     {
-        "type" : "lighting",
-        "rule_id" : "1",
+        "id_" : "1",
         "name_" : "light sensor",
         "room_" : "kitchen",
-        "enable_" : false,
         "id_sensor" : "10001",
         "id_actuator" : "20001",
         "minLux_" : 150.0,
-        "maxLux_" : 500.0
+        "maxLux_" : 500.0,
+        "night_" :{
+            "fromHour" : 21,
+            "toHour" : 7,
+            "fixedPosition" : 80
+                 },
+        "day_" : {
+            "fromHour" : 7,
+            "toHour" : 21,
+            "fixedPosition" : -1
+                },
+        "confirmTicks_" : 3,
+        "fromHour" : 7,
+        "toHour" : 9,
+        "fixedPosition" : 10,
+        "enable_" : false
     },
 
     {
-        "type" : "lighting",
-        "rule_id" : "2",
+        "id_" : "2",
         "name_" : "light sensor",
         "room_" : "bedroom",
-        "enable_" : false,
         "id_sensor" : "10002",
         "id_actuator" : "20002",
         "minLux_" : 150.0,
-        "maxLux_" : 300.0
+        "maxLux_" : 300.0,
+        "night_" :{
+            "fromHour" : 21,
+            "toHour" : 7,
+            "fixedPosition" : 80
+                 },
+        "day_" : {
+            "fromHour" : 7,
+            "toHour" : 21,
+            "fixedPosition" : -1
+                },
+        "enable_" : false
     },
 
     {
-        "type" : "lighting",
-        "rule_id" : "3",
+        "id_" : "3",
         "name_" : "light sensor",
         "room_" : "living room",
-        "enable_" : false,
         "id_sensor" : "10002",
         "id_actuator" : "20003",
         "minLux_" : 50.0,
-        "maxLux_" : 500.0
+        "maxLux_" : 500.0,
+        "night_" :{
+            "fromHour" : 21,
+            "toHour" : 7,
+            "fixedPosition" : 80
+                 },
+        "day_" : {
+            "fromHour" : 7,
+            "toHour" : 21,
+            "fixedPosition" : -1
+                },
+        "fromHour" : 7,
+        "toHour" : 9,
+        "fixedPosition" : 10,
+        "enable_" : false
     }
 ]

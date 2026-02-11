@@ -1,4 +1,5 @@
 #include "RuleControlLight.hpp"
+#include "RuleConfigLight.hpp"
 
 RuleControlLight::RuleControlLight(
     SensorState &sensor, 
@@ -16,5 +17,12 @@ void RuleControlLight::evaluate()
     if(!valueOpt) {
         return;
     }
+
+    double value = *valueOpt;
+    
+    
+    
+
+
     
 }

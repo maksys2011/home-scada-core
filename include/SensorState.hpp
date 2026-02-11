@@ -28,5 +28,4 @@ private:
     size_t debounceLimit;
     Logger* logger_;
     Archive* arch_;
-
 };

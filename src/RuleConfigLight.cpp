@@ -3,8 +3,6 @@
 #include <fstream>
 using json = nlohmann::json;
 
-
-
 RuleConfigLight::RuleConfigLight(
     const std::string &id, 
     const std::string &name, 
@@ -63,8 +61,8 @@ void RuleConfigLight::fromJson(const std::filesystem::path &path)
 
 void RuleConfigLight::fromJson(const json& j)
 {
-    if(j.contains("rule_id")){
-        id_ = j.at("rule_id").get<std::string>();
+    if(j.contains("id_")){
+        id_ = j.at("id_").get<std::string>();
     }else{
         throw std::runtime_error(
             "there is no required key= rule_id"
@@ -119,6 +117,30 @@ void RuleConfigLight::fromJson(const json& j)
         );
     }
 
+    if(j.contains("night_")){
+        
+        const auto& ninghtJson = j.at("night_");
+
+        night_.fromHour = ninghtJson.value("fromHour", 21);
+        night_.toHour = ninghtJson.value("toHour", 7);
+        night_.fixedPosition = ninghtJson.value("fixedPosition", 80);
+
+    }else{
+        night_ = {21, 7, 80};
+    }
+
+    if(j.contains("day_")){
+
+        const auto& dayJson = j.at("day_");
+        
+        day_.fromHour = dayJson.value("fromHout", 7);
+        day_.toHour = dayJson.value("toHour", 21);
+        day_.fixedPosition = dayJson.value("fixedPosition", -1);
+
+    }else{
+        day_ = {7, 21, -1};
+    }
+
     if(j.contains("enabled_")){
         enabled_ = j.at("enabled_").get<bool>();
     }else{
@@ -133,10 +155,22 @@ bool RuleConfigLight::validate() const
 
 void RuleConfigLight::print() const
 {
-    std::cout << "LightConfig {" << std::endl;
+    std::cout << "RuleLightConfig {" << std::endl;
     std::cout << "  id: " << id_ << std::endl;
     std::cout << "  name: " << name_ << std::endl;
     std::cout << "  room: " << room_ << std::endl;
     std::cout << "  enable: " << (enabled_? "ON" : "OFF") << std::endl;
     std::cout << "}" << std::endl;
+
+    std::cout << "Time of night mode {" << std::endl;
+    std::cout << "  night: " << std::endl;
+    std::cout << "  fronHour: " << night_.fromHour << std::endl;
+    std::cout << "  toHour  : " << night_.toHour << std::endl;
+    std::cout << "  operiton mode: " << (night_.fixedPosition == 80 ? "AUTO" : "MANUAL") << std::endl;
+
+    std::cout << "Time of day mode {" << std::endl;
+    std::cout << "  day: " << std::endl;
+    std::cout << "  fronHour: " << day_.fromHour << std::endl;
+    std::cout << "  toHour  : " << day_.toHour << std::endl;
+    std::cout << "  operiton mode: " << (day_.fixedPosition == 80 ? "AUTO" : "MANUAL") << std::endl;
 }
