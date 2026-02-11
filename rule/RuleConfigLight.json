@@ -1,74 +1,27 @@
-[
+
     {
-        "id_" : "1",
+        "id_" : "3",
         "name_" : "light sensor",
         "room_" : "kitchen",
         "id_sensor" : "10001",
-        "id_actuator" : "20001",
+        "id_actuator" : "45003",
         "minLux_" : 150.0,
         "maxLux_" : 500.0,
         "night_" :{
             "fromHour" : 21,
             "toHour" : 7,
-            "fixedPosition" : 80
+            "fixedPosition" : -1
                  },
         "day_" : {
             "fromHour" : 7,
             "toHour" : 21,
             "fixedPosition" : -1
                 },
-        "targetIlluminance_" : 400,
+        "targetIlluminance_" : 400.0,
         "confirmTicks_" : 3,
         "fromHour" : 7,
         "toHour" : 9,
         "fixedPosition" : 10,
         "enable_" : false
-    },
-
-    {
-        "id_" : "2",
-        "name_" : "light sensor",
-        "room_" : "bedroom",
-        "id_sensor" : "10002",
-        "id_actuator" : "20002",
-        "minLux_" : 150.0,
-        "maxLux_" : 300.0,
-        "night_" :{
-            "fromHour" : 21,
-            "toHour" : 7,
-            "fixedPosition" : 80
-                 },
-        "day_" : {
-            "fromHour" : 7,
-            "toHour" : 21,
-            "fixedPosition" : -1
-                },
-        "targetIlluminance_" : 150,
-        "enable_" : false
-    },
-
-    {
-        "id_" : "3",
-        "name_" : "light sensor",
-        "room_" : "living room",
-        "id_sensor" : "10002",
-        "id_actuator" : "20003",
-        "minLux_" : 50.0,
-        "maxLux_" : 500.0,
-        "night_" :{
-            "fromHour" : 21,
-            "toHour" : 7,
-            "fixedPosition" : 80
-                 },
-        "day_" : {
-            "fromHour" : 7,
-            "toHour" : 21,
-            "fixedPosition" : -1
-                },
-        "targetIlluminance_" : 250,
-        "fromHour" : 7,
-        "toHour" : 9,
-        "fixedPosition" : 10,
-        "enable_" : false
     }
-]
+

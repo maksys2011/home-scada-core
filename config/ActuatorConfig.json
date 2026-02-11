@@ -12,5 +12,12 @@
                 "type" : "AnalogOut",
                 "minValue" : 0.0,
                 "maxValue" : 100.0
+        },
+        {
+                "id" : "45003",
+                "name" : "bathroom Actuator",
+                "type" : "AnalogOut",
+                "minValue" : 0.0,
+                "maxValue" : 1000.0
         }
 ]

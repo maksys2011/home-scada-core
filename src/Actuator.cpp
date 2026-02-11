@@ -53,3 +53,21 @@ bool Actuator::getStateActuator()
 {
     return state_;
 }
+
+void Actuator::setPosition(int perсent)
+{
+    
+    perсent = std::clamp(perсent, 0, 100);
+
+    state_ = (perсent > 0);
+    
+    if(perсent == position_) return;
+
+    position_ = perсent;
+    std::cout << "Actuator id: " << config_.getId() << std::endl
+                << "Name: " << config_.getName() << std::endl
+                << "State: " << (state_? "ON" : "OFF" ) << std::endl
+                << "position: " << getPosition() << "%\n"; 
+}
+
+

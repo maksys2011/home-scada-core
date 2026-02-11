@@ -15,6 +15,8 @@
 #include "Logger.hpp"
 #include "Archive.hpp"
 #include "RandomSource.hpp"
+#include "SmoothRandomSource.hpp"
+#include "RuleControlLight.hpp"
 
 App::App() = default;
 
@@ -22,7 +24,7 @@ void App::run(AppConfig&& cfg)
 {
     init(std::move(cfg));
 
-    for(size_t i = 0; i < 10; ++i){
+    for(size_t i = 0; i < 20; ++i){
         std::cout << "\n";
         tick();
         std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -33,16 +35,28 @@ void App::init(AppConfig&& cfg)
 {
     logger_  = std::make_unique<Logger>(cfg_.getPaths().fileLoggerPath);
     archive_ = std::make_unique<Archive>(cfg_.getPaths().fileArhivePath);
-    sourse2_ = std::make_unique<RandomSource>(15.0, 25.0);
+    source2_ = std::make_unique<RandomSource>(15.0, 25.0);
+    source3_ = std::make_unique<RandomSource>(100.0, 1000.0);
+    source4_ = std::make_unique<SmoothRandomSource>(150, 10, 100, 500);
+
     cfg = cfg_.load();
  
     for(const auto& config : cfg.sensorConfigs_){
-        sensor_ = std::make_unique<Sensor>(
+        if(config.getId() == "10001"){
+            sensor_ = std::make_unique<Sensor>(
             config,
             logger_.get(),
             archive_.get(),
-            sourse2_.get()
+            source4_.get()
+            );
+        }else{
+            sensor_ = std::make_unique<Sensor>(
+            config,
+            logger_.get(),
+            archive_.get(),
+            source2_.get()
         );
+        }
         sensorById_.emplace(config.getId(), std::move(sensor_));
     }
 
@@ -52,6 +66,8 @@ void App::init(AppConfig&& cfg)
         );
         actuatorById_.emplace(actConfig.getId(), std::move(actuator_));
     } 
+
+
 
     engine_ = std::make_unique<RuleEngine>();
 
@@ -74,8 +90,32 @@ void App::init(AppConfig&& cfg)
                     *thermoCfg
                 )
             );
-        }  
-}
+        }
+    }
+        
+        
+        
+    for(const auto& ruleCfgBase : cfg.ruleConfigs_2){    
+        if(auto* lightCfg = 
+            dynamic_cast<RuleConfigLight*>(ruleCfgBase.get())){
+            auto sensorIt = sensorById_.find(lightCfg->getIdSensor());
+            auto actIt    = actuatorById_.find(lightCfg->getIdActuator());
+            if (sensorIt == sensorById_.end() ||
+                actIt    == actuatorById_.end()) {
+
+                throw std::runtime_error(
+                    "RuleLight: invalid sensor or actuator id"
+                );
+            }
+            engine_->addRule(
+                std::make_unique<RuleControlLight>(
+                    sensorIt->second->state(),
+                    *actIt->second,
+                    *lightCfg
+                )
+            );
+        }    
+    }
 }   
 
 void App::tick()
@@ -89,6 +129,7 @@ void App::tick()
             *val << "\n";
         }
     }
+
     engine_->evaluate(); 
 }
 

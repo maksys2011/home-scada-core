@@ -17,6 +17,7 @@ RuleConfigLight::RuleConfigLight(
 
     TimeWindow night, 
     TimeWindow day,
+    double targetIlluminance,
 
     bool enabled)
     :
@@ -33,6 +34,7 @@ RuleConfigLight::RuleConfigLight(
 
     night_(night),
     day_(day),
+    targetIlluminance_(targetIlluminance),
 
     enabled_(enabled)
 {}
@@ -142,7 +144,7 @@ void RuleConfigLight::fromJson(const json& j)
     }
 
     if(j.contains("targetIlluminance_")){
-        targetIlluminance_ = j.at("targetIlluminance_").get<size_t>();
+        targetIlluminance_ = j.at("targetIlluminance_").get<double>();
     }else{
         throw std::runtime_error(
             "there is no required key= targetIlluminance"

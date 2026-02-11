@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "SmoothRandomSource.hpp"
 
-SmothRandomSource::SmothRandomSource(double startValue,
+SmoothRandomSource::SmoothRandomSource(double startValue,
                                         double deltaValue, 
                                         double minValue, 
                                         double maxValue)
@@ -32,7 +32,7 @@ SmothRandomSource::SmothRandomSource(double startValue,
     }
 }
 
-double SmothRandomSource::readValue()
+double SmoothRandomSource::readValue()
 {
     double delta = dist_(gen_);
     current_ += delta;

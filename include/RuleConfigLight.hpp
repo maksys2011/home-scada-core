@@ -29,7 +29,7 @@ private:
     size_t confirmTicks_; // гистерезис - принимаем 3
 
     TimeWindow night_ {21, 7, 80};  // период с 9 до 7
-    TimeWindow day_ {7, 21, -1};    // период с 7 до 9
+    TimeWindow day_ {7, 21, -1};    // период с 7 до 9  (-1 режим авто)
     size_t targetIlluminance_;
 
     bool enabled_;
@@ -50,6 +50,7 @@ public:
 
     TimeWindow night,
     TimeWindow day,
+    double targetIlluminance,
     
     bool enabled
     );
@@ -67,6 +68,8 @@ public:
     size_t getConfirmTicks() const {return confirmTicks_;};
     TimeWindow getNinght() const {return night_;};
     TimeWindow getDay() const {return day_;};
+    size_t getTargetIlluminance() const {return targetIlluminance_;};
+    bool getEnabled() const {return enabled_;};
     bool validate() const override;
     void print() const override;
 };

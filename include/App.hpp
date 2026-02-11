@@ -13,6 +13,7 @@ class RuleThermostat;
 class RandomSource;
 class RuleConfig;
 class RuleThermostatConfig;
+class SmoothRandomSource;
 
 class App
 {
@@ -38,8 +39,10 @@ private:
     std::unique_ptr<Actuator>               actuator_;
     std::unique_ptr<RuleEngine>             engine_; 
     std::unique_ptr<RuleThermostat>         thermoRule_;
-    std::unique_ptr<RandomSource>           sourse2_;
-    std::unique_ptr<RuleThermostatConfig>   ruleConfig_;
+    std::unique_ptr<RandomSource>           source2_;
+    std::unique_ptr<RandomSource>           source3_;
+    std::unique_ptr<SmoothRandomSource>     source4_;
+    std::unique_ptr<RuleThermostatConfig >  ruleConfig_;
     RuleThermostatConfig ruleCfg_;
     ConfigLoader cfg_;
 

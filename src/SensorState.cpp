@@ -82,7 +82,7 @@ void SensorState::processValue(double raw)
             currentState,
             raw
         );
-    }    
+    }   
 }
 
 State SensorState::status() const

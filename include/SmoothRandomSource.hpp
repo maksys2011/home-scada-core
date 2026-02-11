@@ -2,11 +2,10 @@
 #include <Source.hpp>
 #include <random>
 
-class SmothRandomSource : public Source{
+class SmoothRandomSource : public Source{
 
 public:
-
-    SmothRandomSource(double startValue,
+    SmoothRandomSource(double startValue,
                         double minValue,
                         double maxValue, 
                         double delta);
@@ -14,7 +13,6 @@ public:
     double readValue() override;
 
 private:
-
     double current_;
     double delta_;
     double min_;

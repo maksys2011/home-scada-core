@@ -15,6 +15,8 @@ public:
     const ActuatorConfig& config() const;
     void print() const;
     bool getStateActuator();
+    void setPosition(int perсent);
+    size_t getPosition() const {return position_;};
 
 private:
 
@@ -23,4 +25,5 @@ private:
     double currentValue_ = 0.0;
     double max_settings = 0.0;
     double min_settings = 0.0;
+    size_t position_ = 0;
 };

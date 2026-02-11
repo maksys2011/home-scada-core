@@ -31,32 +31,20 @@ int main() {
 
     std::cout << "Hello === SCADA === \n";
     
-
     App ap;
     AppConfig cfg;
+
     ap.run(std::move(cfg));
     
     std::cout << "\n";
 
     ConfigLoader configPrice;
     configPrice.load();
-
-    std::cout << "Hardware and Rule Configuration \n\n";
-
-    AppConfig priceSensor = std::move(configPrice.load());
-    for(const auto& sensorCfg : priceSensor.sensorConfigs_){
-        sensorCfg.print();
-    }
-
-    std::cout << "\n\n";
-
-    for(const auto& ruleCfg : priceSensor.ruleConfigs_2){
-        ruleCfg->print();
-    }
-
-
-
-
+    
+    
+    //SmothRandomSource source(10000, 0, 25000, 50);
+    
     std::cout << "BYE === SCADA === \n";
+
     return 0;
 }

@@ -33,12 +33,12 @@
         "enabled_" : false
     },
     {
-        "id_": "35003",
+        "id_": "10001",
         "name_": "light sensor kitchen",
         "type_": "Analog",
         "physicalMin_" : 0.0,
         "physicalMax_" : 30000.0,
-        "noiseEpsilon_" : 100
+        "noiseEpsilon_" : 10
     }
 ]
 

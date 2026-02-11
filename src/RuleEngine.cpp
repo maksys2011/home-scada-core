@@ -11,6 +11,7 @@ void RuleEngine::evaluate()
 {
     for (auto& rule : rules_)
     {
+  
         rule->evaluate();
     }
 }
