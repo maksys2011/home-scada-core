@@ -46,7 +46,24 @@ target_sources(home-scada PRIVATE ${SRC_FILES})
 target_link_libraries(home-scada PRIVATE
     nlohmann_json::nlohmann_json
 )
-# Устанавливаем исполняемый файл
+
+# Подключаем modbus
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(MODBUS REQUIRED libmodbus)
+
+
+add_executable(modbus-test
+    tests/modbus_test.cpp
+)
+
+target_include_directories(modbus-test PRIVATE ${MODBUS_INCLUDE_DIRS})
+target_compile_options(modbus-test PRIVATE ${MODBUS_CFLAGS_OTHER})
+
+target_link_libraries(modbus-test PRIVATE ${MODBUS_LINK_LIBRARIES})
+target_link_options(modbus-test PRIVATE ${MODBUS_LDFLAGS_OTHER})
+
+
+
 
 
 

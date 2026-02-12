@@ -39,6 +39,5 @@ double SmoothRandomSource::readValue()
     if(current_ < min_) current_ = min_;
     if(current_ > max_) current_ = max_;
 
-    return current_;
-    
+    return current_;  
 }
