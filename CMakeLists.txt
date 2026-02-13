@@ -30,12 +30,14 @@ add_executable(home-scada
     src/App.cpp
     src/ConfigLoader.cpp
     src/RuleConfigLight.cpp
+    src/ModbusSource.cpp
 )
 
 target_include_directories(home-scada PUBLIC
     include
     src
     tests
+    modbus
 )
 
 # Добавляем cpp-файлы из src/
@@ -45,6 +47,7 @@ target_sources(home-scada PRIVATE ${SRC_FILES})
 # Линкуем JSON-библиотеку
 target_link_libraries(home-scada PRIVATE
     nlohmann_json::nlohmann_json
+    modbus
 )
 
 # Подключаем modbus

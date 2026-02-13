@@ -1,0 +1,20 @@
+Простой Modbus TCP сервер для эмуляции устройств
+
+Установка зависимостей:
+```bash
+python3 -m venv venv
+source /modbus_venv/bin/activate
+pip install pymodbus
+
+Запуск:
+cd server
+python3 modbus_server.py
+
+Корректировка в nano:
+nano ~/modbus_server.py 
+
+Сервер запустится на 127.0.0.1:1502
+
+
+
+
