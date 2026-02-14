@@ -17,6 +17,7 @@
 #include "RandomSource.hpp"
 #include "SmoothRandomSource.hpp"
 #include "RuleControlLight.hpp"
+#include "ModbusSource.hpp"
 
 App::App() = default;
 
@@ -38,7 +39,8 @@ void App::init(AppConfig&& cfg)
     source2_ = std::make_unique<RandomSource>(15.0, 25.0);
     source3_ = std::make_unique<RandomSource>(100.0, 1000.0);
     source4_ = std::make_unique<SmoothRandomSource>(150, 10, 100, 500);
-
+    source5_ = std::make_unique<ModbusSource>("127.0.0.1", 1502, 2, 0);
+    source5_->connect();  // временно подключаем connect
     cfg = cfg_.load();
  
     for(const auto& config : cfg.sensorConfigs_){
@@ -47,7 +49,8 @@ void App::init(AppConfig&& cfg)
             config,
             logger_.get(),
             archive_.get(),
-            source4_.get()
+            //source4_.get()
+            source5_.get()
             );
         }else{
             sensor_ = std::make_unique<Sensor>(

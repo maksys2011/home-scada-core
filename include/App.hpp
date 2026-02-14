@@ -14,6 +14,7 @@ class RandomSource;
 class RuleConfig;
 class RuleThermostatConfig;
 class SmoothRandomSource;
+class ModbusSource;
 
 class App
 {
@@ -42,6 +43,7 @@ private:
     std::unique_ptr<RandomSource>           source2_;
     std::unique_ptr<RandomSource>           source3_;
     std::unique_ptr<SmoothRandomSource>     source4_;
+    std::unique_ptr<ModbusSource>           source5_;
     std::unique_ptr<RuleThermostatConfig >  ruleConfig_;
     RuleThermostatConfig ruleCfg_;
     ConfigLoader cfg_;

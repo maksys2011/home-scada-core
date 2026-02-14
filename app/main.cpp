@@ -31,13 +31,14 @@ int main() {
 
     std::cout << "Hello === SCADA === \n";
     
-    /*App ap;
+    App ap;
     AppConfig cfg;
     ap.run(std::move(cfg));
     std::cout << "\n";
     ConfigLoader configPrice;
-    configPrice.load();*/
+    configPrice.load();
 
+    /*
     std::string ip = "127.0.0.1";
     int port = 1502;
     int startAddress = 0; 
@@ -51,10 +52,11 @@ int main() {
     for(int i = 0; i < 10; i++){
         double valueTemp = mSourceTemp.readValue();
         double valueLight = mSourceLight.readValue();
-        std::cout << "temperature= " << valueTemp << std::endl;
+        std::cout << "sensor temperature= " << valueTemp << std::endl;
         std::cout << "sensor light= " << valueLight << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
+        */
 
     std::cout << "BYE === SCADA === \n";
 
