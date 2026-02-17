@@ -8,6 +8,7 @@ public:
 
     RandomSource(double minValue, double maxValue);
     double readValue() override;
+    bool connect(){return true;};
 
 private:
 

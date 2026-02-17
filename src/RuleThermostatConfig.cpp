@@ -36,7 +36,6 @@ void RuleThermostatConfig::fromJson(const std::filesystem::path &path)
     json j;
     file >> j;
     fromJson(j);
-
 }
 
 bool RuleThermostatConfig::validate() const

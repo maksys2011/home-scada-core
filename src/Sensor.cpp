@@ -17,6 +17,7 @@ void Sensor::updateValue(double rawValue)
 void Sensor::update()
 {
     if(!source_) return;
+
     double value = source_->readValue();
     state_.processValue(value);
 }

@@ -4,9 +4,9 @@
 
 enum class SensorType
 {
-    Analog,
-    Digital,
-    Counter
+    Analog,    /// double
+    Digital,   /// bool
+    Counter    /// int64_t
 };
 
 enum class ActuatorType
@@ -29,6 +29,14 @@ enum class ControlMode
 {
     Auto,
     Manual
+};
+
+enum class ModbusObjectType
+{
+    Coil,
+    DiscreteInput,
+    InputRegister,
+    HoldingRegister,
 };
 
 SensorType ParseSensorType(const std::string &typeStr);

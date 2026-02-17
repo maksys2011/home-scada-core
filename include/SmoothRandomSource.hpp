@@ -11,6 +11,7 @@ public:
                         double delta);
     
     double readValue() override;
+    bool connect(){return true;};
 
 private:
     double current_;

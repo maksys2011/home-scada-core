@@ -8,6 +8,8 @@
 
 using json = nlohmann::json;
 
+/// @brief - загрузка конфигураций датчиков/устройств
+
 class SensorConfig{
 
 private: 
@@ -44,7 +46,7 @@ public:
                 double hysteresis,
                 bool enabled);
 
-        void fromJson(const json &j);
+        void fromJson(const json& j);
         void fromJson(const std::filesystem::path& path);
         void fromJson(const std::string& path);
         const std::string& getId() const { return id_; };
