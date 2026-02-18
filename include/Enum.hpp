@@ -33,6 +33,7 @@ enum class ControlMode
 
 enum class ModbusObjectType
 {
+    Unknowen = 0,
     Coil,
     DiscreteInput,
     InputRegister,
@@ -50,3 +51,11 @@ std::string ActuatorTypeToString(ActuatorType type);
 std::string StateToString(State state);
 
 State ParseState(std::string const str);
+
+std::string ModbusObjectTypeToString(const ModbusObjectType type);
+
+
+/// @brief  "превращаем строку в обьект ModbusObjectType"
+/// @param connectionType 
+/// @return 
+ModbusObjectType ParseModbusObjectType(const std::string& connectionType);

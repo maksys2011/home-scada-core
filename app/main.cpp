@@ -25,18 +25,21 @@
 #include "ConfigLoader.hpp"
 #include "RuleConfigLight.hpp"
 #include "ModbusSource.hpp"
-using json = nlohmann::json;
+#include "ModbusSourceConfig.hpp"
 
 int main() { 
 
     std::cout << "Hello === SCADA === \n";
+    ModbusSourceConfig cfgM("10.10.19.19", 502, 5, 1, "coil");
+    cfgM.testPrintInfo();
     
-    App ap;
+    
+    /*App ap;
     AppConfig cfg;
     ap.run(std::move(cfg));
     std::cout << "\n";
     ConfigLoader configPrice;
-    configPrice.load();
+    configPrice.load();*/
 
     /*
     std::string ip = "127.0.0.1";

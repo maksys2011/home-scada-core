@@ -31,6 +31,7 @@ add_executable(home-scada
     src/ConfigLoader.cpp
     src/RuleConfigLight.cpp
     src/ModbusSource.cpp
+    src/ModbusSourceConfig.cpp
 )
 
 target_include_directories(home-scada PUBLIC

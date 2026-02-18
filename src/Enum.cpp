@@ -82,3 +82,24 @@ State ParseState(const std::string str) {
     else return State();
 }
 
+std::string ModbusObjectTypeToString(const ModbusObjectType type)
+{
+    switch (type)
+    {
+    case ModbusObjectType::Coil: return "coil";
+    case ModbusObjectType::DiscreteInput: return "discretedInput";
+    case ModbusObjectType::HoldingRegister: return "holdingRegister";
+    case ModbusObjectType::InputRegister: return "inputRegister";
+    case ModbusObjectType::Unknowen: return "unknowen";
+    }
+    return std::string();
+}
+
+ModbusObjectType ParseModbusObjectType(const std::string &connectionType)
+{
+    if(connectionType == "coil") return ModbusObjectType::Coil;
+    else if(connectionType == "discreteInput") return ModbusObjectType::DiscreteInput;
+    else if(connectionType == "inputRegister") return ModbusObjectType::InputRegister;
+    else if(connectionType == "holdingRegister") return ModbusObjectType::HoldingRegister;
+    else return ModbusObjectType::Unknowen;
+}
