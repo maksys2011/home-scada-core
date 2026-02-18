@@ -10,6 +10,7 @@ class ModbusSourceConfig
 {
 public:
     ModbusSourceConfig(
+        const std::string& id,
         const std::string& ip,
         int port,
         int slave_Id,
@@ -20,6 +21,8 @@ public:
     void fromJson(const std::filesystem::path& pathFile);
     void fromJson(const json& j);
 
+
+    const std::string& getId() {return id_;};
     const std::string& getIp() {return ip_;};
     int getPort() const {return port_;};
     int getSlaveId() const {return slave_Id_;};
@@ -29,6 +32,7 @@ public:
     void testPrintInfo() const;
 
 private:
+    std::string id_;
     std::string ip_;
     int port_ = 1502;
     int slave_Id_ = 1;

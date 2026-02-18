@@ -4,12 +4,14 @@
 #include "utils.hpp"
 
 ModbusSourceConfig::ModbusSourceConfig(
+    const std::string& id,
     const std::string& ip, 
     int port, 
     int slave_Id, 
     int startAddress, 
     const std::string& typeNameSource)
     :
+    id_(id),
     ip_(ip),
     port_(port),
     slave_Id_(slave_Id),
@@ -41,7 +43,9 @@ void ModbusSourceConfig::fromJson(const json &j)
 void ModbusSourceConfig::testPrintInfo() const
 {
     std::cout << "Creating Modbus source configurations\n";
+    std::cout << "id= " << id_ << "\n";
     std::cout << "ip= " << ip_ << "\n";
+    std::cout << "port= " << port_ << "\n"; 
     std::cout << "slave id= " <<  slave_Id_ << "\n";
     std::cout << "startAddress=" << startAddress_ << "\n";
     std::cout << "typeSource=" << ModbusObjectTypeToString(typeSource_) << "\n";
