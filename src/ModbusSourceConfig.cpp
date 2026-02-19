@@ -29,6 +29,7 @@ void ModbusSourceConfig::fromJson(const std::filesystem::path &pathFile)
 
 void ModbusSourceConfig::fromJson(const json &j)
 { 
+    id_ = scada::utils::check_the_key<std::string>(j, "id");
     ip_ = scada::utils::check_the_key<std::string>(j, "ip");
     port_ = scada::utils::check_the_key<int>(j, "port");
     slave_Id_ = scada::utils::check_the_key<int>(j, "slave_Id");

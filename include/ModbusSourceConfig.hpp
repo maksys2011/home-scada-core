@@ -1,6 +1,7 @@
 #include <string>
 #include <filesystem>
 #include <nlohmann/json.hpp>
+#include <sstream>
 #include "Enum.hpp"
 using json = nlohmann::json;
 
@@ -40,5 +41,4 @@ private:
     int startAddress_ = 0;
     int count_ = 1;
     ModbusObjectType typeSource_ = ModbusObjectType::Unknowen;
-
 };
