@@ -1,6 +1,7 @@
 #pragma once
 #include <nlohmann/json.hpp>
 #include <string>
+#include <filesystem>
 using json = nlohmann::json;
 
 namespace scada::utils
@@ -15,4 +16,6 @@ namespace scada::utils
         }
         return it->get<T>();
     };
+
+    std::ifstream create_json_ifstream(const std::filesystem::path& path);
 }

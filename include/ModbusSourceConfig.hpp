@@ -9,6 +9,7 @@ using json = nlohmann::json;
 class ModbusSourceConfig
 {
 public:
+    ModbusSourceConfig() = default;
     ModbusSourceConfig(
         const std::string& id,
         const std::string& ip,

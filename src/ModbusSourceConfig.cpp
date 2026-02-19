@@ -21,11 +21,7 @@ ModbusSourceConfig::ModbusSourceConfig(
 
 void ModbusSourceConfig::fromJson(const std::filesystem::path &pathFile)
 {
-    std::ifstream file(pathFile);
-    if(!file.is_open()){
-        throw std::runtime_error(
-            "cannot open modbusSourceConfig file: " + pathFile.string());
-    }
+    std::ifstream file = scada::utils::create_json_ifstream(pathFile);
     json j;
     file >> j;
     fromJson(j);

@@ -1,0 +1,8 @@
+{
+    "id" : "100500",
+    "ip" : "127.0.0.1",
+    "port" : 1502,
+    "slave_Id" : 0,
+    "startAddress" : 0,
+    "typeSource" : "coil"
+}

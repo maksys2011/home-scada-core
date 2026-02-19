@@ -27,10 +27,13 @@
 #include "ModbusSource.hpp"
 #include "ModbusSourceConfig.hpp"
 
+
 int main() { 
 
     std::cout << "Hello === SCADA === \n";
-    ModbusSourceConfig cfgM("12345", "127.0.0.1", 502, 5, 1, "coil");
+    ModbusSourceConfig cfgM;
+    std::filesystem::path path = "../sourceConfig/SourceConfigCoil.json";
+    cfgM.fromJson(path);
     cfgM.testPrintInfo();
     
     
@@ -46,6 +49,8 @@ int main() {
     int port = 1502;
     int startAddress = 0; 
 
+    /*
+
     ModbusSource mSourceTemp(ip, port, 1, startAddress);
     ModbusSource mSourceLight(ip, port, 2, startAddress);
 
@@ -59,7 +64,8 @@ int main() {
         std::cout << "sensor light= " << valueLight << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
-        
+
+    */
 
     std::cout << "BYE === SCADA === \n";
 
