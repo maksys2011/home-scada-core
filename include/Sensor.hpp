@@ -1,7 +1,8 @@
 #pragma once
-#include  "SensorConfig.hpp"
-#include  "SensorState.hpp"
-#include  "Enum.hpp"
+#include "SensorConfig.hpp"
+#include "SensorState.hpp"
+#include "Enum.hpp"
+
 
 class Source;
 class Logger;

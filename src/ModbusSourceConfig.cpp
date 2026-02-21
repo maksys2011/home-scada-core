@@ -18,7 +18,9 @@ ModbusSourceConfig::ModbusSourceConfig(
     slave_Id_(slave_Id),
     startAddress_(startAddress),
     typeSource_(ParseModbusObjectType(typeNameSource))
-{}
+{
+    validate(id, ip, port, slave_Id, startAddress, typeNameSource);
+}
 
 void ModbusSourceConfig::fromJson(const std::filesystem::path &pathFile)
 {

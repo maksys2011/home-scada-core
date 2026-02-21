@@ -1,23 +1,10 @@
 #include "ModbusSource.hpp"
 #include <iostream>
 
-ModbusSource::ModbusSource(
-    const std::string &ip, 
-    int port, 
-    int slaveId, 
-    int startAddress)
-    :
-    ip_(ip),
-    port_(port),
-    slaveId_(slaveId),
-    startAddress_(startAddress)
-{
-    std::cout << "[ModbusSource]: created for" << "\n"
-                << "ip= " <<  ip_ << "\n"
-                << "port= " << port_ << "\n"
-                << "slaveId= " << slaveId_ << "\n"
-                << "startAddress= " << startAddress_ << "\n";
-}
+ModbusSource::ModbusSource(ModbusSourceConfig config)
+    : 
+    config_(std::move(config))
+{}
 
 ModbusSource::~ModbusSource()
 {
@@ -28,13 +15,13 @@ bool ModbusSource::connect()
 {
     if(connected_) return true;
 
-    ctx_ = modbus_new_tcp(ip_.c_str(), port_);
+    ctx_ = modbus_new_tcp(config_.getIp().c_str(), config_.getPort());
     if(!ctx_){
         std::cerr << "[ModbusSource] failed to create context\n";
         return false;
     }
 
-    modbus_set_slave(ctx_, slaveId_);
+    modbus_set_slave(ctx_, config_.getSlaveId());
 
     if(modbus_connect(ctx_) == -1){
         std::cerr << "[ModbusSource] connection failed: "
@@ -69,7 +56,7 @@ double ModbusSource::readValue()
     }
 
     uint16_t reg;
-    int rc = modbus_read_registers(ctx_, startAddress_, 1, &reg);
+    int rc = modbus_read_registers(ctx_, config_.getStartAddress(), 1, &reg);
 
     if(rc == -1){
            std::cerr << "[ModbusSource] Read failed: " 
@@ -78,4 +65,13 @@ double ModbusSource::readValue()
     }
      
     return static_cast<double>(reg);
+}
+
+void ModbusSource::testPrint()
+{
+    std::cout << "[ModbusSource]: created for" << "\n"
+            << "ip= " <<  config_.getIp() <<"\n"
+            << "port= " << config_.getPort() << "\n"
+            << "slaveId= " << config_.getSlaveId() << "\n"
+            << "startAddress= " << config_.getStartAddress() << "\n";
 }

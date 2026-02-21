@@ -18,6 +18,7 @@
 #include "SmoothRandomSource.hpp"
 #include "RuleControlLight.hpp"
 #include "ModbusSource.hpp"
+#include "ModbusSourceConfig.hpp"
 
 App::App() = default;
 
@@ -39,7 +40,10 @@ void App::init(AppConfig&& cfg)
     source2_ = std::make_unique<RandomSource>(15.0, 25.0);
     source3_ = std::make_unique<RandomSource>(100.0, 1000.0);
     source4_ = std::make_unique<SmoothRandomSource>(150, 10, 100, 500);
-    source5_ = std::make_unique<ModbusSource>("127.0.0.1", 1502, 2, 0);
+    std::filesystem::path path = "../sourceConfig/SourceConfigCoil.json";
+    ModbusSourceConfig cfgM;
+    cfgM.fromJson(path);
+    source5_ = std::make_unique<ModbusSource>(cfgM);
     source5_->connect();  // временно подключаем connect
     cfg = cfg_.load();
  

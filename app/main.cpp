@@ -35,6 +35,9 @@ int main() {
     std::filesystem::path path = "../sourceConfig/SourceConfigCoil.json";
     cfgM.fromJson(path);
     cfgM.testPrintInfo();
+    ModbusSource source(cfgM);
+    source.testPrint();
+
     
     /*
     App ap;
