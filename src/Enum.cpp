@@ -87,7 +87,7 @@ std::string ModbusObjectTypeToString(const ModbusObjectType type)
     switch (type)
     {
     case ModbusObjectType::Coil: return "coil";
-    case ModbusObjectType::DiscreteInput: return "discretedInput";
+    case ModbusObjectType::DiscreteInput: return "discreteInput";
     case ModbusObjectType::HoldingRegister: return "holdingRegister";
     case ModbusObjectType::InputRegister: return "inputRegister";
     case ModbusObjectType::Unknowen: return "unknowen";

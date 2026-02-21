@@ -18,8 +18,4 @@ namespace scada::utils
     };
 
     std::ifstream create_json_ifstream(const std::filesystem::path& path);
-    
-    bool validateIpV4(const std::string& ip);
-
-    bool validatePort(const int port);
 }

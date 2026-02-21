@@ -36,7 +36,7 @@ int main() {
     cfgM.fromJson(path);
     cfgM.testPrintInfo();
     
-    
+    /*
     App ap;
     AppConfig cfg;
     ap.run(std::move(cfg));
