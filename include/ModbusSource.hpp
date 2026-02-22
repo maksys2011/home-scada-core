@@ -16,11 +16,6 @@ public:
     void testPrint();
 
 private:
-    std::string ip_;
-    int port_ = 1502;
-    int slaveId_ = 1;
-    int startAddress_ = 0;
-
     bool connected_ = false;
     modbus_t* ctx_ = nullptr;
 

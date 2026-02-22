@@ -2,7 +2,6 @@
 #include <sstream>
 #include <thread>
 #include <iomanip>
-
 #include "App.hpp"
 #include "Sensor.hpp"
 #include "SensorConfig.hpp"
@@ -26,7 +25,7 @@ void App::run(AppConfig&& cfg)
 {
     init(std::move(cfg));
 
-    for(size_t i = 0; i < 20; ++i){
+    for(size_t i = 0; i < 5; ++i){
         std::cout << "\n";
         tick();
         std::this_thread::sleep_for(std::chrono::seconds(1));
