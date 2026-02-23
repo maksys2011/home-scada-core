@@ -18,6 +18,7 @@ ModbusSourceConfig::ModbusSourceConfig(
     slave_Id_(slave_Id),
     startAddress_(startAddress),
     typeSource_(ParseModbusObjectType(typeNameSource))
+    
 {
     validate(id, ip, port, slave_Id, startAddress, typeNameSource);
 }
@@ -47,6 +48,7 @@ void ModbusSourceConfig::fromJson(const json &j)
     slave_Id_ =new_slave_Id;
     startAddress_ = new_startAddress;
     typeSource_ = ParseModbusObjectType(new_typeSource);
+
 }
 
 void ModbusSourceConfig::testPrintInfo() const

@@ -97,9 +97,9 @@ std::string ModbusObjectTypeToString(const ModbusObjectType type)
 
 ModbusObjectType ParseModbusObjectType(const std::string &connectionType)
 {
-    if(connectionType == "coil") return ModbusObjectType::Coil;
-    else if(connectionType == "discreteInput") return ModbusObjectType::DiscreteInput;
-    else if(connectionType == "inputRegister") return ModbusObjectType::InputRegister;
-    else if(connectionType == "holdingRegister") return ModbusObjectType::HoldingRegister;
+    if(connectionType == "Coil") return ModbusObjectType::Coil;
+    else if(connectionType == "DiscreteInput") return ModbusObjectType::DiscreteInput;
+    else if(connectionType == "InputRegister") return ModbusObjectType::InputRegister;
+    else if(connectionType == "HoldingRegister") return ModbusObjectType::HoldingRegister;
     else return ModbusObjectType::Unknowen;
 }

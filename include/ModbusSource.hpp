@@ -3,21 +3,21 @@
 #include <modbus/modbus.h>
 #include "Source.hpp"
 #include "ModbusSourceConfig.hpp"
+#include "ModbusClient.hpp"
 
 class ModbusSource : public Source
 {
 public:    
-    ModbusSource(ModbusSourceConfig config);
+    ModbusSource(const ModbusSourceConfig& config, ModbusClient& client);
     ~ModbusSource() override;
 
     bool connect();
     void disconnect();
     double readValue() override;
-    void testPrint();
+    void writeValue(double value);
 
 private:
-    bool connected_ = false;
-    modbus_t* ctx_ = nullptr;
 
     ModbusSourceConfig config_;
+    ModbusClient& client_;
 };

@@ -37,7 +37,7 @@ enum class ModbusObjectType
     Coil,
     DiscreteInput,
     InputRegister,
-    HoldingRegister,
+    HoldingRegister
 };
 
 SensorType ParseSensorType(const std::string &typeStr);
@@ -53,7 +53,6 @@ std::string StateToString(State state);
 State ParseState(std::string const str);
 
 std::string ModbusObjectTypeToString(const ModbusObjectType type);
-
 
 /// @brief  "превращаем строку в обьект ModbusObjectType"
 /// @param connectionType 

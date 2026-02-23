@@ -66,7 +66,7 @@ void ModbusClient::disconnect()
     }
     connected_ = false;
     
-    std::cout << "[ModbusSource] Disconnected\n";
+    std::cout << "[ModbusClient] Disconnected\n";
 }
 
 uint16_t ModbusClient::readHolding(int address)
@@ -124,6 +124,25 @@ bool ModbusClient::readCoil(int address)
     }
 
     return reg != 0;
+}
+
+uint16_t ModbusClient::readDiscrete(int address)
+{
+    if(!connected_ && !connect()){
+        throw std::runtime_error("[ModbusClient] not connected");
+    }
+
+    uint8_t reg = 0;
+    int rc = modbus_read_input_bits(ctx_, address, 1, &reg);
+
+        if(rc == -1){
+        throw std::runtime_error ( 
+            std::string("[ModbusClient] modbus read input bits registers failed : ") +
+            modbus_strerror(errno)
+        );      
+    }
+
+    return reg;
 }
 
 void ModbusClient::writeRegister(int address, uint16_t value)

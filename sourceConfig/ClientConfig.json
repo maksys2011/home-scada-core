@@ -1,0 +1,6 @@
+{
+    "name" : "PLC OWEN",
+    "ip" : "127.0.0.1",
+    "port" : 1502,
+    "slave_Id" : 1
+}

@@ -15,9 +15,10 @@ public:
     bool connected() const ;
     void disconnect();
 
+    bool readCoil(int address);
+    uint16_t readDiscrete(int address);
     uint16_t readHolding(int address);
     uint16_t readInput(int address);
-    bool readCoil(int address);
 
     void writeRegister(int address, uint16_t value);
     void writeCoil(int address, bool value);

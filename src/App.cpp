@@ -41,8 +41,11 @@ void App::init(AppConfig&& cfg)
     source4_ = std::make_unique<SmoothRandomSource>(150, 10, 100, 500);
     std::filesystem::path path = "../sourceConfig/SourceConfigCoil.json";
     ModbusSourceConfig cfgM;
+    std::string ip = "121.0.0.0";
+    int port = 1502;
+    int slaveId = 0;
+    ModbusClient client(ip, port, slaveId);
     cfgM.fromJson(path);
-    source5_ = std::make_unique<ModbusSource>(cfgM);
     source5_->connect();  // временно подключаем connect
     cfg = cfg_.load();
  
@@ -53,7 +56,7 @@ void App::init(AppConfig&& cfg)
             logger_.get(),
             archive_.get(),
             //source4_.get()
-            source5_.get()
+            source4_.get()
             );
         }else{
             sensor_ = std::make_unique<Sensor>(
