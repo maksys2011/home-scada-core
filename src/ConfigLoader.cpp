@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
+#include "utils.hpp"
 
 ConfigLoader::ConfigLoader()
 {
@@ -11,134 +12,36 @@ ConfigLoader::ConfigLoader()
     paths_.fileCfgRuleLight = "../ruleConfig/RuleConfigLight.json";
     paths_.fileLoggerPath = "../logs/events.log";
     paths_.fileArhivePath = "../archive/archive.csv";
+    paths_.fileCfgModbusSource = "../sourceConfig/SourceConfigCoil.json";
 }
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
 {
-    std::vector<SensorConfig> result;
-
-    std::ifstream file(paths_.fileCfgSensorPath);
-    if(!file.is_open()){
-        throw std::runtime_error(
-            std::string("SensorConfigLoader: cannot open sensors config file: ")
-             + paths_.fileCfgSensorPath.string());
-    }
-
-    json j;
-    file >> j;
-
-    if(j.is_array()){
-        for(const auto& item : j){
-            SensorConfig cfg;
-            cfg.fromJson(item);
-            result.push_back(cfg);
-        }
-    }else if(j.is_object()){
-        SensorConfig cfg;
-        cfg.fromJson(j);
-        result.push_back(cfg);
-    }else{
-        throw std::runtime_error(
-            "SensorConfigLoader: sensors config must be object or array"
-        );
-    }
-    return result;
+    std::string msg1 = "SensorConfigLoader: cannot open sensors config file: ";
+    std::string msg2 = "SensorConfigLoader: sensors config must be object or array";
+    return scada::factory::loadHierarchy<SensorConfig>(msg1, msg2, paths_.fileCfgSensorPath);
 }
 
 std::vector<ActuatorConfig> ConfigLoader::loadActuators()
 {
-    std::vector<ActuatorConfig> result;
-
-    std::ifstream file(paths_.fileCfgActuator);
-
-    if(!file.is_open()){
-        throw std::runtime_error(
-            std::string("ActuatorConfigLoader: cannot open actuator config file")
-            + paths_.fileCfgActuator.string());
-    }
-
-    json j;
-    file >> j;
-
-    if(j.is_array()){
-        for(const auto& item : j){
-            ActuatorConfig actCfg;
-            actCfg.fromJson(item);
-            result.push_back(actCfg);
-        }
-    }else if(j.is_object()){
-        ActuatorConfig actCfg;
-        actCfg.fromJson(j);
-        result.push_back(actCfg);
-    }else{
-        throw std::runtime_error(
-            "ActuatorConfigLoader: actuator config must be object or array"
-        );
-    }
-    return result;
+    std::string msg1 = "ActuatorConfigLoader: cannot open actuator config file: ";
+    std::string msg2 = "ActuatorConfigLoader: actuator config must be object or array";
+    return scada::factory::loadHierarchy<ActuatorConfig>(msg1, msg2, paths_.fileCfgActuator);
 }
 
-std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules_2()
+std::vector<ModbusSourceConfig> ConfigLoader::loadSourceModbus()
 {
-    std::vector<std::unique_ptr<RuleConfig>> result;
-
-    std::ifstream file(paths_.fileCfgRuleLight);
-    if(!file.is_open()){
-        throw std::runtime_error(
-            (std::string)"RuleConfigLoaders: cannot open rule config file"
-            +paths_.fileCfgRule.string());
-    }
-
-    json j;
-    file >> j;
-
-    if(j.is_array()){
-        for(const auto& item : j){
-                RuleConfigLight cfg;
-                cfg.fromJson(item);    
-                result.push_back(std::make_unique<RuleConfigLight>(cfg));
-        }
-    }else if(j.is_object()){
-                RuleConfigLight cfg;
-                cfg.fromJson(j);
-                result.push_back(std::make_unique<RuleConfigLight>(cfg));
-    }else{
-            throw std::runtime_error(
-            (std::string)"RuleConfigLoader: rule config must be object or array");
-    }
-    
-    return result;
+    std::string msg1 = "ModbusSourceConfig: cannot open config file: ";
+    std::string msg2 = "ModbusSourceConfig: config must be object or array";
+    return scada::factory::loadHierarchy<ModbusSourceConfig>(msg1, msg2, paths_.fileCfgModbusSource);
 }
 
-std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules_1()
+
+std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
 {
-    std::vector<std::unique_ptr<RuleConfig>> result;
-
-    std::ifstream file(paths_.fileCfgRule);
-    if(!file.is_open()){
-        throw std::runtime_error(
-            (std::string)"RuleConfigLoaders: cannot open rule config file"
-            +paths_.fileCfgRule.string());
-    }
-
-    json j;
-    file >> j;
-
-    if(j.is_array()){
-        for(const auto& item : j){
-                RuleThermostatConfig cfg;
-                cfg.fromJson(item);
-                result.push_back(std::make_unique<RuleThermostatConfig>(cfg));
-        }
-    }else if(j.is_object()){
-                RuleThermostatConfig cfg;
-                cfg.fromJson(j);
-                result.push_back(std::make_unique<RuleThermostatConfig>(cfg));
-    }else{
-            throw std::runtime_error(
-            (std::string)"RuleConfigLoader: rule config must be object or array");
-    }
-    return result;
+    std::string msg1 = "RuleConfigLoaders: cannot open rule config file: ";
+    std::string msg2 = "RuleConfigLoader: rule config must be object or array";
+    return scada::factory::loadPolymorphic(msg1, msg2, paths_.fileCfgRule);
 }
 
 AppPath ConfigLoader::getPaths() const
@@ -149,10 +52,10 @@ AppPath ConfigLoader::getPaths() const
 AppConfig ConfigLoader::load()
 {
     AppConfig cfg;
-    cfg.sensorConfigs_   = loadSensors();
-    cfg.actuatorConfigs_ = loadActuators();
-    cfg.ruleConfigs_     = loadRules_1();
-    cfg.ruleConfigs_2    = loadRules_2();
+    cfg.sensorConfigs_       = loadSensors();
+    cfg.actuatorConfigs_     = loadActuators();
+    cfg.modbusSourceConfigs_ = loadSourceModbus();
+    cfg.ruleConfigs_         = loadRules();
     
     return cfg;
 }

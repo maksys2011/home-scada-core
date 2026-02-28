@@ -67,7 +67,7 @@ void RuleConfigLight::fromJson(const json& j)
         id_ = j.at("id_").get<std::string>();
     }else{
         throw std::runtime_error(
-            "there is no required key= rule_id"
+            "there is no required key= id"
         );
     }
     

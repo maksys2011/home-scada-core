@@ -101,7 +101,7 @@ void App::init(AppConfig&& cfg)
         
         
         
-    for(const auto& ruleCfgBase : cfg.ruleConfigs_2){    
+    for(const auto& ruleCfgBase : cfg.ruleConfigs_){    
         if(auto* lightCfg = 
             dynamic_cast<RuleConfigLight*>(ruleCfgBase.get())){
             auto sensorIt = sensorById_.find(lightCfg->getIdSensor());

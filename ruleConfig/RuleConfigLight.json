@@ -1,5 +1,6 @@
 
     {
+        "name_rule" : "lighting rules",
         "id_" : "3",
         "name_" : "light sensor",
         "room_" : "kitchen",

@@ -74,3 +74,44 @@ void scada::utils::validateSlaveId(int slaveId, const std::string &nameDevice)
         );
     }
 }
+
+std::unique_ptr<RuleConfig> scada::factory::create(const json& j)
+{
+    std::string type = j.at("name_rule").get<std::string>();
+
+    if(type == "lighting rules"){
+        auto cfg = std::make_unique<RuleConfigLight>();
+        cfg->fromJson(j);
+        return cfg;
+    }else if(type == "temperature rules"){
+    auto cfg = std::make_unique<RuleThermostatConfig>();
+        cfg->fromJson(j);
+        return cfg;
+    }else{
+        throw std::runtime_error("Unknown rule type");
+    }
+}
+
+std::vector<std::unique_ptr<RuleConfig>> scada::factory::loadPolymorphic(const std::string& msg1, const std::string& msg2, const std::filesystem::path& pathFile)
+{
+            
+    std::vector<std::unique_ptr<RuleConfig>> result;
+
+    std::ifstream file = scada::utils::create_json_ifstream(pathFile);
+    json j;
+    file >> j;
+
+    if(j.is_array()){
+        for(const auto& item : j){
+            result.push_back(scada::factory::create(item));
+        }
+    }else if(j.is_object()){
+            result.push_back(scada::factory::create(j));
+    }else{
+            throw std::runtime_error(msg2);
+    }
+    
+    return result;
+}
+
+

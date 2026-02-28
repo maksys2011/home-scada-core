@@ -30,13 +30,18 @@
 #include "ModbusClientConfig.hpp"
 
 int main() { 
-    ModbusClientConfig config;
-    std::filesystem::path path = "../clientConfig/plcClientConfig.json";
-    config.fromJson(path);
-    config.testPrint();
-    ModbusClient client(config);
+    
+    ConfigLoader loader;
+    AppConfig cfg = loader.load();
+    for(const auto& config : cfg.ruleConfigs_){
+        config->print();
+    }
+    
+    
+
 
 
 
     return 0;
 }
+

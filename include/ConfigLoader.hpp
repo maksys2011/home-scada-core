@@ -11,6 +11,7 @@
 #include "RuleConfig.hpp"
 #include "RuleThermostatConfig.hpp"
 #include "RuleConfigLight.hpp"
+#include "ModbusSourceConfig.hpp"
 
 using json = nlohmann::json;
 
@@ -22,14 +23,16 @@ struct AppPath
     std::filesystem::path fileCfgRule;
     std::filesystem::path fileLoggerPath;
     std::filesystem::path fileArhivePath; 
+    std::filesystem::path fileCfgModbusClient;
+    std::filesystem::path fileCfgModbusSource;
 };
 
 struct AppConfig
 {
     std::vector<SensorConfig>                sensorConfigs_;
     std::vector<ActuatorConfig>              actuatorConfigs_;
+    std::vector<ModbusSourceConfig>          modbusSourceConfigs_;
     std::vector<std::unique_ptr<RuleConfig>> ruleConfigs_;
-    std::vector<std::unique_ptr<RuleConfig>> ruleConfigs_2;
 
     AppConfig() = default;
     AppConfig(AppConfig&&) = default;
@@ -50,6 +53,6 @@ private:
     AppPath paths_;
     std::vector<SensorConfig> loadSensors();
     std::vector<ActuatorConfig> loadActuators();
-    std::vector<std::unique_ptr<RuleConfig>> loadRules_1();
-    std::vector<std::unique_ptr<RuleConfig>> loadRules_2();
+    std::vector<ModbusSourceConfig>loadSourceModbus();
+    std::vector<std::unique_ptr<RuleConfig>> loadRules();
 };
