@@ -34,6 +34,7 @@ add_executable(home-scada
     src/ModbusSourceConfig.cpp
     src/utils.cpp
     src/ModbusClient.cpp
+    src/ModbusClientConfig.cpp
 )
 
 target_include_directories(home-scada PUBLIC

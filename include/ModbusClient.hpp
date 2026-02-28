@@ -1,11 +1,12 @@
 #pragma once 
 #include <string>
 #include <modbus/modbus.h>
+#include "ModbusClientConfig.hpp"
 
 class ModbusClient
 {
 public:
-    ModbusClient(const std::string& ip, int port, int slaveId);
+    ModbusClient(const ModbusClientConfig& config);
     ~ModbusClient();
 
     ModbusClient(const ModbusClient&) = delete;
@@ -24,9 +25,7 @@ public:
     void writeCoil(int address, bool value);
 
 private:
-    std::string ip_;
-    int port_;
-    int slaveId_;
+    ModbusClientConfig config_;
     bool connected_ = false;
     modbus_t* ctx_ = nullptr;
 };

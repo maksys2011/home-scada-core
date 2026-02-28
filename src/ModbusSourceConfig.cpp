@@ -48,7 +48,6 @@ void ModbusSourceConfig::fromJson(const json &j)
     slave_Id_ =new_slave_Id;
     startAddress_ = new_startAddress;
     typeSource_ = ParseModbusObjectType(new_typeSource);
-
 }
 
 void ModbusSourceConfig::testPrintInfo() const

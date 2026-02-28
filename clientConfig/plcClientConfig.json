@@ -1,5 +1,5 @@
 {
-    "name" : "PLCOWEN",
+    "name" : "Plc_owen",
     "ip" : "127.0.0.1",
     "port" : 1502,
     "slave_Id" : 1

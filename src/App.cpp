@@ -44,9 +44,7 @@ void App::init(AppConfig&& cfg)
     std::string ip = "121.0.0.0";
     int port = 1502;
     int slaveId = 0;
-    ModbusClient client(ip, port, slaveId);
     cfgM.fromJson(path);
-    source5_->connect();  // временно подключаем connect
     cfg = cfg_.load();
  
     for(const auto& config : cfg.sensorConfigs_){
@@ -55,7 +53,6 @@ void App::init(AppConfig&& cfg)
             config,
             logger_.get(),
             archive_.get(),
-            //source4_.get()
             source4_.get()
             );
         }else{

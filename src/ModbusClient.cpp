@@ -2,11 +2,9 @@
 #include <iostream>
 #include <errno.h>
 
-ModbusClient::ModbusClient(const std::string &ip, int port, int slaveId)
+ModbusClient::ModbusClient(const ModbusClientConfig& config)
     :
-    ip_(ip),
-    port_(port),
-    slaveId_(slaveId)
+    config_(config)
 {}
 
 ModbusClient::~ModbusClient()
@@ -16,18 +14,22 @@ ModbusClient::~ModbusClient()
 
 bool ModbusClient::connect()
 {
+    const auto& ip = config_.getIp();
+    const auto& port = config_.getPort();
+    const auto& slaveId = config_.getSlaveId();
+
     if(connected_) return true;
 
-    ctx_ = modbus_new_tcp(ip_.c_str(), port_);
+    ctx_ = modbus_new_tcp(ip.c_str(), port);
 
     if(!ctx_){
         std::cerr << "[ModbusClient] modbus_new_tcp failed (ip= "
-        << ip_  << ", port=  << " << port_ << "\n";
+        << ip << ", port=  << " << port << "\n";
         connected_ = false;
         return false;
     }
     
-    if(modbus_set_slave(ctx_, slaveId_) == -1){
+    if(modbus_set_slave(ctx_, slaveId) == -1){
         std::cerr << "[ModbusClient] modbus_set_slave failed: "
         << modbus_strerror(errno) << "\n";
         modbus_free(ctx_);
@@ -71,6 +73,7 @@ void ModbusClient::disconnect()
 
 uint16_t ModbusClient::readHolding(int address)
 {
+
     if(!connected_ && !connect()){
         throw std::runtime_error("[ModbusClient] not connected");
     }
