@@ -17,7 +17,6 @@ public:
     void writeValue(double value);
 
 private:
-
     ModbusSourceConfig config_;
     ModbusClient& client_;
 };

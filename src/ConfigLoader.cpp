@@ -6,13 +6,14 @@
 
 ConfigLoader::ConfigLoader()
 {
-    paths_.fileCfgSensorPath = "../config/SensorConfig.json";
-    paths_.fileCfgActuator = "../config/ActuatorConfig.json";
-    paths_.fileCfgRule = "../ruleConfig/RuleConfigThermostat.json";
-    paths_.fileCfgRuleLight = "../ruleConfig/RuleConfigLight.json";
-    paths_.fileLoggerPath = "../logs/events.log";
-    paths_.fileArhivePath = "../archive/archive.csv";
+    paths_.fileCfgSensorPath   = "../config/SensorConfig.json";
+    paths_.fileCfgActuator     = "../config/ActuatorConfig.json";
+    paths_.fileCfgRule         = "../ruleConfig/RuleConfig.json";
+    paths_.fileCfgRuleLight    = "../ruleConfig/RuleConfigLight.json";
+    paths_.fileLoggerPath      = "../logs/events.log";
+    paths_.fileArhivePath      = "../archive/archive.csv";
     paths_.fileCfgModbusSource = "../sourceConfig/SourceConfigCoil.json";
+    paths_.fileCfgModbusClient = "../clientConfig/plcClientConfig.json";
 }
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
@@ -36,12 +37,18 @@ std::vector<ModbusSourceConfig> ConfigLoader::loadSourceModbus()
     return scada::factory::loadHierarchy<ModbusSourceConfig>(msg1, msg2, paths_.fileCfgModbusSource);
 }
 
-
 std::vector<std::unique_ptr<RuleConfig>> ConfigLoader::loadRules()
 {
     std::string msg1 = "RuleConfigLoaders: cannot open rule config file: ";
     std::string msg2 = "RuleConfigLoader: rule config must be object or array";
     return scada::factory::loadPolymorphic(msg1, msg2, paths_.fileCfgRule);
+}
+
+std::vector<ModbusClientConfig> ConfigLoader::loadModbusClient()
+{
+    std::string msg1 = "ModbusClientConfig: cannot open rule config file: ";
+    std::string msg2 = "ModbusClientConfig: config must be object or array";
+    return scada::factory::loadHierarchy<ModbusClientConfig>(msg1, msg2, paths_.fileCfgModbusClient);
 }
 
 AppPath ConfigLoader::getPaths() const
@@ -56,6 +63,7 @@ AppConfig ConfigLoader::load()
     cfg.actuatorConfigs_     = loadActuators();
     cfg.modbusSourceConfigs_ = loadSourceModbus();
     cfg.ruleConfigs_         = loadRules();
+    cfg.modbusClientConfig_  = loadModbusClient();
     
     return cfg;
 }

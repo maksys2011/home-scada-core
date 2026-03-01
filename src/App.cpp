@@ -73,8 +73,6 @@ void App::init(AppConfig&& cfg)
         actuatorById_.emplace(actConfig.getId(), std::move(actuator_));
     } 
 
-
-
     engine_ = std::make_unique<RuleEngine>();
 
     for (const auto& ruleCfgBase : cfg.ruleConfigs_) {
@@ -122,7 +120,50 @@ void App::init(AppConfig&& cfg)
             );
         }    
     }
-}   
+}
+
+void App::init2(AppConfig &&configs)
+{
+    // создание обьектов для тестирования
+    logger_ = std::make_unique<Logger>(cfg_.getPaths().fileLoggerPath);
+    archive_ = std::make_unique<Archive>(cfg_.getPaths().fileArhivePath);
+
+    for(const auto& config : configs.modbusClientConfig_){
+
+        modbusClients_.emplace(config.getClientId(), 
+        std::make_unique<ModbusClient>(config));
+    }
+
+    for(const auto& config : configs.modbusSourceConfigs_){
+        
+        auto it = modbusClients_.find(config.getClientId());
+        if(it == modbusClients_.end()){
+            throw std::runtime_error("no suitable client found for the source");
+        }
+        auto& client = *it->second;
+        modbusSources_.emplace(config.getSourceId(), 
+            std::make_unique<ModbusSource>(config, client));
+    }
+
+    for(const auto& config : configs.sensorConfigs_){
+        auto it = modbusSources_.find(config.getSourceId()); 
+        auto* source = it->second.get();
+        sensorById_.emplace(
+            config.getId(),
+            std::make_unique<Sensor>(
+                config,
+                logger_.get(),
+                archive_.get(),
+                source
+            )
+        );
+    }
+
+
+    
+
+
+}
 
 void App::tick()
 {

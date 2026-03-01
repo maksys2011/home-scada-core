@@ -13,7 +13,8 @@
         "alarmLow_": 5.0,
         "deadband_" : 0.5,
         "hysteresis_" : 0.2,
-        "enabled_" : false
+        "enabled_" : false,
+        "source_id" : 10
     },
 
     {
@@ -30,7 +31,8 @@
         "alarmLow_": 5.0,
         "deadband_" : 0.1,
         "hysteresis_" : 0.5,
-        "enabled_" : false
+        "enabled_" : false,
+        "source_id" : 100
     },
     {
         "id_": "10001",
@@ -38,7 +40,8 @@
         "type_": "Analog",
         "physicalMin_" : 0.0,
         "physicalMax_" : 30000.0,
-        "noiseEpsilon_" : 10
+        "noiseEpsilon_" : 10,
+        "source_id" : 100
     }
 ]
 

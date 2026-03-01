@@ -12,6 +12,7 @@
 #include "RuleThermostatConfig.hpp"
 #include "RuleConfigLight.hpp"
 #include "ModbusSourceConfig.hpp"
+#include "ModbusClientConfig.hpp"
 
 using json = nlohmann::json;
 
@@ -33,6 +34,7 @@ struct AppConfig
     std::vector<ActuatorConfig>              actuatorConfigs_;
     std::vector<ModbusSourceConfig>          modbusSourceConfigs_;
     std::vector<std::unique_ptr<RuleConfig>> ruleConfigs_;
+    std::vector<ModbusClientConfig>          modbusClientConfig_;
 
     AppConfig() = default;
     AppConfig(AppConfig&&) = default;
@@ -55,4 +57,5 @@ private:
     std::vector<ActuatorConfig> loadActuators();
     std::vector<ModbusSourceConfig>loadSourceModbus();
     std::vector<std::unique_ptr<RuleConfig>> loadRules();
+    std::vector<ModbusClientConfig> loadModbusClient();
 };

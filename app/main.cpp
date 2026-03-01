@@ -31,16 +31,18 @@
 
 int main() { 
     
-    ConfigLoader loader;
-    AppConfig cfg = loader.load();
-    for(const auto& config : cfg.ruleConfigs_){
-        config->print();
-    }
+    ModbusClientConfig cfgClient;
+    std::filesystem::path path = "../clientConfig/plcClientConfig.json";
+    cfgClient.fromJson(path);
+    cfgClient.print();
+
+    std::cout << std::endl;
+
+    std::filesystem::path path1 = "../sourceConfig/SourceConfigCoil.json";
+    ModbusSourceConfig cfgModbusSource;
+    cfgModbusSource.fromJson(path1);
+    cfgModbusSource.print();
     
-    
-
-
-
 
     return 0;
 }

@@ -75,6 +75,13 @@ void scada::utils::validateSlaveId(int slaveId, const std::string &nameDevice)
     }
 }
 
+void scada::utils::validateId(const std::string &id, const std::string &nameDavice)
+{
+    if(id.empty()){
+        throw std::runtime_error(nameDavice + ": id cannot be empty");
+    }
+}
+
 std::unique_ptr<RuleConfig> scada::factory::create(const json& j)
 {
     std::string type = j.at("name_rule").get<std::string>();

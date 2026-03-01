@@ -27,6 +27,7 @@ private:
         double deadband_;
         double hysteresis_;
         bool enabled_;
+        std::string source_id_;
 
 public:
         SensorConfig() = default;
@@ -44,11 +45,13 @@ public:
                 double alarmLow,        
                 double deadband,
                 double hysteresis,
-                bool enabled);
+                bool enabled,
+                const std::string& sourceId);
 
         void fromJson(const json& j);
         void fromJson(const std::filesystem::path& path);
         void fromJson(const std::string& path);
+
         const std::string& getId() const { return id_; };
         const std::string& getName() const { return name_; };
         SensorType getType() const { return type_; };
@@ -61,7 +64,10 @@ public:
         double getAlarmLow() const { return alarmLow_; };
         double deadband() const {return deadband_;}
         double hysteresis() const {return hysteresis_;}
+        const std::string& getSourceId() const { return source_id_; };
+
         bool validate() const;
         bool validateValue(double v) const;
+
         void print() const;
 };

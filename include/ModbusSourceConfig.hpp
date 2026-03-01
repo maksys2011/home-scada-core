@@ -14,7 +14,8 @@ class ModbusSourceConfig
 public:
     ModbusSourceConfig() = default;
     ModbusSourceConfig(
-        const std::string& id,
+        const std::string& clientId,
+        const std::string& sourceId,
         const std::string& ip,
         int port,
         int slave_Id,
@@ -25,35 +26,31 @@ public:
     void fromJson(const std::filesystem::path& pathFile);
     void fromJson(const json& j);
 
-
-    const std::string& getId() {return id_;};
-    const std::string& getIp() {return ip_;};
-    int getPort() const {return port_;};
-    int getSlaveId() const {return slave_Id_;};
-    int getStartAddress() const {return startAddress_;};
-    int getCount() const {return count_;};
-    ModbusObjectType getTypeSource() const {return typeSource_;};
+    const std::string& getClientId() const { return client_id_; };
+    const std::string& getSourceId() const  { return source_id_; };
+    const std::string& getIp() const { return ip_; };
+    int getPort() const { return port_; };
+    int getSlaveId() const { return slave_Id_; };
+    int getStartAddress() const { return startAddress_;};
+    int getCount() const { return count_; };
+    ModbusObjectType getTypeSource() const { return typeSource_; };
     
-    void testPrintInfo() const;
+    void print() const;
 
-    /// @brief валидация полей 
-    /// @param ip 
-    /// @return 
-    void validateId(const std::string& id)const;
-    void validateIpv4(const std::string& ip)const;
-    void validatePort(const int port)const;
-    void validateSlaveId(const int slaveId) const;
     void validateStartAddress(const int startAddress) const;
     void validateModbusTypeSource(const std::string& typeSource) const;
-    void validate(const std::string& id,
-                    const std::string& ip,
-                    const int port,
-                    const int slaveId,
-                    const int startAddress,
-                    const std::string& typeSource) const;
+    void validate(
+        const std::string& client_id,
+        const std::string& source_id,
+        const std::string& ip,
+        const int port,
+        const int slaveId,
+        const int startAddress,
+        const std::string& typeSource) const;
 
 private:
-    std::string id_;
+    std::string client_id_;
+    std::string source_id_;
     std::string ip_;
     int port_ = 1502;
     int slave_Id_ = 1;

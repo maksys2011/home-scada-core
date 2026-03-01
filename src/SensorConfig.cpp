@@ -22,7 +22,8 @@ SensorConfig::SensorConfig(
     double deadband,
     double hysteresis,
 
-    bool enabled): 
+    bool enabled,
+    const std::string& sourceId): 
 
     id_(id),
     name_(name),
@@ -41,7 +42,8 @@ SensorConfig::SensorConfig(
     deadband_(deadband),
     hysteresis_(hysteresis),
 
-    enabled_(enabled)
+    enabled_(enabled),
+    source_id_(sourceId)
 {}
 
 
@@ -142,6 +144,12 @@ void SensorConfig::fromJson(const json &j)
     }else{
         enabled_ = true;
     }
+
+    if(j.contains("source_id")){
+        source_id_ = j.at("source_id").get<std::string>();
+    }else{
+
+    }
 }
 
 //void SensorConfig::fromJson(const std::string &path)
@@ -194,5 +202,6 @@ void SensorConfig::print() const
     std::cout << "  deadband: " << deadband_ << std::endl;
     std::cout << "  hysteresis: " << hysteresis_ << std::endl;
     std::cout << "  current state: " << (enabled_? "ON" : "OFF") << std::endl;
+    std::cout << "  source id= " << source_id_ << std::endl;
     std::cout << "}" << std::endl;
 }

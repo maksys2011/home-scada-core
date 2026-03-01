@@ -5,16 +5,22 @@
 
 class Sensor;
 class Actuator;
-class RuleEngine;
 class Logger;
 class Archive;
-class testSource;
+class ModbusClient;
+
+class RuleEngine;
 class RuleThermostat;
-class RandomSource;
-class RuleConfig;
 class RuleThermostatConfig;
+class RuleControlLight;
+class RuleConfigLight;
+class RuleConfig;
+
+class testSource;
+class RandomSource;
 class SmoothRandomSource;
 class ModbusSource;
+
 
 class App
 {
@@ -30,6 +36,7 @@ public:
 
 private:
     void init(AppConfig&& cfg);
+    void init2(AppConfig&& configs);
     void tick();
     void shutdown();
     
@@ -45,10 +52,14 @@ private:
     std::unique_ptr<SmoothRandomSource>     source4_;
     std::unique_ptr<ModbusSource>           source5_;
     std::unique_ptr<RuleThermostatConfig >  ruleConfig_;
+    std::unique_ptr<ModbusClient>           client_;
+
     RuleThermostatConfig ruleCfg_;
     ConfigLoader cfg_;
 
     std::unordered_map<std::string, std::unique_ptr<Actuator>> actuatorById_;
     std::unordered_map<std::string, std::unique_ptr<Sensor>> sensorById_;
     std::unordered_map<std::string, std::unique_ptr<RuleConfig>> ruleConfigById_;
+    std::unordered_map<std::string, std::unique_ptr<ModbusClient>> modbusClients_;
+    std::unordered_map<std::string, std::unique_ptr<ModbusSource>> modbusSources_;
 };

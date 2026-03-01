@@ -35,6 +35,8 @@ namespace scada
 
         void validateSlaveId(int slaveId, const std::string& nameDevice);
 
+        void validateId(const std::string& id, const std::string& nameDavice);
+
     }
 
     namespace factory

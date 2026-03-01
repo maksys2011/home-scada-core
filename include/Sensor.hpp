@@ -21,8 +21,8 @@ public:
     const SensorConfig& config() const;
     SensorState& state();
     void print() const;
-    Source* getSourse() const;
 
+    Source* getSourse() const;
 private:
     const SensorConfig& config_;
     SensorState state_;
