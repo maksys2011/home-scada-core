@@ -11,3 +11,7 @@ double RandomSource::readValue()
 {
     return dist_(gen_);
 }
+
+void RandomSource::print()
+{
+}

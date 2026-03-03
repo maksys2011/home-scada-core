@@ -1,9 +1,20 @@
-{
-    "client_id" : "100",
-    "source_id" : "501",
-    "ip" : "127.0.0.1",
-    "port" : 1503,
-    "slave_Id" : 1,
-    "startAddress" : 0,
-    "typeSource" : "HoldingRegister"
-}
+[
+    {
+        "client_id" : "100",
+        "source_id" : "501",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 0,
+        "typeSource" : "HoldingRegister"
+    },
+    {
+        "client_id" : "100",
+        "source_id" : "502",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 1,
+        "typeSource" : "HoldingRegister"
+    }
+]

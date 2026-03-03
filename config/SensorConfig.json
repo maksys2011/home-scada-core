@@ -14,7 +14,7 @@
         "deadband_" : 0.5,
         "hysteresis_" : 0.2,
         "enabled_" : false,
-        "source_id" : 10
+        "source_id" : "501"
     },
 
     {
@@ -32,7 +32,7 @@
         "deadband_" : 0.1,
         "hysteresis_" : 0.5,
         "enabled_" : false,
-        "source_id" : 100
+        "source_id" : "501"
     },
     {
         "id_": "10001",
@@ -41,7 +41,7 @@
         "physicalMin_" : 0.0,
         "physicalMax_" : 30000.0,
         "noiseEpsilon_" : 10,
-        "source_id" : 100
+        "source_id" : "502"
     }
 ]
 

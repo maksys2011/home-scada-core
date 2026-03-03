@@ -181,3 +181,9 @@ void ModbusClient::writeCoil(int address, bool value)
     }
 
 }
+
+void ModbusClient::print()
+{
+    std::cout << "ModbusCLient: " << std::endl;
+    std::cout << "id= " << config_.getClientId() << std::endl;
+}

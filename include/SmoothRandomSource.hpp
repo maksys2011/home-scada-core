@@ -13,6 +13,8 @@ public:
     double readValue() override;
     bool connect(){return true;};
 
+    void print() override;
+
 private:
     double current_;
     double delta_;

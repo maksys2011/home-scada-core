@@ -68,3 +68,8 @@ void ModbusSource::writeValue(double value)
     }
 }
 
+void ModbusSource::print()
+{
+    std::cout << "ModbusSource: " << std::endl;
+    config_.print();
+}

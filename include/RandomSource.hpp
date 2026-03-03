@@ -10,6 +10,7 @@ public:
     double readValue() override;
     bool connect(){return true;};
 
+    void print() override;
 private:
 
     double min_;

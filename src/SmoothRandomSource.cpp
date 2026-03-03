@@ -41,3 +41,7 @@ double SmoothRandomSource::readValue()
 
     return current_;  
 }
+
+void SmoothRandomSource::print()
+{
+}

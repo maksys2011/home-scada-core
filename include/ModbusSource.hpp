@@ -15,6 +15,7 @@ public:
     void disconnect();
     double readValue() override;
     void writeValue(double value);
+    void print() override;
 
 private:
     ModbusSourceConfig config_;

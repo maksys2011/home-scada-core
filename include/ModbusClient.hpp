@@ -24,6 +24,8 @@ public:
     void writeRegister(int address, uint16_t value);
     void writeCoil(int address, bool value);
 
+    void print();
+
 private:
     ModbusClientConfig config_;
     bool connected_ = false;

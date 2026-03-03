@@ -28,20 +28,19 @@
 #include "ModbusSourceConfig.hpp"
 #include "ModbusClient.hpp"
 #include "ModbusClientConfig.hpp"
+#include "CompositionRoot.hpp"
 
 int main() { 
+    ConfigLoader cfg;
+    AppConfig configs =  cfg.load();
+    CompositionRoot creation(cfg);
+    creation.initClinets(std::move(configs));
+    creation.initSources(std::move(configs));
+    creation.initSensors(std::move(configs));
+    creation.printSensors();
     
-    ModbusClientConfig cfgClient;
-    std::filesystem::path path = "../clientConfig/plcClientConfig.json";
-    cfgClient.fromJson(path);
-    cfgClient.print();
 
-    std::cout << std::endl;
-
-    std::filesystem::path path1 = "../sourceConfig/SourceConfigCoil.json";
-    ModbusSourceConfig cfgModbusSource;
-    cfgModbusSource.fromJson(path1);
-    cfgModbusSource.print();
+   
     
 
     return 0;

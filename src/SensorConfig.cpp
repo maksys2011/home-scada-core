@@ -148,7 +148,9 @@ void SensorConfig::fromJson(const json &j)
     if(j.contains("source_id")){
         source_id_ = j.at("source_id").get<std::string>();
     }else{
-
+        throw std::runtime_error(
+            "there is no required key= source_id"
+        );
     }
 }
 
