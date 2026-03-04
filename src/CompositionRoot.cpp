@@ -8,8 +8,9 @@
 #include "ModbusSource.hpp"
 #include "ModbusSourceConfig.hpp"
 #include "Source.hpp"
+#include "Rule.hpp"
 
-CompositionRoot::CompositionRoot(const ConfigLoader &cfg) 
+CompositionRoot::CompositionRoot(const ConfigLoader& cfg) 
     : configs_(cfg)
 {}
 
@@ -25,12 +26,12 @@ void CompositionRoot::initArchive()
     archive_ = std::make_unique<Archive>(path);
 }
 
-void CompositionRoot::initSensors(AppConfig &&cfg)
+void CompositionRoot::initSensors(const AppConfig& cfg)
 {
     initArchive();
     initLogger();
-    initClinets(std::move(cfg));
-    initSources(std::move(cfg));
+    initClients(cfg);
+    initSources(cfg);
     if(!logger_){
         throw std::runtime_error("logger is not initialized");
     }
@@ -55,26 +56,31 @@ void CompositionRoot::initSensors(AppConfig &&cfg)
     }
 }
 
-void CompositionRoot::initActuators(AppConfig &&cfg)
+void CompositionRoot::initActuators(const AppConfig& cfg)
 {
+    for(const auto& config : cfg.actuatorConfigs_){
+        actuatorById_.emplace(config.getId(),
+        std::make_unique<Actuator>(config)
+    );
+    }
 }
 
-void CompositionRoot::initClinets(AppConfig &&configs)
+void CompositionRoot::initClients(const AppConfig& cfg)
 {
-    for(const auto& config : configs.modbusClientConfig_){
+    for(const auto& config : cfg.modbusClientConfig_){
         clientById_.emplace(config.getClientId(),
         std::make_unique<ModbusClient>(config)
         );
     }
 }
 
-void CompositionRoot::initSources(AppConfig &&configs)
+void CompositionRoot::initSources(const AppConfig& cfg)
 {
     if(clientById_.empty()){
         throw std::runtime_error("No TCP clients available");
     }
 
-    for(const auto& config : configs.modbusSourceConfigs_){
+    for(const auto& config : cfg.modbusSourceConfigs_){
 
         auto idClient = config.getClientId();
         auto it = clientById_.find(idClient);
@@ -88,7 +94,12 @@ void CompositionRoot::initSources(AppConfig &&configs)
     }
 }
 
-void CompositionRoot::printSensors()
+void CompositionRoot::initRules(const AppConfig &cfg)
+{
+    
+}
+
+void CompositionRoot::printSensors() const
 {
     for(const auto& sensor : sensorById_){
         sensor.second->print();
@@ -96,17 +107,29 @@ void CompositionRoot::printSensors()
    
 }
 
-void CompositionRoot::printClients()
+void CompositionRoot::printClients() const 
 {
     for(const auto& client : clientById_){
         client.second->print();
     }
 }
 
-void CompositionRoot::printSources()
+void CompositionRoot::printSources() const 
 {
     for(const auto& source : sourceById_){
         source.second->print();
         std::cout << std::endl;
     }
+}
+
+void CompositionRoot::printActuator() const
+{
+    for(const auto& actuator : actuatorById_){
+        actuator.second->print();
+    }
+}
+
+void CompositionRoot::printRule() const
+{
+
 }

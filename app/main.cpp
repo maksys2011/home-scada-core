@@ -31,13 +31,10 @@
 #include "CompositionRoot.hpp"
 
 int main() { 
-    ConfigLoader cfg;
-    AppConfig configs =  cfg.load();
-    CompositionRoot creation(cfg);
-    creation.initClinets(std::move(configs));
-    creation.initSources(std::move(configs));
-    creation.initSensors(std::move(configs));
-    creation.printSensors();
+   RuleConfigLight cfg;
+   std::filesystem::path path = "../ruleConfig/RuleConfigLight.json";
+   cfg.fromJson(path);
+   cfg.print();
     
 
    

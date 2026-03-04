@@ -23,6 +23,7 @@
         "fromHour" : 7,
         "toHour" : 9,
         "fixedPosition" : 10,
-        "enable_" : false
+        "enable_" : false,
+        "type" : "Light"
     }
 

@@ -33,6 +33,7 @@ private:
     size_t targetIlluminance_;
 
     bool enabled_;
+    RuleType type_;
 
 public:
     RuleConfigLight() = default;
@@ -52,24 +53,27 @@ public:
     TimeWindow day,
     double targetIlluminance,
     
-    bool enabled
+    bool enabled,
+    const std::string& type
     );
 
-    void fromJson(const std::string& path) override;
-    void fromJson(const std::filesystem::path& path);
+    void fromJson(const std::filesystem::path& path)override;
     void fromJson(const json& j) override;
-    const std::string& getId() const {return id_;};
-    const std::string& getName() const {return name_;};
-    const std::string& getRoom() const {return room_;};
-    const std::string getIdSensor() const {return id_sensor;};
-    const std::string getIdActuator() const {return id_actuator;};
-    double getMaxLux() const {return maxLux_;};
-    double getMinLux() const {return minLux_;};
-    size_t getConfirmTicks() const {return confirmTicks_;};
-    TimeWindow getNinght() const {return night_;};
-    TimeWindow getDay() const {return day_;};
-    size_t getTargetIlluminance() const {return targetIlluminance_;};
-    bool getEnabled() const {return enabled_;};
+
+    const std::string& getId() const { return id_; };
+    const std::string& getName() const { return name_; };
+    const std::string& getRoom() const { return room_; };
+    const std::string getIdSensor() const { return id_sensor; };
+    const std::string getIdActuator() const { return id_actuator; };
+    double getMaxLux() const { return maxLux_; };
+    double getMinLux() const { return minLux_; };
+    size_t getConfirmTicks() const { return confirmTicks_; };
+    TimeWindow getNinght() const { return night_; };
+    TimeWindow getDay() const { return day_; };
+    size_t getTargetIlluminance() const { return targetIlluminance_; };
+    bool getEnabled() const { return enabled_; };
+    RuleType getRuleType() const { return type_; };
+
     bool validate() const override;
     void print() const override;
 };

@@ -19,8 +19,8 @@ private:
 
 public:
     void fromJson(const json& j) override;
-    void fromJson(const std::string& path) override;
-    void fromJson(const std::filesystem::path& path);
+    void fromJson(const std::string& path);
+    void fromJson(const std::filesystem::path& path) override;
     bool validate()const override;
     void print()const override;
     double getMinTemp() const;

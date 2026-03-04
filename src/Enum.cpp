@@ -103,3 +103,21 @@ ModbusObjectType ParseModbusObjectType(const std::string &connectionType)
     else if(connectionType == "HoldingRegister") return ModbusObjectType::HoldingRegister;
     else return ModbusObjectType::Unknowen;
 }
+
+RuleType ParseRuleType(const std::string& type)
+{
+    if(type == "Thermostat") return RuleType::Thermostat;
+    else if(type == "Light") return RuleType::Light;
+    else throw std::runtime_error("No suitable typ rule found");
+}
+
+std::string RuleTypeToString(const RuleType type)
+{
+    switch (type)
+    {
+    case RuleType::Thermostat: return "Thermostat";
+    case RuleType::Light: return "Light";
+    }
+
+    return std::string();
+}

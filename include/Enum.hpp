@@ -40,6 +40,12 @@ enum class ModbusObjectType
     HoldingRegister
 };
 
+enum class RuleType
+{
+    Thermostat,
+    Light
+};
+
 SensorType ParseSensorType(const std::string &typeStr);
 
 std::string SensorTypeToString(const SensorType type);
@@ -50,11 +56,12 @@ std::string ActuatorTypeToString(ActuatorType type);
 
 std::string StateToString(State state);
 
-State ParseState(std::string const str);
+State ParseState(const std::string str);
 
 std::string ModbusObjectTypeToString(const ModbusObjectType type);
 
-/// @brief  "превращаем строку в обьект ModbusObjectType"
-/// @param connectionType 
-/// @return 
 ModbusObjectType ParseModbusObjectType(const std::string& connectionType);
+
+RuleType ParseRuleType(const std::string& type);
+
+std::string RuleTypeToString(const RuleType type);

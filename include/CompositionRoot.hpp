@@ -21,6 +21,7 @@ class RandomSource;
 class SmoothRandomSource;
 class ModbusSource;
 class Source;
+class Rule;
 
 
 class CompositionRoot
@@ -28,20 +29,23 @@ class CompositionRoot
 public:
     CompositionRoot() = default;
     CompositionRoot(const ConfigLoader& cfg);
+    
     void initLogger();
     void initArchive();
-    void initSensors(AppConfig&& configs);
-    void initActuators(AppConfig&& configs);
-    void initClinets(AppConfig&& configs);
-    void initSources(AppConfig&& configs);
+    void initSensors(const AppConfig& cfg);
+    void initActuators(const AppConfig& cfg);
+    void initClients(const AppConfig& cfg);
+    void initSources(const AppConfig& cfg);
+    void initRules(const AppConfig& cfg);
 
-    void printSensors();
-    void printClients();
-    void printSources();
-
-
+    void printSensors() const;
+    void printClients() const;
+    void printSources() const;
+    void printActuator() const;
+    void printRule() const;
 
 private:
+    AppConfig configList_;
     ConfigLoader configs_;
     std::unique_ptr<Logger> logger_;
     std::unique_ptr<Archive> archive_;
@@ -49,4 +53,5 @@ private:
     std::unordered_map<std::string, std::unique_ptr<Actuator>> actuatorById_;
     std::unordered_map<std::string, std::unique_ptr<ModbusClient>> clientById_;
     std::unordered_map<std::string, std::unique_ptr<Source>> sourceById_;
+    std::vector<std::unique_ptr<Rule>> ruleById_;
 };
