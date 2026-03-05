@@ -62,8 +62,8 @@ public:
     const std::string& getId() const { return id_; };
     const std::string& getName() const { return name_; };
     const std::string& getRoom() const { return room_; };
-    const std::string getIdSensor() const { return id_sensor; };
-    const std::string getIdActuator() const { return id_actuator; };
+    const std::string& getSensorId() const override { return id_sensor; };
+    const std::string& getActuatorId() const override { return id_actuator; };
     double getMaxLux() const { return maxLux_; };
     double getMinLux() const { return minLux_; };
     size_t getConfirmTicks() const { return confirmTicks_; };
@@ -71,7 +71,7 @@ public:
     TimeWindow getDay() const { return day_; };
     size_t getTargetIlluminance() const { return targetIlluminance_; };
     bool getEnabled() const { return enabled_; };
-    RuleType getRuleType() const { return type_; };
+    RuleType getRuleType() const override { return type_; };
 
     bool validate() const override;
     void print() const override;

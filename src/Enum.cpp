@@ -108,7 +108,7 @@ RuleType ParseRuleType(const std::string& type)
 {
     if(type == "Thermostat") return RuleType::Thermostat;
     else if(type == "Light") return RuleType::Light;
-    else throw std::runtime_error("No suitable typ rule found");
+    else throw std::runtime_error("No suitable type rule found");
 }
 
 std::string RuleTypeToString(const RuleType type)

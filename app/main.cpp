@@ -31,10 +31,12 @@
 #include "CompositionRoot.hpp"
 
 int main() { 
-   RuleThermostatConfig cfg;
-   std::filesystem::path path = "../ruleConfig/RuleConfigTermostat.json";
-   cfg.fromJson(path);
-   cfg.print();
+   
+    ConfigLoader cfg;
+    AppConfig apConfig = cfg.load();
+    CompositionRoot composit(cfg);
+    composit.init(apConfig);
+    composit.printRule();
    
     
 

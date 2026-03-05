@@ -9,6 +9,8 @@
 #include "ModbusSourceConfig.hpp"
 #include "Source.hpp"
 #include "Rule.hpp"
+#include "RuleThermostat.hpp"
+#include "RuleControlLight.hpp"
 
 CompositionRoot::CompositionRoot(const ConfigLoader& cfg) 
     : configs_(cfg)
@@ -96,7 +98,44 @@ void CompositionRoot::initSources(const AppConfig& cfg)
 
 void CompositionRoot::initRules(const AppConfig &cfg)
 {
-    
+    for(const auto& config : cfg.ruleConfigs_){
+        const RuleType type = config->getRuleType();
+        const auto& sensor = sensorById_.find(config->getSensorId());
+        const auto& actuator = actuatorById_.find(config->getActuatorId());
+        auto& state = sensor->second->state();
+        
+        switch (type)
+        {
+        case RuleType::Thermostat:{
+            
+            const auto& thermostatConfig = static_cast<const RuleThermostatConfig&>(*config);
+           
+            ruleById_.push_back(
+                std::make_unique<RuleThermostat>(state, *(actuator->second), thermostatConfig));
+                break;
+            }
+        case RuleType::Light:{
+
+            const auto& lightConfig = static_cast<const RuleConfigLight&>(*config);
+            
+            ruleById_.push_back(
+                std::make_unique<RuleControlLight>(state, *(actuator->second), lightConfig));
+                break;
+            }
+        }
+
+    }
+}
+
+void CompositionRoot::init(const AppConfig& cfg)
+{
+    initLogger();
+    initArchive();
+    initSensors(cfg);
+    initClients(cfg);
+    initSources(cfg);
+    initActuators(cfg);
+    initRules(cfg);
 }
 
 void CompositionRoot::printSensors() const
@@ -131,5 +170,5 @@ void CompositionRoot::printActuator() const
 
 void CompositionRoot::printRule() const
 {
-
+    std::cout << "Rule: " << ruleById_.size() << std::endl;
 }

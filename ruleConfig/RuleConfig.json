@@ -1,18 +1,18 @@
 [
     {
         "name_rule" : "temperature rules",
-        "type" : "termostat",
+        "type" : "Thermostat",
         "rule_id" : "1", 
         "sensor_name": "temperature sensor kitchen",
         "sensor_id" : "35001",
         "actuator_name:": "kitchen Actuator",
         "actuator_id" : "45001",
         "minTemp" : 18.0,
-        "maxTemp" : 21.0 
+        "maxTemp" : 21.0
     },
     {
         "name_rule" : "temperature rules",
-        "type" : "termostat",
+        "type" : "Thermostat",
         "rule_id" : "2",
         "sensor_name": "temperature sensor bathroom",
         "sensor_id" : "35002",
@@ -23,6 +23,7 @@
     },
     {
         "name_rule" : "lighting rules",
+        "type" : "Light",
         "id_" : "3",
         "name_" : "light sensor",
         "room_" : "kitchen",

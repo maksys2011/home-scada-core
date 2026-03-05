@@ -37,6 +37,7 @@ public:
     void initClients(const AppConfig& cfg);
     void initSources(const AppConfig& cfg);
     void initRules(const AppConfig& cfg);
+    void init(const AppConfig& cfg);
 
     void printSensors() const;
     void printClients() const;

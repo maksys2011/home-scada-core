@@ -78,8 +78,8 @@ void App::init(AppConfig&& cfg)
     for (const auto& ruleCfgBase : cfg.ruleConfigs_) {
         if (auto* thermoCfg =
             dynamic_cast<RuleThermostatConfig*>(ruleCfgBase.get())) {
-            auto sensorIt = sensorById_.find(thermoCfg->getIdSensor());
-            auto actIt    = actuatorById_.find(thermoCfg->getIdActuator());
+            auto sensorIt = sensorById_.find(thermoCfg->getSensorId());
+            auto actIt    = actuatorById_.find(thermoCfg->getActuatorId());
             if (sensorIt == sensorById_.end() ||
                 actIt    == actuatorById_.end()) {
 
@@ -102,8 +102,8 @@ void App::init(AppConfig&& cfg)
     for(const auto& ruleCfgBase : cfg.ruleConfigs_){    
         if(auto* lightCfg = 
             dynamic_cast<RuleConfigLight*>(ruleCfgBase.get())){
-            auto sensorIt = sensorById_.find(lightCfg->getIdSensor());
-            auto actIt    = actuatorById_.find(lightCfg->getIdActuator());
+            auto sensorIt = sensorById_.find(lightCfg->getSensorId());
+            auto actIt    = actuatorById_.find(lightCfg->getActuatorId());
             if (sensorIt == sensorById_.end() ||
                 actIt    == actuatorById_.end()) {
 

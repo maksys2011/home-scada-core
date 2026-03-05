@@ -1,7 +1,7 @@
 #pragma once
-
 #include <string>
 #include <nlohmann/json.hpp>
+#include "Enum.hpp"
 using json = nlohmann::json;
 
 class RuleConfig
@@ -10,6 +10,10 @@ public:
     virtual~ RuleConfig() = default;
     virtual void fromJson(const json& j) = 0;
     virtual void fromJson(const std::filesystem::path& path) = 0;
-    virtual bool validate()const = 0;
-    virtual void print()const = 0;
+    virtual bool validate() const = 0;
+    virtual void print() const = 0;
+
+    virtual RuleType getRuleType() const = 0;
+    virtual const std::string& getSensorId() const = 0;
+    virtual const std::string& getActuatorId() const = 0;
 };

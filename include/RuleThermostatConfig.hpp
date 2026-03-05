@@ -25,7 +25,8 @@ public:
 
     double getMinTemp() const { return minTemp_; } ;
     double getMaxTemp() const { return maxTemp_; } ;
-    std::string getId() const { return id_; } ;
-    std::string getIdSensor() const { return id_sensor; } ;
-    std::string getIdActuator() const { return id_actuator; } ;
+    const std::string& getId() const { return id_; } ;
+    const std::string& getSensorId() const override { return id_sensor; } ;
+    const std::string& getActuatorId() const override { return id_actuator; } ;
+    RuleType getRuleType() const override { return type_; };
 };
