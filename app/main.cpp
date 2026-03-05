@@ -31,10 +31,11 @@
 #include "CompositionRoot.hpp"
 
 int main() { 
-   RuleConfigLight cfg;
-   std::filesystem::path path = "../ruleConfig/RuleConfigLight.json";
+   RuleThermostatConfig cfg;
+   std::filesystem::path path = "../ruleConfig/RuleConfigTermostat.json";
    cfg.fromJson(path);
    cfg.print();
+   
     
 
    

@@ -2,7 +2,6 @@
 #include <string>
 #include <filesystem>
 #include <nlohmann/json.hpp>
-
 #include "Enum.hpp"
 #include "RuleConfig.hpp"
 

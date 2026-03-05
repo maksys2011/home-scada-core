@@ -1,38 +1,26 @@
 #include <iostream>
 #include <fstream>
 #include "RuleThermostatConfig.hpp"
+#include "utils.hpp"
 
 void RuleThermostatConfig::fromJson(const json &j)
 {
-    id_ =         j.at("rule_id").get<std::string>();
-    id_sensor =   j.at("sensor_id").get<std::string>();
-    id_actuator = j.at("actuator_id").get<std::string>();
-    minTemp_ =    j.at("minTemp").get<double>();
-    maxTemp_ =    j.at("maxTemp").get<double>();
-    
+    id_ = scada::utils::check_the_key<std::string>(j, "rule_id");
+    id_sensor = scada::utils::check_the_key<std::string>(j, "sensor_id");
+    id_actuator = scada::utils::check_the_key<std::string>(j, "actuator_id");
+    minTemp_ = scada::utils::check_the_key<double>(j, "minTemp");
+    maxTemp_ = scada::utils::check_the_key<double>(j, "maxTemp");
+    type_ = ParseRuleType(scada::utils::check_the_key<std::string>(j, "type"));
+
     if(!validate()){
         throw std::runtime_error(
             "Invalid thermostat config: maxTemp must be greater than minTemp and delta must be sufficient");
     }
 }
 
-void RuleThermostatConfig::fromJson(const std::string &path)
-{
-    std::ifstream file(path);
-    if(!file){
-        throw std::runtime_error("cannot open ruleConfig file" + path);
-    }
-    json j;
-    file >> j;
-    fromJson(j);
-}
-
 void RuleThermostatConfig::fromJson(const std::filesystem::path &path)
 {
-    std::ifstream file(path);
-    if(!file){
-        throw std::runtime_error("cannot open ruleConfig file" + path.string());
-    }
+    std::ifstream file = scada::utils::create_json_ifstream(path);
     json j;
     file >> j;
     fromJson(j);
@@ -49,29 +37,5 @@ void RuleThermostatConfig::print() const
     std::cout << "Rule id: "  << getId() << std::endl;
     std::cout << "MinValue: " << getMinTemp() << std::endl;
     std::cout << "MaxValue: " << getMaxTemp() << std::endl;
-}
-
-double RuleThermostatConfig::getMinTemp() const
-{
-    return minTemp_;
-}
-
-double RuleThermostatConfig::getMaxTemp() const
-{
-    return maxTemp_;
-}
-
-std::string RuleThermostatConfig::getId() const
-{
-    return id_;
-}
-
-std::string RuleThermostatConfig::getIdSensor() const
-{
-    return id_sensor;
-}
-
-std::string RuleThermostatConfig::getIdActuator() const
-{
-    return id_actuator;
+    std::cout << "type: " << RuleTypeToString(type_) << std::endl;
 }
