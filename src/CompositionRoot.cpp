@@ -11,10 +11,13 @@
 #include "Rule.hpp"
 #include "RuleThermostat.hpp"
 #include "RuleControlLight.hpp"
+#include "RuleEngine.hpp"
 
 CompositionRoot::CompositionRoot(const ConfigLoader& cfg) 
     : configs_(cfg)
-{}
+{
+    engine_ = std::make_unique<RuleEngine>();
+}
 
 void CompositionRoot::initLogger()
 {
@@ -30,10 +33,6 @@ void CompositionRoot::initArchive()
 
 void CompositionRoot::initSensors(const AppConfig& cfg)
 {
-    initArchive();
-    initLogger();
-    initClients(cfg);
-    initSources(cfg);
     if(!logger_){
         throw std::runtime_error("logger is not initialized");
     }
@@ -110,7 +109,7 @@ void CompositionRoot::initRules(const AppConfig &cfg)
             
             const auto& thermostatConfig = static_cast<const RuleThermostatConfig&>(*config);
            
-            ruleById_.push_back(
+            engine_->addRule(
                 std::make_unique<RuleThermostat>(state, *(actuator->second), thermostatConfig));
                 break;
             }
@@ -118,22 +117,22 @@ void CompositionRoot::initRules(const AppConfig &cfg)
 
             const auto& lightConfig = static_cast<const RuleConfigLight&>(*config);
             
-            ruleById_.push_back(
+            engine_->addRule(
                 std::make_unique<RuleControlLight>(state, *(actuator->second), lightConfig));
                 break;
             }
         }
-
     }
+    
 }
 
 void CompositionRoot::init(const AppConfig& cfg)
 {
     initLogger();
     initArchive();
-    initSensors(cfg);
     initClients(cfg);
     initSources(cfg);
+    initSensors(cfg);
     initActuators(cfg);
     initRules(cfg);
 }
@@ -163,6 +162,7 @@ void CompositionRoot::printSources() const
 
 void CompositionRoot::printActuator() const
 {
+    std::cout << "actuator=" << actuatorById_.size() << std::endl;
     for(const auto& actuator : actuatorById_){
         actuator.second->print();
     }

@@ -27,7 +27,6 @@ add_executable(home-scada
     src/ArchiveReport.cpp
     src/RuleThermostatConfig.cpp
     src/RuleEngine.cpp
-    src/App.cpp
     src/ConfigLoader.cpp
     src/RuleConfigLight.cpp
     src/ModbusSource.cpp
@@ -36,6 +35,7 @@ add_executable(home-scada
     src/ModbusClient.cpp
     src/ModbusClientConfig.cpp
     src/CompositionRoot.cpp
+    src/Application.cpp
 )
 
 target_include_directories(home-scada PUBLIC

@@ -3,32 +3,58 @@
         "name_rule" : "temperature rules",
         "type" : "Thermostat",
         "rule_id" : "1", 
-        "sensor_name": "temperature sensor kitchen",
+        "sensor_name": "temperature_livingRoom",
         "sensor_id" : "35001",
-        "actuator_name:": "kitchen Actuator",
+        "actuator_name:": "livingRoom actuator",
         "actuator_id" : "45001",
-        "minTemp" : 18.0,
-        "maxTemp" : 21.0
+        "minTemp" : 21.0,
+        "maxTemp" : 22.0
     },
+
     {
         "name_rule" : "temperature rules",
         "type" : "Thermostat",
         "rule_id" : "2",
-        "sensor_name": "temperature sensor bathroom",
+        "sensor_name": "temperature_kitchen",
         "sensor_id" : "35002",
-        "actuator_name:": "bathroom Actuator",
+        "actuator_name:": "kitchen actuator",
         "actuator_id" : "45002",
-        "minTemp" : 20.0,
-        "maxTemp" : 23.0 
+        "minTemp" : 18.0,
+        "maxTemp" : 20.0 
     },
+
+    {
+        "name_rule" : "temperature rules",
+        "type" : "Thermostat",
+        "rule_id" : "2",
+        "sensor_name": "temperature_bedroom",
+        "sensor_id" : "35003",
+        "actuator_name:": "bedroom actuator",
+        "actuator_id" : "45003",
+        "minTemp" : 17.0,
+        "maxTemp" : 20.0 
+    },
+
+    {
+        "name_rule" : "temperature rules",
+        "type" : "Thermostat",
+        "rule_id" : "2",
+        "sensor_name": "temperature_bathroom",
+        "sensor_id" : "35004",
+        "actuator_name:": "bathroom actuator",
+        "actuator_id" : "45004",
+        "minTemp" : 22.0,
+        "maxTemp" : 24.0 
+    },
+
     {
         "name_rule" : "lighting rules",
         "type" : "Light",
         "id_" : "3",
-        "name_" : "light sensor",
-        "room_" : "kitchen",
+        "name_" : "light_livingRoom",
+        "room_" : "living Room",
         "id_sensor" : "10001",
-        "id_actuator" : "45003",
+        "id_actuator" : "45005",
         "minLux_" : 150.0,
         "maxLux_" : 500.0,
         "night_" :{
@@ -41,7 +67,35 @@
             "toHour" : 21,
             "fixedPosition" : -1
                 },
-        "targetIlluminance_" : 400.0,
+        "targetIlluminance_" : 200.0,
+        "confirmTicks_" : 3,
+        "fromHour" : 7,
+        "toHour" : 9,
+        "fixedPosition" : 10,
+        "enable_" : false
+    },
+
+    {
+        "name_rule" : "lighting rules",
+        "type" : "Light",
+        "id_" : "3",
+        "name_" : "light_kitchen",
+        "room_" : "kitchen",
+        "id_sensor" : "10002",
+        "id_actuator" : "45006",
+        "minLux_" : 150.0,
+        "maxLux_" : 500.0,
+        "night_" :{
+            "fromHour" : 21,
+            "toHour" : 7,
+            "fixedPosition" : -1
+                 },
+        "day_" : {
+            "fromHour" : 7,
+            "toHour" : 21,
+            "fixedPosition" : -1
+                },
+        "targetIlluminance_" : 300.0,
         "confirmTicks_" : 3,
         "fromHour" : 7,
         "toHour" : 9,

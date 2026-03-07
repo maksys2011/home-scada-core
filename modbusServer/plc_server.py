@@ -10,12 +10,26 @@ import random
 temperature = 20.0
 light = 300.0
 
+temperature_kitchenRoom = 20.0
+temperature_bathRoom = 21.0
+
+light_kitchenRoom = 350.0
+light_bathRoom = 390.0
+
 # ===== Создание одного PLC (slave 1) =====
 
 store = ModbusDeviceContext(
     co=ModbusSequentialDataBlock(0, [0]*10),   # coils (дискретные выходы)
     # hr=ModbusSequentialDataBlock(0, [0]*10)    # holding registers
-    hr=ModbusSequentialDataBlock(0, [int(temperature), int(light)] + [0]*8)
+    hr=ModbusSequentialDataBlock(0, 
+    [
+        int(temperature), 
+        int(light),
+        int(temperature_kitchenRoom),
+        int(temperature_bathRoom),
+        int(light_kitchenRoom),
+        int(light_bathRoom)
+        ] + [0]*8)
 )
 
 context = ModbusServerContext({1: store}, single=False)

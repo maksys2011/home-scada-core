@@ -21,7 +21,6 @@
 #include "RuleThermostatConfig.hpp"
 #include "RuleEngine.hpp"
 #include "RuleThermostat.hpp"
-#include "App.hpp"
 #include "ConfigLoader.hpp"
 #include "RuleConfigLight.hpp"
 #include "ModbusSource.hpp"
@@ -29,19 +28,15 @@
 #include "ModbusClient.hpp"
 #include "ModbusClientConfig.hpp"
 #include "CompositionRoot.hpp"
+#include "Application.hpp"
 
 int main() { 
    
     ConfigLoader cfg;
     AppConfig apConfig = cfg.load();
     CompositionRoot composit(cfg);
-    composit.init(apConfig);
-    composit.printRule();
-   
-    
-
-   
-    
+    Application app(apConfig, cfg, composit);
+    app.run();
 
     return 0;
 }

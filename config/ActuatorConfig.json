@@ -1,21 +1,47 @@
 [
         {
                 "id" : "45001",
-                "name" : "kitchen Actuator",
+                "name" : "livingRoom_actuator",
                 "type" : "AnalogOut",
                 "minValue" : 0.0,
                 "maxValue" : 100.0
         },
+
         {
                 "id" : "45002",
-                "name" : "bathroom Actuator",
+                "name" : "kitchen_actuator",
                 "type" : "AnalogOut",
                 "minValue" : 0.0,
                 "maxValue" : 100.0
         },
+
         {
                 "id" : "45003",
-                "name" : "bathroom Actuator",
+                "name" : "bedroom_actuator",
+                "type" : "AnalogOut",
+                "minValue" : 0.0,
+                "maxValue" : 100.0
+        },
+
+        {
+                "id" : "45004",
+                "name" : "bathroom_actuator",
+                "type" : "AnalogOut",
+                "minValue" : 0.0,
+                "maxValue" : 100.0
+        },
+
+        {
+                "id" : "45005",
+                "name" : "light_livingRoom_actuator",
+                "type" : "AnalogOut",
+                "minValue" : 0.0,
+                "maxValue" : 1000.0
+        },
+        
+        {
+                "id" : "45006",
+                "name" : "light_kitchenlight_kitchen_actuator",
                 "type" : "AnalogOut",
                 "minValue" : 0.0,
                 "maxValue" : 1000.0

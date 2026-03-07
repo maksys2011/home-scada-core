@@ -1,5 +1,6 @@
 [
     {
+        "comment" : "source temperature_livingRoom",
         "client_id" : "100",
         "source_id" : "501",
         "ip" : "127.0.0.1",
@@ -8,13 +9,59 @@
         "startAddress" : 0,
         "typeSource" : "HoldingRegister"
     },
+
     {
+        "comment" : "source temperature_kitchen",
         "client_id" : "100",
         "source_id" : "502",
         "ip" : "127.0.0.1",
         "port" : 1503,
         "slave_Id" : 1,
         "startAddress" : 1,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "source temperature_bedroom",
+        "client_id" : "100",
+        "source_id" : "503",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 2,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "source temperature_bathroom",
+        "client_id" : "100",
+        "source_id" : "504",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 3,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "light light_livingRoom",
+        "client_id" : "100",
+        "source_id" : "505",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 4,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "light light_kitchen",
+        "client_id" : "100",
+        "source_id" : "506",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 5,
         "typeSource" : "HoldingRegister"
     }
 ]

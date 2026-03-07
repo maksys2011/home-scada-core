@@ -2,6 +2,7 @@
 #include "Sensor.hpp"
 #include <iostream>
 
+/*
 bool SensorManager::addSensor(const std::string &id, Sensor *sensor)
 {
     if(!sensor) return false;
@@ -14,5 +15,5 @@ void SensorManager::tick()
         sensor->update();
     }
 }
-
+*/
 

@@ -39,6 +39,10 @@ public:
     void initRules(const AppConfig& cfg);
     void init(const AppConfig& cfg);
 
+    const std::vector<std::unique_ptr<Rule>>& getRuleById() const { return ruleById_; };
+    const std::unordered_map<std::string, std::unique_ptr<Sensor>>& getSensorById() const { return sensorById_; };
+    const std::unique_ptr<RuleEngine>& getRuleEngine() const { return engine_; };
+    
     void printSensors() const;
     void printClients() const;
     void printSources() const;
@@ -48,6 +52,7 @@ public:
 private:
     AppConfig configList_;
     ConfigLoader configs_;
+    std::unique_ptr<RuleEngine> engine_;
     std::unique_ptr<Logger> logger_;
     std::unique_ptr<Archive> archive_;
     std::unordered_map<std::string, std::unique_ptr<Sensor>> sensorById_;

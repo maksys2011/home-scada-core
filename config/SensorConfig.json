@@ -1,7 +1,8 @@
 [
     {
+        "comment" : "конфигурации для датчик темперутры - гостинная",
         "id_": "35001",
-        "name_": "temperature sensor kitchen",
+        "name_": "temperature_livingRoom",
         "type_": "Analog",
         "physicalMin_" : 0.0,
         "physicalMax_" : 100.0,
@@ -18,8 +19,9 @@
     },
 
     {
+        "comment" : "конфигурации для датчик темперутры - кухня",
         "id_": "35002",
-        "name_": "temperature sensor bathroom",
+        "name_": "temperature_kitchen",
         "type_": "Analog",
         "physicalMin_" : 0.0,
         "physicalMax_" : 100.0,
@@ -32,16 +34,67 @@
         "deadband_" : 0.1,
         "hysteresis_" : 0.5,
         "enabled_" : false,
-        "source_id" : "501"
+        "source_id" : "502"
     },
+
     {
-        "id_": "10001",
-        "name_": "light sensor kitchen",
+        "comment" : "конфигурации для датчик темперутры - спальня",
+        "id_": "35003",
+        "name_": "temperature_bedroom",
         "type_": "Analog",
         "physicalMin_" : 0.0,
-        "physicalMax_" : 30000.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 0.1,
+        "hysteresis_" : 0.5,
+        "enabled_" : false,
+        "source_id" : "503"
+    },
+
+    {
+        "comment" : "конфигурации для датчик темперутры - ванная",
+        "id_": "35004",
+        "name_": "temperature_bathroom",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 0.1,
+        "hysteresis_" : 0.5,
+        "enabled_" : false,
+        "source_id" : "504"
+    },
+
+    {
+        "comment" : "конфигурации для датчик освещения - гостинная",
+        "id_": "10001",
+        "name_": "light_livingRoom",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 20000.0,
         "noiseEpsilon_" : 10,
-        "source_id" : "502"
+        "source_id" : "505"
+    },
+
+    {
+        "comment" : "конфигурации для датчик освещения - гостинная",
+        "id_": "10002",
+        "name_": "light_kitchen",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 20000.0,
+        "noiseEpsilon_" : 10,
+        "source_id" : "506"
     }
 ]
 
