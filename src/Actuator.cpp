@@ -12,8 +12,7 @@ void Actuator::turnOn()
 
     client_.writeCoil(config_.getStartAddress(), true);
     
-    state_ = true;
-    std::cout << "[ACTUATOR]=" << config_.getId() << " -> ON\n";
+    state_ = true;    
 }
 
 void Actuator::turnOff()
@@ -22,8 +21,7 @@ void Actuator::turnOff()
 
     client_.writeCoil(config_.getStartAddress(), false);
     
-    state_ = false;
-    std::cout << "[ACTUATOR]=" << config_.getId() << " -> OFF\n";
+    state_ = false;    
 }
 
 void Actuator::setValue(double value)
@@ -62,8 +60,7 @@ bool Actuator::getStateActuator()
 }
 
 void Actuator::setPosition(int perсent)
-{
-    
+{  
     perсent = std::clamp(perсent, 0, 100);
 
     state_ = (perсent > 0);

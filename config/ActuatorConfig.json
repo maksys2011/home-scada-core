@@ -53,7 +53,7 @@
                 "client_id" : "100",
                 "startAddress" : 5,
                 "id" : "45006",
-                "name" : "light_kitchenlight_kitchen_actuator",
+                "name" : "light_kitchen_actuator",
                 "type" : "AnalogOut",
                 "minValue" : 0.0,
                 "maxValue" : 1000.0

@@ -42,6 +42,7 @@ public:
     const std::vector<std::unique_ptr<Rule>>& getRuleById() const { return ruleById_; };
     const std::unordered_map<std::string, std::unique_ptr<Sensor>>& getSensorById() const { return sensorById_; };
     const std::unique_ptr<RuleEngine>& getRuleEngine() const { return engine_; };
+    const std::unordered_map<std::string, std::unique_ptr<Actuator>>& getActuatorById() const { return actuatorById_; };
     
     void printSensors() const;
     void printClients() const;
