@@ -59,9 +59,20 @@ void CompositionRoot::initSensors(const AppConfig& cfg)
 
 void CompositionRoot::initActuators(const AppConfig& cfg)
 {
+    if(clientById_.empty()){
+        throw std::runtime_error("No TCP clients available");
+    }
+
     for(const auto& config : cfg.actuatorConfigs_){
+        auto idClient = config.getIdClient();
+        auto it = clientById_.find(idClient);
+
+        if(it == clientById_.end()){
+            throw std::runtime_error("No TCP clients available");
+        }
+        
         actuatorById_.emplace(config.getId(),
-        std::make_unique<Actuator>(config)
+        std::make_unique<Actuator>(config,  *(it->second))
     );
     }
 }

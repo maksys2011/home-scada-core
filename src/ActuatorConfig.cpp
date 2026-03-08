@@ -2,46 +2,40 @@
 #include <iostream>
 #include <fstream>
 #include "ActuatorConfig.hpp"
+#include "utils.hpp"
 using json = nlohmann::json;
 
-ActuatorConfig::ActuatorConfig(const std::string &id, 
-                                const std::string &name, 
-                                ActuatorType type, 
-                                double minValue, 
-                                double maxValue)
-        :   id_(id),
-            name_(name),
-            type_(type),
-            minValue_(minValue),
-            maxValue_(maxValue)
+ActuatorConfig::ActuatorConfig(
+    const std::string& client_id,
+    int startAddress,
+    const std::string& id, 
+    const std::string& name, 
+    ActuatorType type, 
+    double minValue, 
+    double maxValue):
+    client_id_(client_id),
+    startAddress_(startAddress),
+    id_(id),
+    name_(name),
+    type_(type),
+    minValue_(minValue),
+    maxValue_(maxValue)
 {}
 
-void ActuatorConfig::fromJson(const json &j)
+void ActuatorConfig::fromJson(const json& j)
 {
-    id_ = j.at("id").get<std::string>();
-    name_ = j.at("name").get<std::string>();
-    type_ = ParseActuatorType(j.at("type").get<std::string>());
-    minValue_ = j.at("minValue").get<double>();
-    maxValue_ = j.at("maxValue").get<double>();
+    client_id_ = scada::utils::check_the_key<std::string>(j, "client_id");
+    startAddress_ = scada::utils::check_the_key<int>(j, "startAddress");
+    id_ = scada::utils::check_the_key<std::string>(j, "id");
+    name_ = scada::utils::check_the_key<std::string>(j, "name");
+    type_ = ParseActuatorType(scada::utils::check_the_key<std::string>(j, "type"));
+    minValue_ = scada::utils::check_the_key<double>(j, "minValue");
+    maxValue_ = scada::utils::check_the_key<double>(j, "maxValue");
 }
 
-void ActuatorConfig::fromJson(const std::filesystem::path &path)
+void ActuatorConfig::fromJson(const std::filesystem::path& path)
 {   
-    std::ifstream file(path);
-    if(!file){
-        throw std::runtime_error("cannot open config file" + path.string());
-    }
-    json j;
-    file >> j;
-    fromJson(j);
-}
-
-void ActuatorConfig::fromJson(const std::string &path)
-{
-    std::ifstream file(path);
-    if(!file){
-        throw std::runtime_error("cannot open config file" + path);
-    }
+    std::ifstream file = scada::utils::create_json_ifstream(path);
     json j;
     file >> j;
     fromJson(j);

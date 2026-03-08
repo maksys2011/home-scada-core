@@ -1,12 +1,13 @@
 #pragma once
-#include "ActuatorConfig.hpp"
 #include <string>
 #include <iostream>
+#include "ActuatorConfig.hpp"
+#include "ModbusClient.hpp"
 
 class Actuator
 {
 public:
-    explicit Actuator (ActuatorConfig  config);
+    explicit Actuator (const ActuatorConfig&  config, ModbusClient& client);
     void turnOn();
     void turnOff();
     void setValue(double value);
@@ -19,7 +20,7 @@ public:
     size_t getPosition() const {return position_;};
 
 private:
-
+    ModbusClient& client_;
     ActuatorConfig config_;
     bool state_ = false;
     double currentValue_ = 0.0;

@@ -55,6 +55,16 @@ def update_sensors():
             curtain_living = context[1].getValues(1, 3, count=1)[0]     # Coil3 - шторы в гостиной
             curtain_kitchen = context[1].getValues(1, 4, count=1)[0]    # Coil4 - шторы на кухне
             valve_bathroom = context[1].getValues(1, 5, count=1)[0]     # Coil5 - клапан в ванной
+
+            # ОТЛАДКА - смотрим что пришло от SCADA
+            print(f"\n=== Состояние Coils (получено от SCADA) ===")
+            print(f"Coil0 (отопление гостиная): {heater_living}")
+            print(f"Coil1 (отопление кухня): {heater_kitchen}")
+            print(f"Coil2 (отопление спальня): {heater_bedroom}")
+            print(f"Coil3 (шторы гостиная): {curtain_living}")
+            print(f"Coil4 (шторы кухня): {curtain_kitchen}")
+            print(f"Coil5 (клапан ванная): {valve_bathroom}")
+            print("="*40)
             
             # ===== ТЕМПЕРАТУРА (как и раньше) =====
             

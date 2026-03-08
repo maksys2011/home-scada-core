@@ -8,6 +8,8 @@ using json = nlohmann::json;
 class ActuatorConfig
 {
 private:
+        std::string client_id_;
+        int startAddress_;
         std::string id_;
         std::string name_;
         ActuatorType type_;
@@ -20,17 +22,22 @@ private:
 
 public:
         ActuatorConfig() = default;
-        ActuatorConfig(const std::string &id_,
-                        const std::string &name_,
-                        ActuatorType type_,
-                        double minValue,
-                        double maxValue);
+        ActuatorConfig(
+                const std::string& client_id,
+                int startAddress,
+                const std::string& id,
+                const std::string& name,
+                ActuatorType type,
+                double minValue,
+                double maxValue);
 
-        void fromJson(const json &j);
+        void fromJson(const json& j);
         void fromJson(const std::filesystem::path& path);
-        void fromJson(const std::string& path);
-        const std::string &getId() const { return id_; };
-        const std::string &getName() const { return name_; };
+
+        const std::string& getIdClient() const { return client_id_; };
+        int getStartAddress () const { return startAddress_; };
+        const std::string& getId() const { return id_; };
+        const std::string& getName() const { return name_; };
         ActuatorType getType() const { return type_; };
         double getMinValue() const { return minValue_; };
         double getMaxValue() const { return maxValue_; };

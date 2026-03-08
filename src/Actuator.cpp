@@ -2,12 +2,16 @@
 #include <utility>
 #include "Enum.hpp"
 
-Actuator::Actuator(ActuatorConfig config):
-            config_(std::move(config))
+Actuator::Actuator(const ActuatorConfig& config, ModbusClient& client):
+            config_(std::move(config)),
+            client_(client)
             {}
 void Actuator::turnOn()
 {
     if(state_) return;
+
+    client_.writeCoil(config_.getStartAddress(), true);
+    
     state_ = true;
     std::cout << "[ACTUATOR]=" << config_.getId() << " -> ON\n";
 }
@@ -15,6 +19,9 @@ void Actuator::turnOn()
 void Actuator::turnOff()
 {
     if(!state_) return;
+
+    client_.writeCoil(config_.getStartAddress(), false);
+    
     state_ = false;
     std::cout << "[ACTUATOR]=" << config_.getId() << " -> OFF\n";
 }

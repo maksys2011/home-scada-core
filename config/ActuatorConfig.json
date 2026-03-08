@@ -1,5 +1,7 @@
 [
         {
+                "client_id" : "100",
+                "startAddress" : 0,
                 "id" : "45001",
                 "name" : "livingRoom_actuator",
                 "type" : "AnalogOut",
@@ -8,6 +10,8 @@
         },
 
         {
+                "client_id" : "100",
+                "startAddress" : 1,
                 "id" : "45002",
                 "name" : "kitchen_actuator",
                 "type" : "AnalogOut",
@@ -16,6 +20,8 @@
         },
 
         {
+                "client_id" : "100",
+                "startAddress" : 2,
                 "id" : "45003",
                 "name" : "bedroom_actuator",
                 "type" : "AnalogOut",
@@ -24,6 +30,8 @@
         },
 
         {
+                "client_id" : "100",
+                "startAddress" : 3,
                 "id" : "45004",
                 "name" : "bathroom_actuator",
                 "type" : "AnalogOut",
@@ -32,6 +40,8 @@
         },
 
         {
+                "client_id" : "100",
+                "startAddress" : 4,
                 "id" : "45005",
                 "name" : "light_livingRoom_actuator",
                 "type" : "AnalogOut",
@@ -40,6 +50,8 @@
         },
         
         {
+                "client_id" : "100",
+                "startAddress" : 5,
                 "id" : "45006",
                 "name" : "light_kitchenlight_kitchen_actuator",
                 "type" : "AnalogOut",

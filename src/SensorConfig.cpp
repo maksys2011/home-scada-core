@@ -23,7 +23,9 @@ SensorConfig::SensorConfig(
     double hysteresis,
 
     bool enabled,
-    const std::string& sourceId): 
+    const std::string& sourceId)
+    
+    : 
 
     id_(id),
     name_(name),
