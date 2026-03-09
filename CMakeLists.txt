@@ -5,8 +5,11 @@ project(HomeScada VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Находим библиотеку
+# Находим hlohmann_json
 find_package(nlohmann_json REQUIRED)
+
+# Находим postgreSQL
+find_package(PostgreSQL REQUIRED)
 
 # Исполняемый файл
 add_executable(home-scada
@@ -36,6 +39,7 @@ add_executable(home-scada
     src/ModbusClientConfig.cpp
     src/CompositionRoot.cpp
     src/Application.cpp
+    src/PgArchive.cpp
 )
 
 target_include_directories(home-scada PUBLIC
@@ -43,6 +47,7 @@ target_include_directories(home-scada PUBLIC
     src
     tests
     modbus
+    ${PostgreSQL_INCLUDE_DIRS}
 )
 
 # Добавляем cpp-файлы из src/
@@ -53,11 +58,19 @@ target_sources(home-scada PRIVATE ${SRC_FILES})
 target_link_libraries(home-scada PRIVATE
     nlohmann_json::nlohmann_json
     modbus
+    ${PostgreSQL_LIBRARIES}
 )
 
 # Подключаем modbus
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(MODBUS REQUIRED libmodbus)
+
+
+
+target_include_directories(home-scada PRIVATE
+    include
+    ${PostgreSQL_INCLUDE_DIRS}
+)
 
 
 add_executable(modbus-test
@@ -69,7 +82,6 @@ target_compile_options(modbus-test PRIVATE ${MODBUS_CFLAGS_OTHER})
 
 target_link_libraries(modbus-test PRIVATE ${MODBUS_LINK_LIBRARIES})
 target_link_options(modbus-test PRIVATE ${MODBUS_LDFLAGS_OTHER})
-
 
 
 

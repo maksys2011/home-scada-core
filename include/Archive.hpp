@@ -16,13 +16,11 @@ public:
     
     ~Archive();
 
-    void appendArchive(
-        
+    virtual void appendArchive(    
         const std::string& Id,
         const std::string& nameSensor,
         double value,
         State state
-
     );
 
 private:

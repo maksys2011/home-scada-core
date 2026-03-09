@@ -20,4 +20,5 @@ private:
     CompositionRoot& root_;
     const AppConfig& cfg_;
     const ConfigLoader& configs_;
+    std::time_t now_ = std::time(nullptr);
 };

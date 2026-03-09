@@ -29,15 +29,25 @@
 #include "ModbusClientConfig.hpp"
 #include "CompositionRoot.hpp"
 #include "Application.hpp"
+#include <libpq-fe.h>
+#include "PgArchive.hpp"
 
 int main() { 
-   
+    /*
     ConfigLoader cfg;
     AppConfig apConfig = cfg.load();
     CompositionRoot composit(cfg);
     Application app(apConfig, cfg, composit);
-    app.run();
+    app.run(); */
 
+    std::string str = "dbname=homescada user=maksys2011";
+    PgArchive archive(str);
+    archive.appendArchive("temp_1", "temperature_room", 22.0, State::OK);
+
+
+ 
     return 0;
 }
+
+
 
