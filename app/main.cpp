@@ -33,12 +33,12 @@
 #include "PgArchive.hpp"
 
 int main() { 
-    /*
+    
     ConfigLoader cfg;
     AppConfig apConfig = cfg.load();
     CompositionRoot composit(cfg);
     Application app(apConfig, cfg, composit);
-    app.run(); */
+    app.run();
 
     std::string str = "dbname=homescada user=maksys2011";
     PgArchive archive(str);
