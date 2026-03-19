@@ -24,7 +24,6 @@ public:
     );
 
 private:
-
     std::ofstream file_;
     
 };

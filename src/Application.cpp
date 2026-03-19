@@ -22,10 +22,10 @@ void Application::run()
 {
     init();
     
-    for(size_t i = 0; i < 100; ++i){
+    for(size_t i = 0; i < 25; ++i){
         
         tick();
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
     
 }

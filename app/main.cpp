@@ -31,8 +31,10 @@
 #include "Application.hpp"
 #include <libpq-fe.h>
 #include "PgArchive.hpp"
+#include <mqtt/async_client.h>
 
-int main() { 
+int main() 
+{    
     
     ConfigLoader cfg;
     AppConfig apConfig = cfg.load();
@@ -40,14 +42,15 @@ int main() {
     Application app(apConfig, cfg, composit);
     app.run();
 
-    std::string str = "dbname=homescada user=maksys2011";
-    PgArchive archive(str);
-    archive.appendArchive("temp_1", "temperature_room", 22.0, State::OK);
+    return 0;
+}
+
+
+
 
 
  
-    return 0;
-}
+
 
 
 

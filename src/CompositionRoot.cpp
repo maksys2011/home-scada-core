@@ -12,12 +12,15 @@
 #include "RuleThermostat.hpp"
 #include "RuleControlLight.hpp"
 #include "RuleEngine.hpp"
+#include "PgArchive.hpp"
 
 CompositionRoot::CompositionRoot(const ConfigLoader& cfg) 
     : configs_(cfg)
 {
     engine_ = std::make_unique<RuleEngine>();
 }
+
+CompositionRoot::~CompositionRoot() = default;
 
 void CompositionRoot::initLogger()
 {
@@ -31,6 +34,12 @@ void CompositionRoot::initArchive()
     archive_ = std::make_unique<Archive>(path);
 }
 
+void CompositionRoot::initPgArchive()
+{
+    const std::string connInfo = "dbname=homescada user=maksys2011";
+    pgArchive_ = std::make_unique<PgArchive>(connInfo);
+}
+
 void CompositionRoot::initSensors(const AppConfig& cfg)
 {
     if(!logger_){
@@ -38,6 +47,9 @@ void CompositionRoot::initSensors(const AppConfig& cfg)
     }
     if(!archive_){
         throw std::runtime_error("archive is not initialized");
+    }
+    if(!pgArchive_){
+        throw std::runtime_error("pgArchive is not initialized");
     }
 
     for(const auto& configSensor : cfg.sensorConfigs_){
@@ -51,6 +63,7 @@ void CompositionRoot::initSensors(const AppConfig& cfg)
                 configSensor,
                 logger_.get(),
                 archive_.get(),
+                *pgArchive_,
                 source->second.get()
             )
         );
@@ -141,6 +154,7 @@ void CompositionRoot::init(const AppConfig& cfg)
 {
     initLogger();
     initArchive();
+    initPgArchive();
     initClients(cfg);
     initSources(cfg);
     initSensors(cfg);

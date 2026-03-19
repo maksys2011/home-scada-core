@@ -4,16 +4,28 @@ project(HomeScada VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Находим hlohmann_json
+# Paho MQTT options
+set(PAHO_WITH_MQTT_C ON CACHE BOOL "" FORCE)
+set(PAHO_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(PAHO_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(PAHO_BUILD_DOCUMENTATION OFF CACHE BOOL "" FORCE)
+
+# External dependencies
 find_package(nlohmann_json REQUIRED)
-
-# Находим postgreSQL
 find_package(PostgreSQL REQUIRED)
 
-# Исполняемый файл
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(MODBUS REQUIRED libmodbus)
+
+# Third-party libraries
+add_subdirectory(third_party/paho.mqtt.cpp)
+
+# Main executable
 add_executable(home-scada
     app/main.cpp
+
     src/Sensor.cpp
     src/SensorConfig.cpp
     src/SensorState.cpp
@@ -24,13 +36,13 @@ add_executable(home-scada
     src/Logger.cpp
     src/SensorManager.cpp
     src/Archive.cpp
-    tests/tester.cpp
-    tests/testSource.cpp
     src/ArchiveReader.cpp
     src/ArchiveReport.cpp
     src/RuleThermostatConfig.cpp
     src/RuleEngine.cpp
     src/ConfigLoader.cpp
+    src/RuleThermostat.cpp
+    src/RuleControlLight.cpp
     src/RuleConfigLight.cpp
     src/ModbusSource.cpp
     src/ModbusSourceConfig.cpp
@@ -40,6 +52,9 @@ add_executable(home-scada
     src/CompositionRoot.cpp
     src/Application.cpp
     src/PgArchive.cpp
+
+    tests/tester.cpp
+    tests/testSource.cpp
 )
 
 target_include_directories(home-scada PUBLIC
@@ -48,40 +63,38 @@ target_include_directories(home-scada PUBLIC
     tests
     modbus
     ${PostgreSQL_INCLUDE_DIRS}
+    ${MODBUS_INCLUDE_DIRS}
 )
 
-# Добавляем cpp-файлы из src/
-file(GLOB SRC_FILES src/*.cpp)
-target_sources(home-scada PRIVATE ${SRC_FILES})
-
-# Линкуем JSON-библиотеку
 target_link_libraries(home-scada PRIVATE
     nlohmann_json::nlohmann_json
-    modbus
     ${PostgreSQL_LIBRARIES}
+    ${MODBUS_LINK_LIBRARIES}
+    paho-mqttpp3-shared
 )
 
-# Подключаем modbus
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(MODBUS REQUIRED libmodbus)
-
-
-
-target_include_directories(home-scada PRIVATE
-    include
-    ${PostgreSQL_INCLUDE_DIRS}
-)
-
+target_compile_options(home-scada PRIVATE ${MODBUS_CFLAGS_OTHER})
+target_link_options(home-scada PRIVATE ${MODBUS_LDFLAGS_OTHER})
 
 add_executable(modbus-test
     tests/modbus_test.cpp
 )
 
-target_include_directories(modbus-test PRIVATE ${MODBUS_INCLUDE_DIRS})
-target_compile_options(modbus-test PRIVATE ${MODBUS_CFLAGS_OTHER})
+target_include_directories(modbus-test PRIVATE
+    ${MODBUS_INCLUDE_DIRS}
+)
 
-target_link_libraries(modbus-test PRIVATE ${MODBUS_LINK_LIBRARIES})
-target_link_options(modbus-test PRIVATE ${MODBUS_LDFLAGS_OTHER})
+target_compile_options(modbus-test PRIVATE
+    ${MODBUS_CFLAGS_OTHER}
+)
+
+target_link_libraries(modbus-test PRIVATE
+    ${MODBUS_LINK_LIBRARIES}
+)
+
+target_link_options(modbus-test PRIVATE
+    ${MODBUS_LDFLAGS_OTHER}
+)
 
 
 

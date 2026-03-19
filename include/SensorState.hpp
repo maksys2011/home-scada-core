@@ -7,10 +7,15 @@
 class SensorConfig;
 class Logger;
 class Archive;
+class PgArchive;
 
 class SensorState {
 public:
-    explicit SensorState(const SensorConfig& config, Logger* logger, Archive* arch);
+    explicit SensorState(
+        const SensorConfig& config, 
+        Logger* logger, 
+        Archive* arch,
+        PgArchive& pgArchive);
     void processValue(double raw);
     State status() const;
     std::optional<double>lastValue() const;
@@ -28,4 +33,5 @@ private:
     size_t debounceLimit;
     Logger* logger_;
     Archive* arch_;
+    PgArchive& pgArchive_;
 };

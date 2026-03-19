@@ -22,6 +22,7 @@ class SmoothRandomSource;
 class ModbusSource;
 class Source;
 class Rule;
+class PgArchive;
 
 
 class CompositionRoot
@@ -29,9 +30,11 @@ class CompositionRoot
 public:
     CompositionRoot() = default;
     CompositionRoot(const ConfigLoader& cfg);
-    
+    ~CompositionRoot();
+        
     void initLogger();
     void initArchive();
+    void initPgArchive();
     void initSensors(const AppConfig& cfg);
     void initActuators(const AppConfig& cfg);
     void initClients(const AppConfig& cfg);
@@ -56,6 +59,7 @@ private:
     std::unique_ptr<RuleEngine> engine_;
     std::unique_ptr<Logger> logger_;
     std::unique_ptr<Archive> archive_;
+    std::unique_ptr<PgArchive> pgArchive_;
     std::unordered_map<std::string, std::unique_ptr<Sensor>> sensorById_;
     std::unordered_map<std::string, std::unique_ptr<Actuator>> actuatorById_;
     std::unordered_map<std::string, std::unique_ptr<ModbusClient>> clientById_;

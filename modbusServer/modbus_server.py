@@ -6,12 +6,12 @@ import time
 import random
 
 # ===== Начальные значения сенсоров =====
-temperature_livingRoom = 20.0    # HR0
-temperature_kitchen = 21.0       # HR1
-temperature_bedroom = 19.5       # HR2
-temperature_bathroom = 22.0      # HR3
-light_livingRoom = 300.0         # HR4
-light_kitchen = 350.0            # HR5
+temperature_livingRoom = 15.0    # HR0
+temperature_kitchen = 15.0       # HR1
+temperature_bedroom = 15.5       # HR2
+temperature_bathroom = 15.0      # HR3
+light_livingRoom = 150.0         # HR4
+light_kitchen = 150.0            # HR5
 
 # ===== Параметры влияния актуаторов =====
 HEATER_POWER = 0.3        # Нагрев за такт (для температуры)

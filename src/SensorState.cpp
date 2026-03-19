@@ -4,15 +4,21 @@
 #include  <iostream>
 #include  <Logger.hpp>
 #include  <Archive.hpp>
+#include  <PgArchive.hpp>
 
-SensorState::SensorState(const SensorConfig &config, Logger* logger, Archive* arch)
+SensorState::SensorState(
+    const SensorConfig &config, 
+    Logger* logger, 
+    Archive* arch,
+    PgArchive& pgArchive)
     : config_(config),
         currentState(State::OK),
         pendingState(State::OK),
         debounceCounter(0),
         debounceLimit(1),
         logger_(logger),
-        arch_(arch)
+        arch_(arch),
+        pgArchive_(pgArchive)
 {}
 void SensorState::processValue(double raw)
 {
@@ -39,6 +45,10 @@ void SensorState::processValue(double raw)
             currentState
         );
     }
+    
+    pgArchive_.appendArchive(
+        config_.getId(), config_.getName(), raw, currentState
+    );
 
     if (currentState == State::WARN && newState == State::OK) {
         if (raw >= (config_.getWarnHigh() - config_.hysteresis()) ||

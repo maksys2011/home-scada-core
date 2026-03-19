@@ -25,6 +25,8 @@ PgArchive::~PgArchive()
         PQfinish(conn_);
         conn_ = nullptr;
     }
+
+    std::cout << "[PostgreSQL] Disconnected\n";
 }
 
 void PgArchive::appendArchive(
