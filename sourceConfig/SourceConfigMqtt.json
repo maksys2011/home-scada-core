@@ -1,0 +1,9 @@
+{
+    "comment" : "source mqtt room1",
+    "name" : "room1 temperature",
+    "source_id" : "mgtt_temp_room1",
+    "broker" : "tcp://localhost:1883",
+    "client_id" : "home-scada-client",
+    "topic" : "home/room1/temperature",
+    "qos" : 1
+}

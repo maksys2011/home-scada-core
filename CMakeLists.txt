@@ -52,6 +52,8 @@ add_executable(home-scada
     src/CompositionRoot.cpp
     src/Application.cpp
     src/PgArchive.cpp
+    src/MqttSourceConfig.cpp
+    src/MqttSource.cpp
 
     tests/tester.cpp
     tests/testSource.cpp
