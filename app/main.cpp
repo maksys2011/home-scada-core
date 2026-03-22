@@ -37,20 +37,29 @@
 
 int main() 
 {    
-    std::filesystem::path path = "../sourceConfig/SourceConfigMqtt.json";
-    MqttSourceConfig config;
+    SensorConfig config;
+    std::filesystem::path path = "../config/SensorConfigTemperatureMqtt.json";
+    std::filesystem::path pathLog = "../logs/events.log";
+    std::filesystem::path pathArch = "../archive/archive.csv";
+    std::filesystem::path pathSource = "../sourceConfig/SourceConfigMqtt.json";
     config.fromJson(path);
-
-    MqttSource source(config);
-
-    if(!source.connect()){
-        std::cerr << "MQTT connect failed" << '\n';
-        return 1;
+    config.print();
+    Logger lg(pathLog);
+    Archive arch(pathArch);
+    MqttSourceConfig configSource;
+    configSource.fromJson(pathSource);
+    MqttSource source(configSource);
+    source.connect();
+    PgArchive pgArchive("dbname=homescada user=maksys2011");
+    Sensor sensor(config, &lg, &arch, pgArchive, &source);
+    for(int i = 0; i < 10; i++){
+        sensor.update();
+        sensor.state().processValue(source.readValue());
+        double value = *sensor.state().lastValue();
+        std::cout << value << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(3));
     }
-    while(true){
-        std::cout << "MQTT value= " << source.readValue() << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
+    
     /*
     ConfigLoader cfg;
     AppConfig apConfig = cfg.load();
@@ -58,9 +67,7 @@ int main()
     Application app(apConfig, cfg, composit);
     app.run();
     */
-    std::cout << "hello world" << std::endl;
-
-
+    
     return 0;
 }
 

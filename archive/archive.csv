@@ -4979,3 +4979,11 @@
 1773434064;35004;temperature_bathroom;17;OK
 1773434064;35002;temperature_kitchen;19;OK
 1773434064;35001;temperature_livingRoom;19;OK
+1774198588;sensor_temp_room1;room1_temperature;0;OK
+1774198621;sensor_temp_room1;room1_temperature;0;OK
+1774201397;sensor_temp_room1;room1_temperature;0;OK
+1774201565;sensor_temp_room1;room1_temperature;0;OK
+1774201701;sensor_temp_room1;room1_temperature;0;OK
+1774201704;sensor_temp_room1;room1_temperature;24.7;OK
+1774202006;sensor_temp_room1;room1_temperature;0;OK
+1774202009;sensor_temp_room1;room1_temperature;23.2;OK

@@ -1,0 +1,24 @@
+  {
+    "comment": "MQTT sensor room1 temperature from ESP32 + DHT22",
+    "id_": "sensor_temp_room1",
+    "name_": "room1_temperature",
+    "type_": "Analog",
+    "unit_": "C",
+
+    "physicalMin_" : 0.0,
+    "physicalMax_" : 100.0,
+
+    "noiseEpsilon_" : 0.5,
+    "staleTimeout_" : 500,
+
+    "warnHigh_": 50.5,
+    "warnLow_": 10,
+    "alarmHigh_": 95.0,
+    "alarmLow_": 5.0,
+
+    "deadband_" : 0.1,
+    "hysteresis_" : 0.5,
+    "enabled_" : false,
+
+    "source_id" : "mqtt_temp_room1"
+  }
