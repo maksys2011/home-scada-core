@@ -31,6 +31,7 @@ void connectWiFi() {
     Serial.print("[WiFi] Connecting to: ");
     Serial.println(ssid);
 
+
     WiFi.mode(WIFI_STA);
     WiFi.disconnect(true);
     delay(1000);

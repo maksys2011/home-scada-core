@@ -14,6 +14,7 @@ ConfigLoader::ConfigLoader()
     paths_.fileArhivePath      = "../archive/archive.csv";
     paths_.fileCfgModbusSource = "../sourceConfig/SourceConfigCoil.json";
     paths_.fileCfgModbusClient = "../clientConfig/plcClientConfig.json";
+    
 }
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
@@ -49,6 +50,12 @@ std::vector<ModbusClientConfig> ConfigLoader::loadModbusClient()
     std::string msg1 = "ModbusClientConfig: cannot open rule config file: ";
     std::string msg2 = "ModbusClientConfig: config must be object or array";
     return scada::factory::loadHierarchy<ModbusClientConfig>(msg1, msg2, paths_.fileCfgModbusClient);
+}
+
+std::vector<MqttSourceConfig> ConfigLoader::loadMqtt()
+{
+
+    return std::vector<MqttSourceConfig>();
 }
 
 AppPath ConfigLoader::getPaths() const

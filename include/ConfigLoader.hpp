@@ -13,6 +13,7 @@
 #include "RuleConfigLight.hpp"
 #include "ModbusSourceConfig.hpp"
 #include "ModbusClientConfig.hpp"
+#include "MqttSourceConfig.hpp"
 
 using json = nlohmann::json;
 
@@ -26,6 +27,7 @@ struct AppPath
     std::filesystem::path fileArhivePath; 
     std::filesystem::path fileCfgModbusClient;
     std::filesystem::path fileCfgModbusSource;
+    std::filesystem::path fileCfgMqttSource;
 };
 
 struct AppConfig
@@ -35,7 +37,8 @@ struct AppConfig
     std::vector<ModbusSourceConfig>          modbusSourceConfigs_;
     std::vector<std::unique_ptr<RuleConfig>> ruleConfigs_;
     std::vector<ModbusClientConfig>          modbusClientConfig_;
-
+    std::vector<MqttSourceConfig>            mqttSourceConfig_;
+    
     AppConfig() = default;
     AppConfig(AppConfig&&) = default;
     AppConfig& operator=(AppConfig&&) = default;
@@ -58,4 +61,5 @@ private:
     std::vector<ModbusSourceConfig>loadSourceModbus();
     std::vector<std::unique_ptr<RuleConfig>> loadRules();
     std::vector<ModbusClientConfig> loadModbusClient();
+    std::vector<MqttSourceConfig> loadMqtt();
 };
