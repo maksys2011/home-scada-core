@@ -54,6 +54,7 @@ add_executable(home-scada
     src/PgArchive.cpp
     src/MqttSourceConfig.cpp
     src/MqttSource.cpp
+    src/MqttCommandPublisher.cpp
 
     tests/tester.cpp
     tests/testSource.cpp

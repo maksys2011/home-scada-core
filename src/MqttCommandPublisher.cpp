@@ -54,7 +54,7 @@ bool MqttCommandPublisher::publishCommand(const std::string &topic, const std::s
 {
     if(!isConnected_) {
         std::cerr << "[MQTT CMD] Not connected, skip publish\n";
-        return;
+        return false;
     }
 
     try
@@ -68,6 +68,7 @@ bool MqttCommandPublisher::publishCommand(const std::string &topic, const std::s
     {
         std::cerr << "[MQTT CMD] Publish error: " << e.what() << '\n';
     }
+    return true;
 }
 
 void MqttCommandPublisher::publishOn(const std::string &topic)

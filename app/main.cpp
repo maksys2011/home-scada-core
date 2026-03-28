@@ -34,9 +34,11 @@
 #include <mqtt/async_client.h>
 #include "MqttSourceConfig.hpp"
 #include "MqttSource.hpp"
+#include "MqttCommandPublisher.hpp"
 
 int main() 
 {    
+    /*
     SensorConfig config;
     std::filesystem::path path = "../config/SensorConfigTemperatureMqtt.json";
     std::filesystem::path pathLog = "../logs/events.log";
@@ -67,6 +69,18 @@ int main()
     Application app(apConfig, cfg, composit);
     app.run();
     */
+    std::string broker = "tcp://localhost:1883";
+    std::string topic = "home/test/cmd";
+    std::string client = "home-scada-client";
+    MqttCommandPublisher cmd(broker, client);
+    cmd.connect();
+    
+    for(size_t i = 0; i < 10; i++){
+        cmd.publishOn(topic);
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+        cmd.publishOff(topic);
+    }
+
     
     return 0;
 }
