@@ -1,0 +1,13 @@
+    {
+        "comment" : "MQTT_sensor_room1_humidity",
+        "id_": "sensor_humidity_room1",
+        "name_": "room1_humidity",
+        "type_": "Analog",
+        "unit" : "%",
+        "warnHigh_": 80.0,
+        "warnLow_": 10.0,
+        "alarmHigh_": 99.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 100,
+        "hysteresis_" : 3
+    }

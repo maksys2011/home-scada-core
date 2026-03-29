@@ -2,18 +2,26 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <DHT.h>
+#include <string>
+#include "utilsMcu.hpp"
  
-const char* ssid = "...";
-const char* password = "...";
+std::string ssid = "Keenetic-3162-24";
+std::string password = "31082019am";
  
-const char* mqtt_server = "...";
+const char* mqtt_server = "192.168.1.67";
 const int mqtt_port = 1883;
  
-const char* mqtt_client_id = "esp32-room1-temp";
-const char* topicTemp = "home/room1/temperature";
-const char* cmdTopic  = "home/test/cmd";
+std::string mqtt_client_id = "esp32-room1-temp";
+
+const char* topicTemp = "home/bedroom2/sensor/temperature";
+const char* topicHumidity = "home/bedroom2/sensor/humidity";
+
+const char* cmdHeaterTopic  = "home/bedroom2/actuators/heater/5";           // управление сплит-системой
+const char* cmdHumidifierTopic2 = "home/bedroom2/actuators/humidity/17";    // управление системой вентиляции
  
 const int ledPin = 5;     // внешний LED -> GPIO5
+const int ledPin_17 = 17;
+
 #define DHTPIN 4          // DHT22 -> GPIO4
 #define DHTTYPE DHT22
  
@@ -21,68 +29,6 @@ DHT dht(DHTPIN, DHTTYPE);
  
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
- 
-void connectWiFi() {
-  Serial.println();
-  Serial.print("[WiFi] Connecting to: ");
-  Serial.println(ssid);
- 
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
- 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
- 
-  Serial.println();
-  Serial.println("[WiFi] Connected!");
-  Serial.print("[WiFi] IP: ");
-  Serial.println(WiFi.localIP());
-}
- 
-void callBack(char* topic, byte* payload, unsigned int length) {
-  String msg = "";
- 
-  for (unsigned int i = 0; i < length; ++i) {
-    msg += (char)payload[i];
-  }
- 
-  Serial.print("[MQTT] Message on ");
-  Serial.print(topic);
-  Serial.print(" -> ");
-  Serial.println(msg);
- 
-  if (String(topic) == cmdTopic) {
-    if (msg == "ON") {
-      digitalWrite(ledPin, HIGH);
-      Serial.println("[LED] ON");
-    } else if (msg == "OFF") {
-      digitalWrite(ledPin, LOW);
-      Serial.println("[LED] OFF");
-    }
-  }
-}
- 
-void reconnectMQTT() {
-  while (!mqttClient.connected()) {
-    Serial.print("[MQTT] Connecting... ");
- 
-    if (mqttClient.connect(mqtt_client_id)) {
-      Serial.println("OK");
- 
-      mqttClient.subscribe(cmdTopic);
-      Serial.print("[MQTT] Subscribed: ");
-      Serial.println(cmdTopic);
- 
-    } else {
-      Serial.print("FAILED, rc=");
-      Serial.print(mqttClient.state());
-      Serial.println(" retry in 2 sec");
-      delay(2000);
-    }
-  }
-}
  
 void setup() {
   Serial.begin(115200);
@@ -92,24 +38,28 @@ void setup() {
   Serial.println("=== ESP32 DHT22 + MQTT CMD ===");
  
   pinMode(ledPin, OUTPUT);
+  pinMode(ledPin_17, OUTPUT);
+
   digitalWrite(ledPin, LOW);
+  digitalWrite(ledPin_17, LOW);
  
   dht.begin();
- 
-  connectWiFi();
+
+  utilsMcu::wifiMqtt::connect(ssid, password);
  
   mqttClient.setServer(mqtt_server, mqtt_port);
-  mqttClient.setCallback(callBack);
+  mqttClient.setCallback(utilsMcu::commandActuators::callback);
 }
  
 void loop() {
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("[WiFi] Lost connection, reconnecting...");
-    connectWiFi();
+    utilsMcu::wifiMqtt::connect(ssid, password);
   }
  
   if (!mqttClient.connected()) {
-    reconnectMQTT();
+    utilsMcu::mqtt::reconnect(mqttClient, mqtt_client_id, cmdHeaterTopic, cmdHumidifierTopic2);
+
   }
  
   mqttClient.loop();
@@ -126,17 +76,29 @@ void loop() {
     Serial.print(h, 2);
     Serial.println(" %");
  
-    char payload[16];
-    snprintf(payload, sizeof(payload), "%.2f", t);
+    char tempPayload[16];
+    char humPayload[16];
+
+    snprintf(tempPayload, sizeof(tempPayload), "%.2f", t);
+    snprintf(humPayload, sizeof(humPayload), "%.2f", h);
  
-    bool ok = mqttClient.publish(topicTemp, payload);
+    bool okTemp = mqttClient.publish(topicTemp, tempPayload);
+    bool okHum = mqttClient.publish(topicHumidity, humPayload);
+
  
     Serial.print("[MQTT] Publish ");
     Serial.print(topicTemp);
     Serial.print(" = ");
-    Serial.print(payload);
+    Serial.print(tempPayload);
     Serial.print(" -> ");
-    Serial.println(ok ? "OK" : "FAIL");
+    Serial.println(okTemp ? "OK" : "FAIL");
+
+    Serial.print("[MQTT] Publish ");
+    Serial.print(topicHumidity);
+    Serial.print(" = ");
+    Serial.print(humPayload);
+    Serial.print(" -> ");
+    Serial.println(okHum ? "OK" : "FAIL");
   }
  
   delay(3000);

@@ -1,5 +1,5 @@
   {
-    "comment": "MQTT sensor room1 temperature from ESP32 + DHT22",
+    "comment": "MQTT_sensor_room1_temperature from ESP32 + DHT22",
     "id_": "sensor_temp_room1",
     "name_": "room1_temperature",
     "type_": "Analog",
