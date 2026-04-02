@@ -14,6 +14,8 @@
 #include "ModbusSourceConfig.hpp"
 #include "ModbusClientConfig.hpp"
 #include "MqttSourceConfig.hpp"
+#include "Source.hpp"
+#include "SourceConfig.hpp"
 
 using json = nlohmann::json;
 
@@ -28,17 +30,19 @@ struct AppPath
     std::filesystem::path fileCfgModbusClient;
     std::filesystem::path fileCfgModbusSource;
     std::filesystem::path fileCfgMqttSource;
+    std::filesystem::path fileCfgSource;
 };
 
 struct AppConfig
 {
-    std::vector<SensorConfig>                sensorConfigs_;
-    std::vector<ActuatorConfig>              actuatorConfigs_;
-    std::vector<ModbusSourceConfig>          modbusSourceConfigs_;
+    std::vector<SensorConfig> sensorConfigs_;
+    std::vector<ActuatorConfig> actuatorConfigs_;
+    std::vector<ModbusSourceConfig> modbusSourceConfigs_;
     std::vector<std::unique_ptr<RuleConfig>> ruleConfigs_;
-    std::vector<ModbusClientConfig>          modbusClientConfig_;
-    std::vector<MqttSourceConfig>            mqttSourceConfig_;
-    
+    std::vector<ModbusClientConfig> modbusClientConfig_;
+    std::vector<MqttSourceConfig> mqttSourceConfig_;
+    std::vector<std::unique_ptr<SourceConfig>> sourceConfigs_;
+
     AppConfig() = default;
     AppConfig(AppConfig&&) = default;
     AppConfig& operator=(AppConfig&&) = default;
@@ -61,5 +65,6 @@ private:
     std::vector<ModbusSourceConfig>loadSourceModbus();
     std::vector<std::unique_ptr<RuleConfig>> loadRules();
     std::vector<ModbusClientConfig> loadModbusClient();
-    std::vector<MqttSourceConfig> loadMqtt();
+    std::vector<MqttSourceConfig> loadSourceMqtt();
+    std::vector<std::unique_ptr<SourceConfig>> loadSourceConfig();
 };

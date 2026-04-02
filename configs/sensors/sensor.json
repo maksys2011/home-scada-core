@@ -1,6 +1,6 @@
 [
     {
-        "comment" : "конфигурации для датчик темперутры - гостинная",
+        "comment" : "[PLC] конфигурации для датчика температуры на кухне",
         "id_": "35001",
         "name_": "temperature_livingRoom",
         "type_": "Analog",
@@ -19,7 +19,7 @@
     },
 
     {
-        "comment" : "конфигурации для датчик темперутры - кухня",
+        "comment" : "[PLC] конфигурации для датчика температуры - кухня",
         "id_": "35002",
         "name_": "temperature_kitchen",
         "type_": "Analog",
@@ -38,7 +38,7 @@
     },
 
     {
-        "comment" : "конфигурации для датчик темперутры - спальня",
+        "comment" : "[PLC] конфигурации для датчика температуры - спальня",
         "id_": "35003",
         "name_": "temperature_bedroom",
         "type_": "Analog",
@@ -57,7 +57,7 @@
     },
 
     {
-        "comment" : "конфигурации для датчик темперутры - ванная",
+        "comment" : "[PLC] конфигурации для датчика температуры - ванная",
         "id_": "35004",
         "name_": "temperature_bathroom",
         "type_": "Analog",
@@ -76,7 +76,7 @@
     },
 
     {
-        "comment" : "конфигурации для датчик освещения - гостинная",
+        "comment" : "[PLC] конфигурации для датчика освещения - гостинная",
         "id_": "10001",
         "name_": "light_livingRoom",
         "type_": "Analog",
@@ -87,7 +87,7 @@
     },
 
     {
-        "comment" : "конфигурации для датчик освещения - гостинная",
+        "comment" : "[PLC] конфигурации для датчика освещения - кухня",
         "id_": "10002",
         "name_": "light_kitchen",
         "type_": "Analog",
@@ -95,6 +95,47 @@
         "physicalMax_" : 20000.0,
         "noiseEpsilon_" : 10,
         "source_id" : "506"
+    },
+
+    {
+        "comment" : "[ESP32] конфигурации для датчика температуры - спальня 2 этаж",
+        "id_" : "35005",
+        "name_" : "temperature_floor2_bedroom",
+        "type_" : "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 0.1,
+        "hysteresis_" : 0.5,
+        "enabled_" : false,
+        "source_id" : "507"
+    },
+
+    {
+        "comment" : "[ESP32] конфигурации для датчика освещения - спальня 2 этаж",
+        "id_" : "10003",
+        "name_" : "light_floor2_bedroom",
+        "type_" : "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 20000.0,
+        "noiseEpsilon_" : 10,
+        "source_id" : "508"
+    },
+
+    {
+        "comment" : "[ESP32] конфигурации для датчика влажности - спальня 2 этаж",
+        "id_" : "20001",
+        "name_" : "humidiry_floor2_bedroom",
+        "type_" : "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 1,
+        "source_id" : "509"
     }
 ]
 

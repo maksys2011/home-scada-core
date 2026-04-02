@@ -6,15 +6,16 @@
 
 ConfigLoader::ConfigLoader()
 {
-    paths_.fileCfgSensorPath   = "../config/SensorConfig.json";
-    paths_.fileCfgActuator     = "../config/ActuatorConfig.json";
-    paths_.fileCfgRule         = "../ruleConfig/RuleConfig.json";
-    paths_.fileCfgRuleLight    = "../ruleConfig/RuleConfigLight.json";
+    paths_.fileCfgSensorPath   = "../configs/sensors/sensor.json";
+    paths_.fileCfgActuator     = "../configs/actuators/actuator.json";
+    paths_.fileCfgRule         = "../configs/rules/rule.json";
+    //paths_.fileCfgRuleLight    = "";
     paths_.fileLoggerPath      = "../logs/events.log";
     paths_.fileArhivePath      = "../archive/archive.csv";
-    paths_.fileCfgModbusSource = "../sourceConfig/SourceConfigCoil.json";
-    paths_.fileCfgModbusClient = "../clientConfig/plcClientConfig.json";
-    
+    paths_.fileCfgSource       = "../configs/sources/source.json";
+    paths_.fileCfgModbusSource = "../configs/sources/SourceConfigModbus.json";
+    paths_.fileCfgModbusClient = "../configs/clients/plcClient.json";
+    paths_.fileCfgMqttSource   = "../configs/sources/SourceConfigMqtt.json";   
 }
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
@@ -52,10 +53,18 @@ std::vector<ModbusClientConfig> ConfigLoader::loadModbusClient()
     return scada::factory::loadHierarchy<ModbusClientConfig>(msg1, msg2, paths_.fileCfgModbusClient);
 }
 
-std::vector<MqttSourceConfig> ConfigLoader::loadMqtt()
+std::vector<MqttSourceConfig> ConfigLoader::loadSourceMqtt()
 {
+    std::string msg1 = "SourceMqttConfig: cannot open config file: ";
+    std::string msg2 = "SourceMqttConfig: config must be object or array";
+    return scada::factory::loadHierarchy<MqttSourceConfig>(msg1, msg2, paths_.fileCfgMqttSource);
+}
 
-    return std::vector<MqttSourceConfig>();
+std::vector<std::unique_ptr<SourceConfig>> ConfigLoader::loadSourceConfig()
+{
+    std::string msg1 = "SourceConfig: cannot open config file: ";
+    std::string msg2 = "SourceConfig: config must be object or array";
+    return scada::source::loadPolymorphic(msg1, msg2, paths_.fileCfgSource);
 }
 
 AppPath ConfigLoader::getPaths() const
@@ -71,6 +80,8 @@ AppConfig ConfigLoader::load()
     cfg.modbusSourceConfigs_ = loadSourceModbus();
     cfg.ruleConfigs_         = loadRules();
     cfg.modbusClientConfig_  = loadModbusClient();
+    cfg.mqttSourceConfig_    = loadSourceMqtt();
+    cfg.sourceConfigs_       = loadSourceConfig();
     
     return cfg;
 }

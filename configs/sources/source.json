@@ -1,0 +1,106 @@
+[
+    {
+        "comment" : "source temperature_livingRoom",
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "501",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 0,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "source temperature_kitchen",
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "502",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 1,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "source temperature_bedroom",
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "503",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 2,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "source temperature_bathroom",
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "504",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 3,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "light light_livingRoom",
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "505",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 4,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "light light_kitchen",
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "506",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_Id" : 1,
+        "startAddress" : 5,
+        "typeSource" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "source mqtt bedroom2",
+        "type_source" : "Mqtt",
+        "name" : "bedroom2_temperature",
+        "source_id" : "507",
+        "broker" : "tcp://localhost:1883",
+        "client_id" : "home-scada-client",
+        "topic" : "home/bedroom2/sensor/temperature",
+        "qos" : 1
+    },
+
+    {
+        "comment" : "source mqtt bedroom2",
+        "type_source" : "Mqtt",
+        "name" : "bedroom2_humidity",
+        "source_id" : "508",
+        "broker" : "tcp://localhost:1883",
+        "client_id" : "home-scada-client",
+        "topic" : "home/bedroom2/sensor/humidity",
+        "qos" : 1
+    },
+
+    {
+        "comment" : "source mqtt bedroom2",
+        "type_source" : "Mqtt",
+        "name" : "bedroom2_light",
+        "source_id" : "509",
+        "broker" : "tcp://localhost:1883",
+        "client_id" : "home-scada-client",
+        "topic" : "home/bedroom2/sensor/light",
+        "qos" : 1
+    }
+]

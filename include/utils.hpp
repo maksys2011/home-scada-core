@@ -10,6 +10,9 @@
 #include "RuleConfig.hpp"
 #include "RuleConfigLight.hpp"
 #include "RuleThermostatConfig.hpp"
+#include "Source.hpp"
+#include "ModbusSourceConfig.hpp"
+#include "MqttSourceConfig.hpp"
 
 using json = nlohmann::json;
 
@@ -44,7 +47,9 @@ namespace scada
         std::unique_ptr<RuleConfig> create(const json& j);
 
         template<typename T>
-        std::vector<T> loadHierarchy(const std::string& msg1, const std::string& msg2,  const std::filesystem::path& pathFile)
+        std::vector<T> loadHierarchy(const std::string& msg1, 
+                                    const std::string& msg2,  
+                                    const std::filesystem::path& pathFile)
         {
     
             std::vector<T> result;
@@ -74,7 +79,20 @@ namespace scada
             return result;
         }
 
-        std::vector<std::unique_ptr<RuleConfig>> loadPolymorphic(const std::string& msg1, const std::string& msg2, const std::filesystem::path& pathFile);
+        std::vector<std::unique_ptr<RuleConfig>> loadPolymorphic(
+            const std::string& msg1, 
+            const std::string& msg2, 
+            const std::filesystem::path& pathFile);
+    }
+
+    namespace source
+    {
+        std::unique_ptr<SourceConfig> create(const json& j);
+        std::vector<std::unique_ptr<SourceConfig>> loadPolymorphic(
+            const std::string& msg1,
+            const std::string& msg2,
+            const std::filesystem::path& pathFile);
+
     }
 
 }

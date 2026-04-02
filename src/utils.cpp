@@ -91,7 +91,7 @@ std::unique_ptr<RuleConfig> scada::factory::create(const json& j)
         cfg->fromJson(j);
         return cfg;
     }else if(type == "temperature rules"){
-    auto cfg = std::make_unique<RuleThermostatConfig>();
+        auto cfg = std::make_unique<RuleThermostatConfig>();
         cfg->fromJson(j);
         return cfg;
     }else{
@@ -99,7 +99,10 @@ std::unique_ptr<RuleConfig> scada::factory::create(const json& j)
     }
 }
 
-std::vector<std::unique_ptr<RuleConfig>> scada::factory::loadPolymorphic(const std::string& msg1, const std::string& msg2, const std::filesystem::path& pathFile)
+std::vector<std::unique_ptr<RuleConfig>> scada::factory::loadPolymorphic(
+    const std::string& msg1, 
+    const std::string& msg2, 
+    const std::filesystem::path& pathFile)
 {
             
     std::vector<std::unique_ptr<RuleConfig>> result;
@@ -121,4 +124,43 @@ std::vector<std::unique_ptr<RuleConfig>> scada::factory::loadPolymorphic(const s
     return result;
 }
 
+std::unique_ptr<SourceConfig> scada::source::create(const json &j)
+{
+    std::string typeSource = j.at("type_source").get<std::string>();
+    if(typeSource == "Modbus"){
+        auto cfg = std::make_unique<ModbusSourceConfig>();
+        cfg->fromJson(j);
+        return cfg;
+    }else if(typeSource == "Mqtt"){
+        auto cfg = std::make_unique<MqttSourceConfig>();
+        cfg->fromJson(j);
+        return cfg;
+    }else{
+        throw std::runtime_error(
+            "Unknown source config type");
+    }
+}
 
+std::vector<std::unique_ptr<SourceConfig>> scada::source::loadPolymorphic(
+    const std::string &msg1, 
+    const std::string &msg2, 
+    const std::filesystem::path &pathFile)
+{
+    std::vector<std::unique_ptr<SourceConfig>> configs;
+    std::ifstream file = scada::utils::create_json_ifstream(pathFile);
+
+    json j;
+    file >> j;
+
+    if(j.is_array()){
+        for(const auto& item : j){
+            configs.push_back(scada::source::create(item));
+        }
+    }else if(j.is_object()){
+        configs.push_back(scada::source::create(j));
+    }else{
+        throw std::runtime_error(msg1);
+    }
+
+    return configs;
+}

@@ -1,14 +1,15 @@
 #pragma once
+
 #include <string>
 #include <filesystem>
 #include <nlohmann/json.hpp>
 #include "Enum.hpp"
+#include "RuleConfig.hpp"
 using json = nlohmann::json;
 
-class LightConfig : public RuleConfig;
+class LightConfig : public RuleConfig
 {
 private:
-
     std::string id_;
     std::string name_;
     std::string room_;

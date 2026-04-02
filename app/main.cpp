@@ -38,20 +38,12 @@
 
 int main() 
 {    
-
-    
-
-    /*
-
     ConfigLoader cfg;
     AppConfig apConfig = cfg.load();
-    CompositionRoot composit(cfg);
-    Application app(apConfig, cfg, composit);
-    app.run();
-    
-    */
-
-    
+    for(const auto& it : apConfig.sourceConfigs_){
+        it->print();
+        std::cout << std::endl;
+    } 
     return 0;
 }
 

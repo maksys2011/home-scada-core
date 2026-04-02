@@ -121,3 +121,14 @@ std::string RuleTypeToString(const RuleType type)
 
     return std::string();
 }
+
+std::string ParseSourceType(SourceType &type)
+{
+    switch (type)
+    {
+    case SourceType::Modbus: return "Modbus";
+    case SourceType::Mqtt: return "Mqtt";
+    case SourceType::OpcUa: return "OpcUa";
+    }
+    return std::string();
+}

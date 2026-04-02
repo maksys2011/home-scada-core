@@ -46,6 +46,13 @@ enum class RuleType
     Light
 };
 
+enum class SourceType
+{
+    Modbus,
+    Mqtt,
+    OpcUa
+};
+
 SensorType ParseSensorType(const std::string &typeStr);
 
 std::string SensorTypeToString(const SensorType type);
@@ -65,3 +72,5 @@ ModbusObjectType ParseModbusObjectType(const std::string& connectionType);
 RuleType ParseRuleType(const std::string& type);
 
 std::string RuleTypeToString(const RuleType type);
+
+std::string ParseSourceType(SourceType& type);

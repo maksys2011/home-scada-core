@@ -52,7 +52,7 @@ void ModbusSourceConfig::fromJson(const json &j)
     typeSource_ = ParseModbusObjectType(new_typeSource);
 }
 
-void ModbusSourceConfig::print() const
+void ModbusSourceConfig::print()
 {
     std::cout << "Creating Modbus source configurations" << std::endl;
     std::cout << "client id= " << client_id_ << std::endl;

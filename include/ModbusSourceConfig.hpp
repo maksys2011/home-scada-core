@@ -4,12 +4,11 @@
 #include <nlohmann/json.hpp>
 #include <sstream>
 #include <set>
+#include "SourceConfig.hpp"
 #include "Enum.hpp"
 using json = nlohmann::json;
 
-/// @brief Конфигурация Modbus-источника данных (TCP)  
-
-class ModbusSourceConfig
+class ModbusSourceConfig : public SourceConfig
 {
 public:
     ModbusSourceConfig() = default;
@@ -23,8 +22,8 @@ public:
         const std::string& typeNameSource
     );
 
-    void fromJson(const std::filesystem::path& pathFile);
-    void fromJson(const json& j);
+    void fromJson(const std::filesystem::path& pathFile) override;
+    void fromJson(const json& j) override;
 
     const std::string& getClientId() const { return client_id_; };
     const std::string& getSourceId() const  { return source_id_; };
@@ -35,7 +34,7 @@ public:
     int getCount() const { return count_; };
     ModbusObjectType getTypeSource() const { return typeSource_; };
     
-    void print() const;
+    void print() override;
 
     void validateStartAddress(const int startAddress) const;
     void validateModbusTypeSource(const std::string& typeSource) const;

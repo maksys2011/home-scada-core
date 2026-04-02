@@ -1,13 +1,13 @@
 #pragma once
-
 #include <string>
 #include <filesystem>
 #include <nlohmann/json.hpp>
+#include "SourceConfig.hpp"
 #include "utils.hpp"
 
 using json = nlohmann::json;
 
-class MqttSourceConfig
+class MqttSourceConfig : public SourceConfig
 {
 public:
     MqttSourceConfig() = default;
@@ -19,8 +19,8 @@ public:
         std::string& topic,
         int qos
     );
-    void fromJson(const json& j);
-    void fromJson(const std::filesystem::path& path);
+    void fromJson(const json& j) override;
+    void fromJson(const std::filesystem::path& path) override;
 
     const std::string& getName() const { return name_; };
     const std::string& getSourceId() const { return sourceId_; };
@@ -29,7 +29,7 @@ public:
     const std::string& getTopic() const { return topic_; };
     int getQos() const { return qos_; };
 
-    void print();
+    void print() override;
 
     void validate();
 

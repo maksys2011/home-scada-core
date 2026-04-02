@@ -5,16 +5,17 @@
 #include <string>
 #include "utilsMcu.hpp"
  
-std::string ssid = "Keenetic-3162-24";
-std::string password = "31082019am";
+std::string ssid = "...";
+std::string password = "...";
  
-const char* mqtt_server = "192.168.1.67";
+const char* mqtt_server = "...";
 const int mqtt_port = 1883;
  
 std::string mqtt_client_id = "esp32-room1-temp";
 
 const char* topicTemp = "home/bedroom2/sensor/temperature";
 const char* topicHumidity = "home/bedroom2/sensor/humidity";
+const char* topicLight = "home/bedroom2/sensor/light";
 
 const char* cmdHeaterTopic  = "home/bedroom2/actuators/heater/5";           // управление сплит-системой
 const char* cmdHumidifierTopic2 = "home/bedroom2/actuators/humidity/17";    // управление системой вентиляции
