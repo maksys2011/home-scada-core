@@ -4,10 +4,8 @@
 #include <string>
 #include <mqtt/async_client.h>
 #include <functional>
-
 #include "MqttSourceConfig.hpp"
 #include "Source.hpp"
-
 
 class MqttSource : public Source
 {

@@ -22,21 +22,21 @@ void ModbusSource::disconnect()
 
 double ModbusSource::readValue()
 {
-   switch (config_.getTypeSource())
+   switch (config_.getTypeRegister())
    {
-        case ModbusObjectType::Coil:
+        case ModbusRegisterType::Coil:
             return static_cast<double>(
             client_.readCoil(config_.getStartAddress()));
 
-        case ModbusObjectType::DiscreteInput: 
+        case ModbusRegisterType::DiscreteInput: 
             return static_cast<double>(
             client_.readDiscrete(config_.getStartAddress()));
 
-        case ModbusObjectType::HoldingRegister: 
+        case ModbusRegisterType::HoldingRegister: 
             return static_cast<double>(
             client_.readHolding(config_.getStartAddress()));
 
-        case ModbusObjectType::InputRegister: 
+        case ModbusRegisterType::InputRegister:
             return static_cast<double>(
             client_.readInput(config_.getStartAddress()));
 
@@ -47,20 +47,20 @@ double ModbusSource::readValue()
 
 void ModbusSource::writeValue(double value)
 {
-    switch (config_.getTypeSource())
+    switch (config_.getTypeRegister())
     {
-        case ModbusObjectType::Coil:
+        case ModbusRegisterType::Coil:
             client_.writeCoil(config_.getStartAddress(),
             static_cast<bool>(value));
             break;
         
-        case ModbusObjectType::HoldingRegister:
+        case ModbusRegisterType::DiscreteInput:
             client_.writeRegister(config_.getStartAddress(),
             static_cast<uint16_t>(value));
             break;
 
-        case ModbusObjectType::DiscreteInput:
-        case ModbusObjectType::InputRegister:
+        case ModbusRegisterType::HoldingRegister:
+        case ModbusRegisterType::InputRegister:
             throw std::runtime_error("register type is read-only");
 
         default:

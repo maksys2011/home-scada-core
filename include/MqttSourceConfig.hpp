@@ -17,10 +17,12 @@ public:
         std::string& broker,
         std::string& clientId,
         std::string& topic,
-        int qos
+        int qos,
+        std::string& source_type
     );
     void fromJson(const json& j) override;
     void fromJson(const std::filesystem::path& path) override;
+    const std::string getTypeSource() override{ return ParseSourceTypeToString(source_type_); }; 
 
     const std::string& getName() const { return name_; };
     const std::string& getSourceId() const { return sourceId_; };
@@ -40,4 +42,5 @@ private:
     std::string clientId_;
     std::string topic_;
     int qos_ = 0;
+    SourceType source_type_ = SourceType::Unknown;
 };

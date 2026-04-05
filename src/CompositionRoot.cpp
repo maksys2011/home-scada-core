@@ -54,7 +54,9 @@ void CompositionRoot::initSensors(const AppConfig& cfg)
 
     for(const auto& configSensor : cfg.sensorConfigs_){
         auto source = sourceById_.find(configSensor.getSourceId());
+        std::cout << "value sourc: " << sourceById_.size() << '\n';
         if(source == sourceById_.end()){
+            std::cout << "no source" << std::endl;
             throw std::runtime_error("No suitable data source found");
         }
         sensorById_.emplace(
@@ -103,6 +105,10 @@ void CompositionRoot::initSources(const AppConfig& cfg)
 {
     if(clientById_.empty()){
         throw std::runtime_error("No TCP clients available");
+    }
+
+    for(const auto& config : cfg.sourceConfigs_){
+        
     }
 
     for(const auto& config : cfg.modbusSourceConfigs_){

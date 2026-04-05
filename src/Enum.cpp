@@ -82,26 +82,26 @@ State ParseState(const std::string str) {
     else return State();
 }
 
-std::string ModbusObjectTypeToString(const ModbusObjectType type)
+std::string ModbusRegisterTypeToString(const ModbusRegisterType type)
 {
     switch (type)
     {
-    case ModbusObjectType::Coil: return "coil";
-    case ModbusObjectType::DiscreteInput: return "discreteInput";
-    case ModbusObjectType::HoldingRegister: return "holdingRegister";
-    case ModbusObjectType::InputRegister: return "inputRegister";
-    case ModbusObjectType::Unknowen: return "unknowen";
+    case ModbusRegisterType::Coil: return "coil";
+    case ModbusRegisterType::DiscreteInput: return "discreteInput";
+    case ModbusRegisterType::HoldingRegister: return "holdingRegister";
+    case ModbusRegisterType::InputRegister: return "inputRegister";
+    case ModbusRegisterType::Unknown: return "unknowen";
     }
     return std::string();
 }
 
-ModbusObjectType ParseModbusObjectType(const std::string &connectionType)
+ModbusRegisterType ParseModbusRegisterType(const std::string& type)
 {
-    if(connectionType == "Coil") return ModbusObjectType::Coil;
-    else if(connectionType == "DiscreteInput") return ModbusObjectType::DiscreteInput;
-    else if(connectionType == "InputRegister") return ModbusObjectType::InputRegister;
-    else if(connectionType == "HoldingRegister") return ModbusObjectType::HoldingRegister;
-    else return ModbusObjectType::Unknowen;
+    if(type == "Coil") return ModbusRegisterType::Coil;
+    else if(type == "DiscreteInput") return ModbusRegisterType::DiscreteInput;
+    else if(type == "InputRegister") return ModbusRegisterType::InputRegister;
+    else if(type == "HoldingRegister") return ModbusRegisterType::HoldingRegister;
+    else return ModbusRegisterType::Unknown;
 }
 
 RuleType ParseRuleType(const std::string& type)
@@ -122,7 +122,15 @@ std::string RuleTypeToString(const RuleType type)
     return std::string();
 }
 
-std::string ParseSourceType(SourceType &type)
+SourceType ParceSourceType(const std::string &type)
+{
+    if(type == "Modbus") return SourceType::Modbus;
+    else if(type == "Mqtt") return SourceType::Mqtt;
+    else if(type == "OpcUa") return SourceType::OpcUa;
+    else return SourceType::Unknown;
+}
+
+std::string ParseSourceTypeToString(SourceType &type)
 {
     switch (type)
     {

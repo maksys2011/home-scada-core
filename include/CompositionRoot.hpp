@@ -24,7 +24,6 @@ class Source;
 class Rule;
 class PgArchive;
 
-
 class CompositionRoot
 {
 public:

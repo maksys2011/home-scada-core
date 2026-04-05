@@ -27,7 +27,7 @@ namespace scada
             if(it == j.end()){
                 throw std::runtime_error("there is no required key= " + key);
         }
-        return it->get<T>();
+            return it->get<T>();
         };
 
         std::ifstream create_json_ifstream(const std::filesystem::path& path);
@@ -88,6 +88,7 @@ namespace scada
     namespace source
     {
         std::unique_ptr<SourceConfig> create(const json& j);
+        
         std::vector<std::unique_ptr<SourceConfig>> loadPolymorphic(
             const std::string& msg1,
             const std::string& msg2,

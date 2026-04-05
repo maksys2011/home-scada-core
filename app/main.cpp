@@ -38,12 +38,18 @@
 
 int main() 
 {    
-    ConfigLoader cfg;
-    AppConfig apConfig = cfg.load();
-    for(const auto& it : apConfig.sourceConfigs_){
+
+    ConfigLoader loadConfigs;
+    AppConfig a = loadConfigs.load();
+    for(const auto& it : a.sourceConfigs_){
         it->print();
         std::cout << std::endl;
-    } 
+    }
+    
+    
+    
+
+
     return 0;
 }
 

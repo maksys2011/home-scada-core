@@ -77,10 +77,10 @@ AppConfig ConfigLoader::load()
     AppConfig cfg;
     cfg.sensorConfigs_       = loadSensors();
     cfg.actuatorConfigs_     = loadActuators();
-    cfg.modbusSourceConfigs_ = loadSourceModbus();
+    //cfg.modbusSourceConfigs_ = loadSourceModbus();
     cfg.ruleConfigs_         = loadRules();
     cfg.modbusClientConfig_  = loadModbusClient();
-    cfg.mqttSourceConfig_    = loadSourceMqtt();
+    //cfg.mqttSourceConfig_    = loadSourceMqtt();
     cfg.sourceConfigs_       = loadSourceConfig();
     
     return cfg;

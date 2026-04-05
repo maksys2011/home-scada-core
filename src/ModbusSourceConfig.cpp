@@ -11,7 +11,8 @@ ModbusSourceConfig::ModbusSourceConfig(
     int port, 
     int slave_Id, 
     int startAddress, 
-    const std::string& typeNameSource)
+    const std::string& register_type,
+    const std::string& source_type)
     :
     client_id_(clientId),
     source_id_(sourceId),
@@ -19,8 +20,8 @@ ModbusSourceConfig::ModbusSourceConfig(
     port_(port),
     slave_Id_(slave_Id),
     startAddress_(startAddress),
-    typeSource_(ParseModbusObjectType(typeNameSource))
-    
+    register_type_(ParseModbusRegisterType(register_type)),
+    source_type_(ParceSourceType(source_type))    
 {}
 
 void ModbusSourceConfig::fromJson(const std::filesystem::path &pathFile)
@@ -37,11 +38,19 @@ void ModbusSourceConfig::fromJson(const json &j)
     auto new_sourceId = scada::utils::check_the_key<std::string>(j, "source_id");
     auto new_ip = scada::utils::check_the_key<std::string>(j, "ip"); 
     auto new_port = scada::utils::check_the_key<int>(j, "port");
-    auto new_slave_Id = scada::utils::check_the_key<int>(j, "slave_Id");
+    auto new_slave_Id = scada::utils::check_the_key<int>(j, "slave_id");
     auto new_startAddress = scada::utils::check_the_key<int>(j, "startAddress");
-    auto new_typeSource = scada::utils::check_the_key<std::string>(j, "typeSource");
+    auto new_register_type = scada::utils::check_the_key<std::string>(j, "register_type");
+    auto new_source_type = scada::utils::check_the_key<std::string>(j,"type_source");
 
-    validate(new_clientId, new_sourceId, new_ip, new_port, new_slave_Id, new_startAddress, new_typeSource);
+    validate(new_clientId, 
+        new_sourceId, 
+        new_ip, 
+        new_port, 
+        new_slave_Id, 
+        new_startAddress, 
+        new_register_type
+    );
 
     client_id_ = std::move(new_clientId);
     source_id_ = std::move(new_sourceId);
@@ -49,7 +58,8 @@ void ModbusSourceConfig::fromJson(const json &j)
     port_ = new_port;
     slave_Id_ =new_slave_Id;
     startAddress_ = new_startAddress;
-    typeSource_ = ParseModbusObjectType(new_typeSource);
+    register_type_ = ParseModbusRegisterType(new_register_type);
+    source_type_ = ParceSourceType(new_source_type);
 }
 
 void ModbusSourceConfig::print()
@@ -60,8 +70,9 @@ void ModbusSourceConfig::print()
     std::cout << "ip= " << ip_ << std::endl;
     std::cout << "port= " << port_ << std::endl; 
     std::cout << "slave id= " <<  slave_Id_ << std::endl;
-    std::cout << "startAddress=" << startAddress_ << std::endl;
-    std::cout << "typeSource=" << ModbusObjectTypeToString(typeSource_) << std::endl;
+    std::cout << "startAddress= " << startAddress_ << std::endl;
+    std::cout << "register type= " << ModbusRegisterTypeToString(register_type_) << std::endl;
+    std::cout << "source type= " << ParseSourceTypeToString(source_type_) << std::endl;
 }
  
 void ModbusSourceConfig::validateStartAddress(const int startAddress) const
@@ -74,11 +85,11 @@ void ModbusSourceConfig::validateStartAddress(const int startAddress) const
     }
 }
 
-void ModbusSourceConfig::validateModbusTypeSource(const std::string &typeSource) const
+void ModbusSourceConfig::validateModbusRegisterType(const std::string& registerType) const
 {
-    if(validSourceTypes.count(typeSource) == 0){
+    if(validSourceTypes.count(registerType) == 0){
         throw std::runtime_error(
-            "ModbusSourceConfig: unsupported source type -> " + typeSource
+            "ModbusSourceConfig: unsupported source type -> " + registerType
         );
     }
 }
@@ -90,7 +101,9 @@ void ModbusSourceConfig::validate(
     const int port, 
     const int slaveId, 
     const int startAddress, 
-    const std::string &typeSource) const
+    const std::string& register_type
+) const
+
 {
     std::string name = "ModbusSource";
     scada::utils::validateId(clientId, name);
@@ -99,5 +112,5 @@ void ModbusSourceConfig::validate(
     scada::utils::validatePort(port, name);
     scada::utils::validateSlaveId(slaveId, name);
     validateStartAddress(startAddress);
-    validateModbusTypeSource(typeSource);
+    validateModbusRegisterType(register_type);
 }

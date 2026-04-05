@@ -1,0 +1,11 @@
+    {
+        "comment" : "source temperature_livingRoom",
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "501",
+        "ip" : "127.0.0.1",
+        "port" : 1503,
+        "slave_id" : 1,
+        "startAddress" : 0,
+        "register_type" : "HoldingRegister"
+    }

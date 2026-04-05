@@ -31,9 +31,9 @@ enum class ControlMode
     Manual
 };
 
-enum class ModbusObjectType
+enum class ModbusRegisterType
 {
-    Unknowen = 0,
+    Unknown = 0,
     Coil,
     DiscreteInput,
     InputRegister,
@@ -48,9 +48,10 @@ enum class RuleType
 
 enum class SourceType
 {
+    Unknown = 0,
     Modbus,
     Mqtt,
-    OpcUa
+    OpcUa,
 };
 
 SensorType ParseSensorType(const std::string &typeStr);
@@ -65,12 +66,14 @@ std::string StateToString(State state);
 
 State ParseState(const std::string str);
 
-std::string ModbusObjectTypeToString(const ModbusObjectType type);
+std::string ModbusRegisterTypeToString(const ModbusRegisterType type);
 
-ModbusObjectType ParseModbusObjectType(const std::string& connectionType);
+ModbusRegisterType ParseModbusRegisterType(const std::string& type);
 
 RuleType ParseRuleType(const std::string& type);
 
 std::string RuleTypeToString(const RuleType type);
 
-std::string ParseSourceType(SourceType& type);
+std::string ParseSourceTypeToString(SourceType& type);
+
+SourceType ParceSourceType(const std::string& type);

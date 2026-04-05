@@ -142,13 +142,13 @@ std::unique_ptr<SourceConfig> scada::source::create(const json &j)
 }
 
 std::vector<std::unique_ptr<SourceConfig>> scada::source::loadPolymorphic(
-    const std::string &msg1, 
-    const std::string &msg2, 
-    const std::filesystem::path &pathFile)
+    const std::string& msg1, 
+    const std::string& msg2, 
+    const std::filesystem::path& pathFile)
 {
     std::vector<std::unique_ptr<SourceConfig>> configs;
-    std::ifstream file = scada::utils::create_json_ifstream(pathFile);
 
+    std::ifstream file = scada::utils::create_json_ifstream(pathFile);
     json j;
     file >> j;
 
@@ -159,7 +159,7 @@ std::vector<std::unique_ptr<SourceConfig>> scada::source::loadPolymorphic(
     }else if(j.is_object()){
         configs.push_back(scada::source::create(j));
     }else{
-        throw std::runtime_error(msg1);
+        throw std::runtime_error(msg2);
     }
 
     return configs;

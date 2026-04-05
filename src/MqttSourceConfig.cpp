@@ -3,19 +3,21 @@
 #include <iostream>
 
 MqttSourceConfig::MqttSourceConfig(
-    std::string &name, 
-    std::string &sourceId, 
-    std::string &broker, 
-    std::string &clientId, 
-    std::string &topic, 
-    int qos)
+    std::string& name, 
+    std::string& sourceId, 
+    std::string& broker, 
+    std::string& clientId, 
+    std::string& topic, 
+    int qos,
+    std::string& source_type)
     :
     name_(name),
     sourceId_(sourceId),
     broker_(broker),
     clientId_(clientId),
     topic_(topic),
-    qos_(qos)
+    qos_(qos),
+    source_type_(ParceSourceType(source_type))
 {}
 
 void MqttSourceConfig::fromJson(const json &j)
@@ -26,6 +28,7 @@ void MqttSourceConfig::fromJson(const json &j)
     auto new_clientId = scada::utils::check_the_key<std::string>(j, "client_id");
     auto new_topic = scada::utils::check_the_key<std::string>(j, "topic");
     int new_gos = scada::utils::check_the_key<int>(j, "qos");
+    auto new_source_type = scada::utils::check_the_key<std::string>(j, "type_source");
 
     validate();
 
@@ -35,6 +38,7 @@ void MqttSourceConfig::fromJson(const json &j)
     clientId_ = std::move(new_clientId);
     topic_ = std::move(new_topic);
     qos_ = new_gos;
+    source_type_ = ParceSourceType(new_source_type);
 }
 
 void MqttSourceConfig::fromJson(const std::filesystem::path &path)

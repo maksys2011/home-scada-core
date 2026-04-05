@@ -19,11 +19,13 @@ public:
         int port,
         int slave_Id,
         int startAddress,
-        const std::string& typeNameSource
+        const std::string& register_type,
+        const std::string& source_type
     );
 
     void fromJson(const std::filesystem::path& pathFile) override;
     void fromJson(const json& j) override;
+    const std::string getTypeSource() override { return ParseSourceTypeToString(source_type_); };
 
     const std::string& getClientId() const { return client_id_; };
     const std::string& getSourceId() const  { return source_id_; };
@@ -32,12 +34,12 @@ public:
     int getSlaveId() const { return slave_Id_; };
     int getStartAddress() const { return startAddress_;};
     int getCount() const { return count_; };
-    ModbusObjectType getTypeSource() const { return typeSource_; };
+    ModbusRegisterType getTypeRegister() const { return register_type_; };
     
     void print() override;
 
     void validateStartAddress(const int startAddress) const;
-    void validateModbusTypeSource(const std::string& typeSource) const;
+    void validateModbusRegisterType(const std::string& registerType) const;
     void validate(
         const std::string& client_id,
         const std::string& source_id,
@@ -45,7 +47,8 @@ public:
         const int port,
         const int slaveId,
         const int startAddress,
-        const std::string& typeSource) const;
+        const std::string& register_type
+        ) const;
 
 private:
     std::string client_id_;
@@ -55,7 +58,8 @@ private:
     int slave_Id_ = 1;
     int startAddress_ = 0;
     int count_ = 1;
-    ModbusObjectType typeSource_ = ModbusObjectType::Unknowen;
+    SourceType source_type_ = SourceType::Unknown;
+    ModbusRegisterType register_type_ = ModbusRegisterType::Unknown;
     static inline const std::set<std::string> validSourceTypes{
         "Unknowen", 
         "Coil",
