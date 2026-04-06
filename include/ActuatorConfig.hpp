@@ -13,12 +13,13 @@ private:
         std::string id_;
         std::string name_;
         ActuatorType type_;
-        
+
         double minValue_ = 0.0;
         double maxValue_ = 1.0;
         bool defaultState_ = false;
 
         bool inverted_ = false;
+        
 
 public:
         ActuatorConfig() = default;

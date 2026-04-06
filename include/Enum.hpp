@@ -17,6 +17,14 @@ enum class ActuatorType
     AnalogOut
 };
 
+enum class ActuatorConnectionType
+{
+    Unknown = 0,
+    Modbus,
+    Mqtt,
+    OpcUa
+};
+
 enum class State
 {
     OK,
@@ -52,6 +60,14 @@ enum class SourceType
     Modbus,
     Mqtt,
     OpcUa,
+};
+
+enum class CommandType
+{
+    Unknown = 0,
+    Turn,
+    SetPosition,
+    Reset
 };
 
 SensorType ParseSensorType(const std::string &typeStr);

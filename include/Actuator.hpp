@@ -1,20 +1,25 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include "Enum.hpp"
 #include "ActuatorConfig.hpp"
 #include "ModbusClient.hpp"
 
 class Actuator
 {
 public:
-    explicit Actuator (const ActuatorConfig&  config, ModbusClient& client);
+    explicit Actuator (
+        const ActuatorConfig&  config, 
+        ModbusClient& client);
+   
+    void print() const;
     void turnOn();
     void turnOff();
     void setValue(double value);
     bool getStatus() const;
     double getValue() const;
     const ActuatorConfig& config() const;
-    void print() const;
+    
     bool getStateActuator();
     void setPosition(int perсent);
     size_t getPosition() const {return position_;};
