@@ -7,6 +7,7 @@
 #include "Rule.hpp"
 #include "RuleEngine.hpp"
 #include "Actuator.hpp"
+#include "IActuator.hpp"
 
 Application::Application(
     const AppConfig &cfg, 
@@ -22,10 +23,10 @@ void Application::run()
 {
     init();
     
-    for(size_t i = 0; i < 25; ++i){
+    for(size_t i = 0; i < 50; ++i){
         
         tick();
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(2));
     }
     
 }
@@ -100,12 +101,12 @@ void Application::renderConsole()
 
     std::cout << "-------------------------------------------\n";
 
-    for(const auto& [key, actuator] : root_.getActuatorById()){ 
+    for(const auto& [key, actuator] : root_.getIActuatorById()){ 
 
-        std::string state = actuator->getStatus() ? "ON" : "OFF";
-        const std::string& name = actuator->config().getName();
+        std::string state = actuator->getState() ? "ON" : "OFF";
+        const std::string& name = actuator->getName();
 
-        std::string color = actuator->getStatus() ? "\033[32m" : "\033[31m";
+        std::string color = actuator->getState() ? "\033[32m" : "\033[31m";
 
         std::cout << std::left << std::setw(25) << name
             << color

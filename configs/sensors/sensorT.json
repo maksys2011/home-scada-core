@@ -1,0 +1,91 @@
+[
+    {
+        "id_": "10001",
+        "name_": "temperature_kitchen",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 0.5,
+        "hysteresis_" : 0.2,
+        "enabled_" : false,
+        "source_id" : "500"
+    },
+
+    {
+        "id_": "10004",
+        "name_": "temperature_living_room",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 0.5,
+        "hysteresis_" : 0.2,
+        "enabled_" : false,
+        "source_id" : "501"
+    },
+
+    {
+        "id_": "10007",
+        "name_": "temperature_bedroom",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 0.5,
+        "hysteresis_" : 0.2,
+        "enabled_" : false,
+        "source_id" : "502"
+    },
+
+    {
+        "id_": "10010",
+        "name_": "temperature_bathroom",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 0.5,
+        "hysteresis_" : 0.2,
+        "enabled_" : false,
+        "source_id" : "503"
+    },
+
+    {
+        "id_": "10011",
+        "name_": "temperature_hallway",
+        "type_": "Analog",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "staleTimeout_" : 500,
+        "warnHigh_": 50.5,
+        "warnLow_": 10,
+        "alarmHigh_": 95.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 0.5,
+        "hysteresis_" : 0.2,
+        "enabled_" : false,
+        "source_id" : "504"
+    }
+]

@@ -1,0 +1,71 @@
+[
+   {
+    "actuator_type": "split_system",
+    "location": "kitchen",
+    "client_id": "100",
+    "startAddress": 0,
+    "id": "35001",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool",
+    "transport" : "Modbus"
+  },
+
+   {
+    "actuator_type": "split_system",
+    "location": "living_room",
+    "client_id": "100",
+    "startAddress": 1,
+    "id": "35002",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool",
+    "transport" : "Modbus"
+  },
+
+   {
+    "actuator_type": "split_system",
+    "location": "bedroom",
+    "client_id": "100",
+    "startAddress": 2,
+    "id": "35003",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool",
+    "transport" : "Modbus"
+  },
+
+   {
+    "actuator_type": "split_system",
+    "location": "bathroom",
+    "client_id": "100",
+    "startAddress": 3,
+    "id": "35004",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool",
+    "transport" : "Modbus"
+  },
+
+   {
+    "actuator_type": "split_system",
+    "location": "hallway",
+    "client_id": "100",
+    "startAddress": 4,
+    "id": "35005",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool",
+    "transport" : "Modbus"
+  }
+]

@@ -6,14 +6,14 @@
 
 ConfigLoader::ConfigLoader()
 {
-    paths_.fileCfgSensorPath   = "../configs/sensors/sensor.json";
-    paths_.fileCfgActuator     = "../configs/actuators/actuator.json";
-    paths_.fileCfgRule         = "../configs/rules/rule.json";
+    paths_.fileCfgSensorPath   = "../configs/sensors/sensorT.json";
+    paths_.fileCfgActuator     = "../configs/actuators/splitSystem.json";
+    paths_.fileCfgRule         = "../configs/rules/ruleT.json";
     //paths_.fileCfgRuleLight    = "";
     paths_.fileLoggerPath      = "../logs/events.log";
     paths_.fileArhivePath      = "../archive/archive.csv";
-    paths_.fileCfgSource       = "../configs/sources/source.json";
-    paths_.fileCfgModbusSource = "../configs/sources/SourceConfigModbus.json";
+    paths_.fileCfgSource       = "../configs/sources/sourceT.json";
+    paths_.fileCfgModbusSource = "../configs/sources/sourceT.json";
     paths_.fileCfgModbusClient = "../configs/clients/plcClient.json";
     paths_.fileCfgMqttSource   = "../configs/sources/SourceConfigMqtt.json";   
 }
@@ -77,7 +77,7 @@ AppConfig ConfigLoader::load()
     AppConfig cfg;
     cfg.sensorConfigs_       = loadSensors();
     cfg.actuatorConfigs_     = loadActuators();
-    //cfg.modbusSourceConfigs_ = loadSourceModbus();
+    cfg.modbusSourceConfigs_ = loadSourceModbus();
     cfg.ruleConfigs_         = loadRules();
     cfg.modbusClientConfig_  = loadModbusClient();
     //cfg.mqttSourceConfig_    = loadSourceMqtt();

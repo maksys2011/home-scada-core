@@ -11,7 +11,7 @@ private:
         std::string client_id_;
         int startAddress_;
         std::string id_;
-        std::string name_;
+        std::string actuator_type_;
         ActuatorType type_;
 
         double minValue_ = 0.0;
@@ -19,18 +19,22 @@ private:
         bool defaultState_ = false;
 
         bool inverted_ = false;
-        
-
+        int expectedIndex_ = 0;
+        CommandType cmd_ = CommandType::Unknown;
+        std::string transport_;
 public:
         ActuatorConfig() = default;
         ActuatorConfig(
                 const std::string& client_id,
                 int startAddress,
                 const std::string& id,
-                const std::string& name,
+                const std::string& actuator_type,
                 ActuatorType type,
                 double minValue,
-                double maxValue);
+                double maxValue,
+                int expectedIndex,
+                const std::string& cmd,
+                const std::string transport);
 
         void fromJson(const json& j);
         void fromJson(const std::filesystem::path& path);
@@ -38,10 +42,14 @@ public:
         const std::string& getIdClient() const { return client_id_; };
         int getStartAddress () const { return startAddress_; };
         const std::string& getId() const { return id_; };
-        const std::string& getName() const { return name_; };
+        const std::string& getName() const { return actuator_type_; };
         ActuatorType getType() const { return type_; };
         double getMinValue() const { return minValue_; };
         double getMaxValue() const { return maxValue_; };
+        int getExpectedIndex() const { return expectedIndex_; };
+        CommandType getCmd() const { return cmd_; };
+        const std::string& getTransport () const { return transport_; };
+
         bool validate() const;
         void print() const;
 };

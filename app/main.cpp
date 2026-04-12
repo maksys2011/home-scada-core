@@ -35,16 +35,19 @@
 #include "MqttSourceConfig.hpp"
 #include "MqttSource.hpp"
 #include "MqttCommandPublisher.hpp"
+#include "GenericActuator.hpp"
+
 
 int main() 
 {    
+    ConfigLoader cfg;
+    CompositionRoot root(cfg);
+    AppConfig appConfig = cfg.load();
+    Application scada(appConfig, cfg, root);
 
-    ConfigLoader loadConfigs;
-    AppConfig a = loadConfigs.load();
-    for(const auto& it : a.sourceConfigs_){
-        it->print();
-        std::cout << std::endl;
-    }
+    scada.run();
+
+
     
     
     

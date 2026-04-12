@@ -40,6 +40,8 @@ namespace scada
 
         void validateId(const std::string& id, const std::string& nameDavice);
 
+        int getTeamIndex(const std::string indexCmd);
+
     }
 
     namespace factory

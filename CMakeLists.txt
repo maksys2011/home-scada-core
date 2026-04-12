@@ -55,6 +55,9 @@ add_executable(home-scada
     src/MqttSourceConfig.cpp
     src/MqttSource.cpp
     src/MqttCommandPublisher.cpp
+    src/ModbusTransport.cpp
+    src/MqttTransport.cpp
+    src/GenericActuator.cpp
 
     tests/tester.cpp
     tests/testSource.cpp

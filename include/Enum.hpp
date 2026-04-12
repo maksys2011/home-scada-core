@@ -93,3 +93,7 @@ std::string RuleTypeToString(const RuleType type);
 std::string ParseSourceTypeToString(SourceType& type);
 
 SourceType ParceSourceType(const std::string& type);
+
+CommandType ParceCommandType(const std::string& type);
+
+std::string ParceCommandTypeToString(const CommandType& type);

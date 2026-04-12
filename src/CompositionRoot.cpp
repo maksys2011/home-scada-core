@@ -13,6 +13,11 @@
 #include "RuleControlLight.hpp"
 #include "RuleEngine.hpp"
 #include "PgArchive.hpp"
+#include "ModbusTransport.hpp"
+#include "MqttTransport.hpp"
+#include "IActuator.hpp"
+#include "ITransport.hpp"
+#include "GenericActuator.hpp"
 
 CompositionRoot::CompositionRoot(const ConfigLoader& cfg) 
     : configs_(cfg)
@@ -54,9 +59,7 @@ void CompositionRoot::initSensors(const AppConfig& cfg)
 
     for(const auto& configSensor : cfg.sensorConfigs_){
         auto source = sourceById_.find(configSensor.getSourceId());
-        std::cout << "value sourc: " << sourceById_.size() << '\n';
         if(source == sourceById_.end()){
-            std::cout << "no source" << std::endl;
             throw std::runtime_error("No suitable data source found");
         }
         sensorById_.emplace(
@@ -103,12 +106,13 @@ void CompositionRoot::initClients(const AppConfig& cfg)
 
 void CompositionRoot::initSources(const AppConfig& cfg)
 {
-    if(clientById_.empty()){
-        throw std::runtime_error("No TCP clients available");
-    }
+    if(modbusClientById_.empty()){
 
-    for(const auto& config : cfg.sourceConfigs_){
-        
+        std::cout << "client size=" << modbusClientById_.size() << std::endl;
+
+        std::cout << "no client" << std::endl;
+
+        throw std::runtime_error("No TCP clients available");
     }
 
     for(const auto& config : cfg.modbusSourceConfigs_){
@@ -123,6 +127,8 @@ void CompositionRoot::initSources(const AppConfig& cfg)
         sourceById_.emplace(config.getSourceId(),
         std::make_unique<ModbusSource>(config, *(it->second)));
     }
+
+
 }
 
 void CompositionRoot::initRules(const AppConfig &cfg)
@@ -130,17 +136,24 @@ void CompositionRoot::initRules(const AppConfig &cfg)
     for(const auto& config : cfg.ruleConfigs_){
         const RuleType type = config->getRuleType();
         const auto& sensor = sensorById_.find(config->getSensorId());
-        const auto& actuator = actuatorById_.find(config->getActuatorId());
+        const auto& actuator = iActuatorById_.find(config->getActuatorId());
         auto& state = sensor->second->state();
-        
+
+        if(sensor == sensorById_.end()){
+            throw std::runtime_error("Sensor not found for rule: " + config->getSensorId());
+        }
+
+        if(actuator == iActuatorById_.end()){
+            throw std::runtime_error("Actuator not found for rule: " + config->getActuatorId());
+        }
+
         switch (type)
         {
         case RuleType::Thermostat:{
             
-            const auto& thermostatConfig = static_cast<const RuleThermostatConfig&>(*config);
-           
-            engine_->addRule(
-                std::make_unique<RuleThermostat>(state, *(actuator->second), thermostatConfig));
+            auto& thermostatConfig = static_cast<const RuleThermostatConfig&>(*config);
+
+            engine_->addRule(std::make_unique<RuleThermostat>(state, *(actuator->second), thermostatConfig));
                 break;
             }
         case RuleType::Light:{
@@ -156,15 +169,56 @@ void CompositionRoot::initRules(const AppConfig &cfg)
     
 }
 
+void CompositionRoot::initModbusClient(const AppConfig &cfg)
+{
+    for(const auto& config : cfg.modbusClientConfig_){
+        modbusClientById_.emplace(
+            config.getClientId(), std::make_shared<ModbusClient>(config)
+        );
+    }
+
+    std::cout << "inintModbusClient: " << modbusClientById_.size() << std::endl;
+}
+
+void CompositionRoot::initMqttCommandPublisher(const AppConfig &cfg)
+{
+}
+
+void CompositionRoot::initIactuators(const AppConfig &cfg)
+{
+    for(const auto& config : cfg.actuatorConfigs_){
+
+        std::shared_ptr<ITransport> transport;
+
+        if(config.getTransport() == "Modbus"){
+            
+            auto client = modbusClientById_.find(config.getIdClient());
+            
+            if(client == modbusClientById_.end()){
+
+                throw std::runtime_error("Modbus client not found");
+            }
+            transport = std::make_shared<ModbusTransport>(*(client->second));
+        }else {
+            throw std::runtime_error("Unknown transport type for actuator: " + config.getTransport());
+        }
+
+        iActuatorById_.emplace(
+            config.getId(), std::make_unique<GenericActuator>(config, transport));   
+    }
+}
+
 void CompositionRoot::init(const AppConfig& cfg)
 {
     initLogger();
     initArchive();
     initPgArchive();
     initClients(cfg);
+    initModbusClient(cfg);
     initSources(cfg);
     initSensors(cfg);
     initActuators(cfg);
+    initIactuators(cfg);    
     initRules(cfg);
 }
 

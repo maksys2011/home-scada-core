@@ -2,6 +2,7 @@
 *.exe
 *.o
 *.info
+/modbusServer/venv/
 /modbus_plc
 
 

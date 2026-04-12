@@ -2,7 +2,7 @@
 #include <string>
 #include <variant>
 
-using TransportValue = std::variant<int, bool, double, std::string>;
+using TransportValue = std::variant<bool, int, double, std::string>;
 
 class ITransport
 {

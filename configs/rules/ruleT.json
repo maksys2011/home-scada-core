@@ -1,0 +1,61 @@
+[
+    {
+        "name_rule" : "temperature rules",
+        "type" : "Thermostat",
+        "rule_id" : "1", 
+        "sensor_name": "temperature_kitchen",
+        "sensor_id" : "10001",
+        "actuator_name:": "split_system",
+        "actuator_id" : "35001",
+        "minTemp" : 21.0,
+        "maxTemp" : 22.0
+    },
+
+    {
+        "name_rule" : "temperature rules",
+        "type" : "Thermostat",
+        "rule_id" : "2",
+        "sensor_name": "temperature_living_room",
+        "sensor_id" : "10004",
+        "actuator_name:": "split_system",
+        "actuator_id" : "35002",
+        "minTemp" : 18.0,
+        "maxTemp" : 20.0 
+    },
+
+    {
+        "name_rule" : "temperature rules",
+        "type" : "Thermostat",
+        "rule_id" : "3",
+        "sensor_name": "temperature_bedroom",
+        "sensor_id" : "10007",
+        "actuator_name:": "split_system",
+        "actuator_id" : "35003",
+        "minTemp" : 17.0,
+        "maxTemp" : 20.0 
+    },
+
+    {
+        "name_rule" : "temperature rules",
+        "type" : "Thermostat",
+        "rule_id" : "4",
+        "sensor_name": "temperature_bathroom",
+        "sensor_id" : "10010",
+        "actuator_name:": "split_system",
+        "actuator_id" : "35004",
+        "minTemp" : 22.0,
+        "maxTemp" : 24.0 
+    },
+
+    {
+        "name_rule" : "temperature rules",
+        "type" : "Thermostat",
+        "rule_id" : "5",
+        "sensor_name": "temperature_hallway",
+        "sensor_id" : "10011",
+        "actuator_name:": "split_system",
+        "actuator_id" : "35005",
+        "minTemp" : 22.0,
+        "maxTemp" : 24.0 
+    }
+] 

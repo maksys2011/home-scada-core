@@ -1,0 +1,12 @@
+{
+    "actuator_type": "split_system",
+    "location": "kitchen",
+    "client_id": "100",
+    "startAddress": 0,
+    "id": "35001",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool"
+  }

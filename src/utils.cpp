@@ -82,6 +82,16 @@ void scada::utils::validateId(const std::string &id, const std::string &nameDavi
     }
 }
 
+int scada::utils::getTeamIndex(const std::string indexCmd)
+{
+    if(indexCmd == "bool") return 0;
+    else if(indexCmd == "int") return 1;
+    else if(indexCmd == "double") return 2;
+    else if(indexCmd == "string") return 3;
+    else return -1;
+    return 0;
+}
+
 std::unique_ptr<RuleConfig> scada::factory::create(const json& j)
 {
     std::string type = j.at("name_rule").get<std::string>();

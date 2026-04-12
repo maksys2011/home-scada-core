@@ -130,6 +130,26 @@ SourceType ParceSourceType(const std::string &type)
     else return SourceType::Unknown;
 }
 
+CommandType ParceCommandType(const std::string &type)
+{
+    if(type == "Unknown") return CommandType::Unknown;
+    else if(type == "Turn") return CommandType::Turn;
+    else if(type == "Position") return CommandType::SetPosition;
+    else if(type == "Reset") return CommandType::Reset;
+    return CommandType::Unknown;
+}
+
+std::string ParceCommandTypeToString(const CommandType &type)
+{
+    switch (type)
+    {
+    case CommandType::Turn: return "Turn;";
+    case CommandType::SetPosition: return "Position";
+    case CommandType::Reset: return "Reset";
+    default: return "Unknown";
+    }
+}
+
 std::string ParseSourceTypeToString(SourceType &type)
 {
     switch (type)

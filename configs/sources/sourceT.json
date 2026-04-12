@@ -1,0 +1,56 @@
+[
+    {
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "500",
+        "ip" : "0.0.0.0",
+        "port" : 1503,
+        "slave_id" : 1,
+        "startAddress" : 0,
+        "register_type" : "HoldingRegister"
+    },
+
+    {
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "501",
+        "ip" : "0.0.0.0",
+        "port" : 1503,
+        "slave_id" : 1,
+        "startAddress" : 1,
+        "register_type" : "HoldingRegister"
+    },
+
+    {
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "502",
+        "ip" : "0.0.0.0",
+        "port" : 1503,
+        "slave_id" : 1,
+        "startAddress" : 2,
+        "register_type" : "HoldingRegister"
+    },
+
+    {
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "503",
+        "ip" : "0.0.0.0",
+        "port" : 1503,
+        "slave_id" : 1,
+        "startAddress" : 3,
+        "register_type" : "HoldingRegister"
+    },
+
+    {
+        "type_source" : "Modbus",
+        "client_id" : "100",
+        "source_id" : "504",
+        "ip" : "0.0.0.0",
+        "port" : 1503,
+        "slave_id" : 1,
+        "startAddress" : 4,
+        "register_type" : "HoldingRegister"
+    }
+]

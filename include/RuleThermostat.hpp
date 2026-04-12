@@ -5,19 +5,20 @@
 class SensorState;
 class Actuator;
 class RuleThermostatConfig;
+class IActuator;
 
 class RuleThermostat : public Rule
 {
 public:
     RuleThermostat(
         SensorState& sensor,
-        Actuator& actuator,
+        IActuator& actuator,
         const RuleThermostatConfig& ruleCfg);
 
     void evaluate() override;
 
 private:
     SensorState& sensor_;
-    Actuator& actuator_;
+    IActuator& actuator_;
     const RuleThermostatConfig& ruleCfg_;
 };

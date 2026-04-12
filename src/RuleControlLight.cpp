@@ -3,11 +3,12 @@
 #include "RuleConfigLight.hpp"
 #include "Actuator.hpp"
 #include "Sensor.hpp"
+#include "IActuator.hpp"
 
 
 RuleControlLight::RuleControlLight(
     SensorState &sensor, 
-    Actuator &actuator, 
+    IActuator &actuator, 
     const RuleConfigLight &config)
     :
     sensor_(sensor),
@@ -33,6 +34,7 @@ void RuleControlLight::evaluate()
     bool isnight =(currentTime_ >= night.fromHour || currentTime_ < night.toHour);
     const TimeWindow& window = isnight ? night : day;
 
+    /*
     if(window.fixedPosition == -1){
         if(value < min) {
             actuator_.setPosition(currentPosition_ + 10);
@@ -44,6 +46,7 @@ void RuleControlLight::evaluate()
             return;
         }
     }
-
+    
     std::cout << "[ACTUATOR]= " << actuator_.config().getId() << " fixedPosition "  << window.fixedPosition << "\n";
+    */
 }
