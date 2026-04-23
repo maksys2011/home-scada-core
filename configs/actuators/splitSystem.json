@@ -1,5 +1,5 @@
 [
-   {
+  {
     "actuator_type": "split_system",
     "location": "kitchen",
     "client_id": "100",
@@ -13,7 +13,7 @@
     "transport" : "Modbus"
   },
 
-   {
+  {
     "actuator_type": "split_system",
     "location": "living_room",
     "client_id": "100",
@@ -27,7 +27,7 @@
     "transport" : "Modbus"
   },
 
-   {
+  {
     "actuator_type": "split_system",
     "location": "bedroom",
     "client_id": "100",
@@ -41,7 +41,7 @@
     "transport" : "Modbus"
   },
 
-   {
+  {
     "actuator_type": "split_system",
     "location": "bathroom",
     "client_id": "100",
@@ -55,7 +55,7 @@
     "transport" : "Modbus"
   },
 
-   {
+  {
     "actuator_type": "split_system",
     "location": "hallway",
     "client_id": "100",

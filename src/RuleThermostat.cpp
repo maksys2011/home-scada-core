@@ -31,6 +31,4 @@ void RuleThermostat::evaluate()
     }else{
         return;
     }
-    
-
 }

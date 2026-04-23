@@ -11,8 +11,7 @@ public:
     void evaluate();
     size_t getSize();
 
-private:
-    
+private:  
     std::vector<std::unique_ptr<Rule>> rules_;
 
 };

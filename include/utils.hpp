@@ -95,7 +95,6 @@ namespace scada
             const std::string& msg1,
             const std::string& msg2,
             const std::filesystem::path& pathFile);
-
     }
 
 }

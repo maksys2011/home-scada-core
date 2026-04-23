@@ -1,6 +1,7 @@
 #pragma once 
 #include <string>
 #include <modbus/modbus.h>
+#include <mutex>
 #include "ModbusClientConfig.hpp"
 
 class ModbusClient
@@ -30,4 +31,5 @@ private:
     ModbusClientConfig config_;
     bool connected_ = false;
     modbus_t* ctx_ = nullptr;
+    std::mutex mtx_;
 };

@@ -1,7 +1,17 @@
-{
-    "client_id" : "100",
-    "name" : "PlC_owen",
-    "ip" : "0.0.0.0",
-    "port" : 1503,
-    "slave_id" : 1
-}
+[
+    {
+        "client_id" : "100",
+        "name" : "PlC_owen",
+        "ip" : "0.0.0.0",
+        "port" : 1503,
+        "slave_id" : 1
+    },
+
+    {
+        "client_id" : "200",
+        "name" : "PlC_siemens",
+        "ip" : "0.0.1.23",
+        "port" : 1504,
+        "slave_id" : 1
+    }
+]

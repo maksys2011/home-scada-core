@@ -74,6 +74,8 @@ void ModbusClient::disconnect()
 uint16_t ModbusClient::readHolding(int address)
 {
 
+    std::lock_guard<std::mutex> lock(mtx_);
+
     if(!connected_ && !connect()){
         throw std::runtime_error("[ModbusClient] not connected");
     }
@@ -93,6 +95,9 @@ uint16_t ModbusClient::readHolding(int address)
 
 uint16_t ModbusClient::readInput(int address)
 {
+
+    std::lock_guard<std::mutex> lock(mtx_);
+
     if(!connected_ && !connect()){
         throw std::runtime_error("[ModbusClient] not connected");
     }
@@ -112,6 +117,9 @@ uint16_t ModbusClient::readInput(int address)
 
 bool ModbusClient::readCoil(int address)
 {
+
+    std::lock_guard<std::mutex> lock(mtx_);
+
     if(!connected_ && !connect()){
         throw std::runtime_error("[ModbusClient] not connected");
     }
@@ -131,6 +139,9 @@ bool ModbusClient::readCoil(int address)
 
 uint16_t ModbusClient::readDiscrete(int address)
 {
+    
+    std::lock_guard<std::mutex> lock(mtx_);
+
     if(!connected_ && !connect()){
         throw std::runtime_error("[ModbusClient] not connected");
     }
@@ -150,6 +161,9 @@ uint16_t ModbusClient::readDiscrete(int address)
 
 void ModbusClient::writeRegister(int address, uint16_t value)
 {
+
+    std::lock_guard<std::mutex> lock(mtx_);
+
     if(!connected_ && !connect()){
         throw std::runtime_error("[ModbusClient] not connected");
     }
@@ -167,6 +181,9 @@ void ModbusClient::writeRegister(int address, uint16_t value)
 
 void ModbusClient::writeCoil(int address, bool value)
 {
+
+    std::lock_guard<std::mutex> lock(mtx_);
+
     if(!connected_ && !connect()){
         throw std::runtime_error("[ModbusClient] not connected");
     }

@@ -16,10 +16,12 @@ Sensor::Sensor(
         state_(config, logger, arch, pgArchive),
         source_(source)
 {}
+
 void Sensor::updateValue(double rawValue)
 {
     state_.processValue(rawValue);
 }
+
 void Sensor::update()
 {
     if(!source_) return;
@@ -27,14 +29,17 @@ void Sensor::update()
     double value = source_->readValue();
     state_.processValue(value);
 }
+
 const SensorConfig &Sensor::config() const
 {
     return config_;
 }
+
 SensorState& Sensor::state()
 {
     return state_;
 }
+
 void Sensor::print() const
 {
     std::cout << "Sensor ID: " << config_.getId() << std::endl <<

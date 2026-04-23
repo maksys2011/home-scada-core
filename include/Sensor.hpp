@@ -1,4 +1,8 @@
 #pragma once
+#include <mutex>
+#include <thread>
+#include <chrono>
+#include <atomic>
 #include "SensorConfig.hpp"
 #include "SensorState.hpp"
 #include "Enum.hpp"
@@ -19,12 +23,15 @@ public:
 
     void updateValue(double rawValue);
     void update();
+    
     const SensorConfig& config() const;
-    SensorState& state();
-    void print() const;
-
     Source* getSourse() const;
+    SensorState& state();
+   
+    void print() const;
+ 
 private:
+    
     const SensorConfig& config_;
     SensorState state_;
     Source* source_;
