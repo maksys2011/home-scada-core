@@ -36,32 +36,57 @@
 #include "MqttSource.hpp"
 #include "MqttCommandPublisher.hpp"
 #include "GenericActuator.hpp"
+#include "PlcWorker.hpp"
+using json = nlohmann::json;
 
+int main()
+{
 
-int main() 
-{    
-    ConfigLoader cfg;
-    CompositionRoot root(cfg);
-    AppConfig appConfig = cfg.load();
-    Application scada(appConfig, cfg, root);
+    // test PLCWorker
 
-    scada.run();
+    ModbusClientConfig config("100", "PlC_owen", "0.0.0.0", 1503, 1);
 
+    ModbusClient client(config);
 
+    std::vector<ModbusReadPoint> reg;
+
+    std::filesystem::path path = "../configs/sources/sourceT.json";
+
+    std::ifstream file = scada::utils::create_json_ifstream(path);
+
+    json j;
+    file >> j;
+
+    for (const auto& item : j)
+    {
+        ModbusReadPoint data;
+        data.key = item.at("source_id").get<std::string>();
+        data.count = 1;
+        data.regType = ParseModbusRegisterType(item.at("register_type").get<std::string>());
+        data.slaveId = item.at("slave_id").get<int>();
+        data.startAddress = item.at("startAddress").get<int>();
+        reg.push_back(data);
+    }
+
+    PlcWorker worker(client, reg);
+
+    worker.start();
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    for (const auto& it : reg)
+    {
+        std::string key = it.key;
+        auto result = worker.getDataPoint(key);
+        if (result == std::nullopt)
+            continue;
+        else
+        {
+            std::cout << it.key << " = " << result->value << std::endl;
+        }
+    }
+
+    worker.stop();
     
-    
-    
-
-
     return 0;
 }
-
-
-
-
-
- 
-
-
-
-

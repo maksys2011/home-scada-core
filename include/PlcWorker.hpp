@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <condition_variable>
+#include <optional>
 #include "ModbusClient.hpp"
 #include "Enum.hpp"
 #include "ModbusTransport.hpp"
@@ -26,15 +27,6 @@ struct ModbusReadPoint
     int count = 1;
 };
 
-struct ModbusWritePoint
-{
-    std::string key;
-    int slaveId;
-    ModbusRegisterType regType;
-    int startAddress;
-    int value;
-};
-
 class PlcWorker
 {
 public:
@@ -45,7 +37,7 @@ public:
 
     void start();
     void stop();
-    void setWtite();
+    std::optional<DataPoint> getDataPoint(const std::string& key) const;
 
 private:
     void process();
@@ -58,6 +50,5 @@ private:
     std::condition_variable cv_;
     std::unordered_map<std::string, DataPoint> data_;
     std::vector<ModbusReadPoint> readPoints_;
-    std::vector<ModbusWritePoint> pendingWrites_;
     std::chrono::milliseconds pollInterval_ {200};
 };

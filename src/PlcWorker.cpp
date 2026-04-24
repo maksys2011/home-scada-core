@@ -33,9 +33,19 @@ void PlcWorker::stop()
     }
 }
 
-void PlcWorker::setWtite()
+std::optional<DataPoint> PlcWorker::getDataPoint(const std::string &key) const
 {
+    std::lock_guard<std::mutex> lock(mtx_);
+
+    auto it = data_.find(key);
+
+    if(it == data_.end()){
+        return std::nullopt; 
+    }
+        
+    return it->second;    
 }
+
 
 void PlcWorker::process()
 {
@@ -65,14 +75,20 @@ void PlcWorker::readCycle()
         double value {0.0};
         bool success = false;
 
-        if(reg == ModbusRegisterType::HoldingRegister){
-            value = client_.readHolding(address);
+        if(reg == ModbusRegisterType::Coil){
+            value = client_.readCoil(address);
             success = true;
         }else if(reg == ModbusRegisterType::DiscreteInput){
             value = client_.readDiscrete(address);
             success = true;
+        }else if(reg == ModbusRegisterType::InputRegister){
+            value = client_.readInput(address);
+            success = true;
+        }else if(reg == ModbusRegisterType::HoldingRegister){
+            value = client_.readHolding(address);
+            success = true;
         }
-
+        
         if(!success){
             continue;
         }
