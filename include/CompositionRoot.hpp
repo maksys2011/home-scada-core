@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "ConfigLoader.hpp"
 
+
 class Sensor;
 class Actuator;
 class Logger;
@@ -26,6 +27,8 @@ class PgArchive;
 class IActuator;
 class MqttCommandPublisher;
 class ITransport;
+class PlcWorker;
+struct ModbusReadPoint;
 
 class CompositionRoot
 {
@@ -40,6 +43,7 @@ public:
     void initSensors(const AppConfig& cfg);
     void initActuators(const AppConfig& cfg);
     void initClients(const AppConfig& cfg);
+    void initPlcWorker(const AppConfig& cfg);
     void initSources(const AppConfig& cfg);
     void initRules(const AppConfig& cfg);
 
@@ -49,11 +53,16 @@ public:
 
     void init(const AppConfig& cfg);
 
-    const std::vector<std::unique_ptr<Rule>>& getRuleById() const { return ruleById_; };
-    const std::unordered_map<std::string, std::unique_ptr<Sensor>>& getSensorById() const { return sensorById_; };
-    const std::unique_ptr<RuleEngine>& getRuleEngine() const { return engine_; };
-    const std::unordered_map<std::string, std::unique_ptr<Actuator>>& getActuatorById() const { return actuatorById_; };
-    const std::unordered_map<std::string, std::unique_ptr<IActuator>>& getIActuatorById() const { return iActuatorById_; };
+    const std::vector<std::unique_ptr<Rule>>& getRuleById() const { 
+        return ruleById_; };
+    const std::unordered_map<std::string, std::unique_ptr<Sensor>>& getSensorById() const {
+        return sensorById_; };
+    const std::unique_ptr<RuleEngine>& getRuleEngine() const { 
+        return engine_; };
+    const std::unordered_map<std::string, std::unique_ptr<Actuator>>& getActuatorById() const { 
+        return actuatorById_; };
+    const std::unordered_map<std::string, std::unique_ptr<IActuator>>& getIActuatorById() const {
+        return iActuatorById_; };
     
     void printSensors() const;
     void printClients() const;
@@ -73,10 +82,11 @@ private:
     std::unordered_map<std::string, std::unique_ptr<ModbusClient>> clientById_;
     std::unordered_map<std::string, std::unique_ptr<Source>> sourceById_;
     std::vector<std::unique_ptr<Rule>> ruleById_;
-
     std::unordered_map<std::string, std::shared_ptr<ModbusClient>> modbusClientById_;
     std::unordered_map<std::string, std::shared_ptr<MqttCommandPublisher>> mqttCommandPublisherById_;
     std::unordered_map<std::string, std::shared_ptr<ITransport>> transportById_;
     std::unordered_map<std::string, std::unique_ptr<IActuator>> iActuatorById_;
+    std::unordered_map<std::string, std::unique_ptr<PlcWorker>> plcWorkerById_;
+    std::unordered_map<std::string, std::vector<ModbusReadPoint>> list_of_registers_;
 
 };

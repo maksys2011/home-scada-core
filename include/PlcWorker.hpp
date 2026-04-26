@@ -20,7 +20,6 @@ struct DataPoint
 
 struct ModbusReadPoint
 {
-    std::string key;
     int slaveId;
     ModbusRegisterType regType;
     int startAddress;
@@ -37,7 +36,7 @@ public:
 
     void start();
     void stop();
-    std::optional<DataPoint> getDataPoint(const std::string& key) const;
+    std::optional<DataPoint> getDataPoint(int key) const;
 
 private:
     void process();
@@ -48,7 +47,7 @@ private:
     mutable std::mutex mtx_;
     std::atomic_bool running_ {false};
     std::condition_variable cv_;
-    std::unordered_map<std::string, DataPoint> data_;
+    std::unordered_map<int, DataPoint> data_;
     std::vector<ModbusReadPoint> readPoints_;
     std::chrono::milliseconds pollInterval_ {200};
 };

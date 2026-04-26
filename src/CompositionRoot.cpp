@@ -104,6 +104,53 @@ void CompositionRoot::initClients(const AppConfig& cfg)
     }
 }
 
+void CompositionRoot::initPlcWorker(const AppConfig& cfg)
+{
+    if(clientById_.empty()){
+        throw std::runtime_error(
+            "No TCP clients available"
+        );
+    }
+
+    for(const auto& config : cfg.sourceConfigs_){
+        if(config->getTypeSource() == "Modbus"){
+
+            auto modbus_source_config = dynamic_cast<ModbusSourceConfig*>(config.get());
+
+            if(!modbus_source_config){
+                throw std::runtime_error
+                ("SourceConfig type mismatch:expected ModbusSourceConfig for source type Modbus");
+            }
+
+            ModbusReadPoint reg;
+            reg.count = 1;
+            reg.regType = modbus_source_config->getTypeRegister();
+            reg.slaveId = modbus_source_config->getSlaveId();
+            reg.startAddress = modbus_source_config->getStartAddress();
+            list_of_registers_[modbus_source_config->getClientId()].push_back(reg);
+
+        }else if(config->getTypeSource() == "Mqtt"){
+            auto mqtt_source_config = dynamic_cast<MqttSourceConfig*>(config.get());
+
+        }else if(config->getTypeSource() == "Opc"){
+
+        }
+
+    }
+
+    for(const auto& client : clientById_){
+        auto client_id = client.first;
+        auto reg_list = list_of_registers_.find(client_id);
+        
+        if(reg_list == list_of_registers_.end()){
+            continue;
+        }
+
+        plcWorkerById_.emplace(client_id, std::make_unique<PlcWorker>(
+            *client.second, reg_list->second));
+    }
+}
+
 void CompositionRoot::initSources(const AppConfig& cfg)
 {
     if(modbusClientById_.empty()){
@@ -119,16 +166,15 @@ void CompositionRoot::initSources(const AppConfig& cfg)
 
         auto idClient = config.getClientId();
         auto it = clientById_.find(idClient);
+        auto plcWorker = plcWorkerById_.find(idClient);
 
         if(it == clientById_.end()){
             throw std::runtime_error("No TCP clients available");
         }
 
         sourceById_.emplace(config.getSourceId(),
-        std::make_unique<ModbusSource>(config, *(it->second)));
+        std::make_unique<ModbusSource>(config, *(it->second), *(plcWorker->second)));
     }
-
-
 }
 
 void CompositionRoot::initRules(const AppConfig &cfg)

@@ -33,7 +33,7 @@ void PlcWorker::stop()
     }
 }
 
-std::optional<DataPoint> PlcWorker::getDataPoint(const std::string &key) const
+std::optional<DataPoint> PlcWorker::getDataPoint(int key) const
 {
     std::lock_guard<std::mutex> lock(mtx_);
 
@@ -98,7 +98,7 @@ void PlcWorker::readCycle()
         DataPoint data;
         data.timestamp = std::chrono::system_clock::now();
         data.value = value;
-        data_[it.key] = data;
+        data_[it.startAddress] = data;
     }
 }
 

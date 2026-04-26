@@ -4,11 +4,14 @@
 #include "Source.hpp"
 #include "ModbusSourceConfig.hpp"
 #include "ModbusClient.hpp"
+#include "PlcWorker.hpp"
 
 class ModbusSource : public Source
 {
 public:    
-    ModbusSource(const ModbusSourceConfig& config, ModbusClient& client);
+    ModbusSource(const ModbusSourceConfig& config, 
+        ModbusClient& client,
+        PlcWorker& plc);
     ~ModbusSource() override;
 
     bool connect();
@@ -20,4 +23,5 @@ public:
 private:
     ModbusSourceConfig config_;
     ModbusClient& client_;
+    PlcWorker& plc_;
 };

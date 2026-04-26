@@ -1,10 +1,13 @@
 #include "ModbusSource.hpp"
 #include <iostream>
 
-ModbusSource::ModbusSource(const ModbusSourceConfig& config, ModbusClient& client)
+ModbusSource::ModbusSource(const ModbusSourceConfig& config, 
+    ModbusClient& client,
+    PlcWorker& plc)
     :
     config_(std::move(config)),
-    client_(client)
+    client_(client),
+    plc_(plc)
 {}
 
 ModbusSource::~ModbusSource()
