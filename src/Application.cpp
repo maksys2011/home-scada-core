@@ -8,6 +8,7 @@
 #include "RuleEngine.hpp"
 #include "Actuator.hpp"
 #include "IActuator.hpp"
+#include "PlcWorker.hpp"
 
 Application::Application(
     const AppConfig &cfg, 
@@ -22,13 +23,29 @@ Application::Application(
 void Application::run()
 {
     init();
-    
-    for(size_t i = 0; i < 50; ++i){
-        
-        tick();
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    for(const auto& plcWorker : root_.getPlcWorkerById()){
+        plcWorker.second->start();
+    } 
+
+    try
+    {
+        for(size_t i = 0; i < 50; ++i){  
+            tick();
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+        }
     }
-    
+    catch(const std::exception& e)
+    {
+        for(const auto& plcWorker : root_.getPlcWorkerById()){
+            plcWorker.second->stop();
+        }
+        throw;
+    }
+
+    for(const auto& plcWorker : root_.getPlcWorkerById()){
+        plcWorker.second->stop();
+    }
 }
 
 void Application::tick()

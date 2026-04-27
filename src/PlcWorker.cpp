@@ -1,3 +1,4 @@
+#include <iostream>
 #include "PlcWorker.hpp"
 
 PlcWorker::PlcWorker(ModbusClient &client, 
@@ -19,6 +20,7 @@ void PlcWorker::start()
     running_ = true;
     worker_ = std::thread(&PlcWorker::process, this);
 }
+
 
 void PlcWorker::stop()
 {
@@ -49,6 +51,11 @@ std::optional<DataPoint> PlcWorker::getDataPoint(int key) const
 
 void PlcWorker::process()
 {
+    std::cout << "[PlcWorker] polling thread id = " 
+          << std::this_thread::get_id() 
+          << std::endl;
+
+
     while(running_){
 
         readCycle();

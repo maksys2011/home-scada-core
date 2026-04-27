@@ -63,6 +63,8 @@ public:
         return actuatorById_; };
     const std::unordered_map<std::string, std::unique_ptr<IActuator>>& getIActuatorById() const {
         return iActuatorById_; };
+    const std::unordered_map<std::string, std::unique_ptr<PlcWorker>>& getPlcWorkerById() const{
+        return plcWorkerById_; };
     
     void printSensors() const;
     void printClients() const;

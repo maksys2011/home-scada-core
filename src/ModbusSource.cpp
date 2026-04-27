@@ -25,6 +25,16 @@ void ModbusSource::disconnect()
 
 double ModbusSource::readValue()
 {
+    auto value = plc_.getDataPoint(config_.getStartAddress());
+
+    if(!value){
+        return 0.0;
+    }
+    
+    return value->value;
+    //return plc_.getDataPoint(config_.getStartAddress());
+
+/*
    switch (config_.getTypeRegister())
    {
         case ModbusRegisterType::Coil:
@@ -46,7 +56,10 @@ double ModbusSource::readValue()
         default: 
             throw std::runtime_error("Unsupported Modbus type");
    }
+*/
+
 }
+   
 
 void ModbusSource::writeValue(double value)
 {

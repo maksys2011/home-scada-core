@@ -212,7 +212,6 @@ void CompositionRoot::initRules(const AppConfig &cfg)
             }
         }
     }
-    
 }
 
 void CompositionRoot::initModbusClient(const AppConfig &cfg)
@@ -222,8 +221,6 @@ void CompositionRoot::initModbusClient(const AppConfig &cfg)
             config.getClientId(), std::make_shared<ModbusClient>(config)
         );
     }
-
-    std::cout << "inintModbusClient: " << modbusClientById_.size() << std::endl;
 }
 
 void CompositionRoot::initMqttCommandPublisher(const AppConfig &cfg)
@@ -261,6 +258,7 @@ void CompositionRoot::init(const AppConfig& cfg)
     initPgArchive();
     initClients(cfg);
     initModbusClient(cfg);
+    initPlcWorker(cfg);
     initSources(cfg);
     initSensors(cfg);
     initActuators(cfg);

@@ -39,11 +39,18 @@
 #include "PlcWorker.hpp"
 using json = nlohmann::json;
 
-
 int main()
 {
 
-
-    
+    std::cout << "[Main] thread id = " 
+          << std::this_thread::get_id() 
+          << std::endl;
+          
+    AppConfig config;
+    ConfigLoader loader;
+    config = loader.load();
+    CompositionRoot root(loader);
+    Application scada(config, loader, root);
+    scada.run();
     return 0;
 }
