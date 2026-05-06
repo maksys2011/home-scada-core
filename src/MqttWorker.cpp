@@ -30,7 +30,7 @@ void MqttWorker::stop()
     
 }
 
-std::optional<DataPoint> MqttWorker::getDataPoints(std::string topic)
+std::optional<DataPoint> MqttWorker::getDataPoints(const std::string& topic)
 {
     std::lock_guard<std::mutex> lock(mtx_);
 

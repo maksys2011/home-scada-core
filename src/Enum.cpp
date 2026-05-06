@@ -160,3 +160,4 @@ std::string ParseSourceTypeToString(SourceType &type)
     }
     return std::string();
 }
+

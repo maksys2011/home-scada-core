@@ -11,12 +11,7 @@
 #include "ModbusClient.hpp"
 #include "Enum.hpp"
 #include "ModbusTransport.hpp"
-
-struct DataPoint
-{
-    double value = 0.0;
-    std::chrono::system_clock::time_point timestamp;
-};
+#include "DataPoint.hpp"
 
 struct ModbusReadPoint
 {

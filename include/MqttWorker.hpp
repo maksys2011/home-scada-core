@@ -10,12 +10,7 @@
 #include <optional>
 #include "MqttSourceConfig.hpp"
 #include "MqttClient.hpp"
-
-struct DataPoint
-{
-    double value = 0.0;
-    std::chrono::system_clock::time_point timestamp;
-};
+#include "DataPoint.hpp"
 
 class MqttWorker
 {
@@ -25,7 +20,7 @@ public:
     
     bool start();
     void stop();
-    std::optional<DataPoint> getDataPoints(std::string topic);
+    std::optional<DataPoint> getDataPoints(const std::string& topic);
 
 private:
     void process();

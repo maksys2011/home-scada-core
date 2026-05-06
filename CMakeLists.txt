@@ -60,6 +60,7 @@ add_executable(home-scada
     src/GenericActuator.cpp
     src/PlcWorker.cpp
     src/MqttClient.cpp
+    src/MqttWorker.cpp
 
     tests/tester.cpp
     tests/testSource.cpp

@@ -5,11 +5,14 @@
 #include <functional>
 #include "MqttSourceConfig.hpp"
 #include "Source.hpp"
+#include "MqttWorker.hpp"
+#include "DataPoint.hpp"
 
 class MqttSource : public Source
 {
 public:
-    MqttSource(const MqttSourceConfig& config);
+    MqttSource(MqttSourceConfig& config,
+                MqttWorker& worker);
     ~MqttSource() override;
 
     double readValue() override;
@@ -18,8 +21,8 @@ public:
 
 private:
     
-    MqttSourceConfig config_; 
-    mqtt::async_client client_;
+    MqttSourceConfig& config_; 
+    MqttWorker& worker_;
     double lastValue_ = 0.0;
     std::mutex mtx_;
     bool isConnected_ = false;
