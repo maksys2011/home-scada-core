@@ -51,11 +51,6 @@ std::optional<DataPoint> PlcWorker::getDataPoint(int key) const
 
 void PlcWorker::process()
 {
-    std::cout << "[PlcWorker] polling thread id = " 
-          << std::this_thread::get_id() 
-          << std::endl;
-
-
     while(running_){
 
         readCycle();

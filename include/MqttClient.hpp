@@ -20,8 +20,10 @@ public:
     ~MqttClient();
 
     bool connect(const std::vector<std::string>& topics);
-    bool connected() const  {return isConnected_; };
+    bool connection_check() const  {return isConnected_; };
+    
     std::optional<mqtt::const_message_ptr> tryConsume();
+
 
 private:
     mqtt::async_client client_;

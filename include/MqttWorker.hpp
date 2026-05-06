@@ -11,7 +11,7 @@
 #include "MqttSourceConfig.hpp"
 #include "MqttClient.hpp"
 
-struct DataPoints
+struct DataPoint
 {
     double value = 0.0;
     std::chrono::system_clock::time_point timestamp;
@@ -21,23 +21,19 @@ class MqttWorker
 {
 public:
     MqttWorker(MqttClient& client,
-                MqttSourceConfig& config,
-                std::vector<std::string> topics);
+                MqttSourceConfig& config);
     
     bool start();
     void stop();
-    std::optional<DataPoints> getDataPoints(std::string topic);
+    std::optional<DataPoint> getDataPoints(std::string topic);
 
 private:
     void process();
-    void readTopic();
 
     MqttClient& client_;
     MqttSourceConfig& config_;
     std::mutex mtx_;
     mutable std::thread worker_;
-    std::condition_variable cv_;
     std::atomic_bool running_{true};
-    std::vector<std::string> topics_;
-    std::unordered_map<std::string, DataPoints> cache_;
+    std::unordered_map<std::string, DataPoint> cache_;
 };
