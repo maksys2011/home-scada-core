@@ -20,7 +20,7 @@ struct DataPoints
 class MqttWorker
 {
 public:
-    MqttWorker(const MqttClient& client,
+    MqttWorker(MqttClient& client,
                 MqttSourceConfig& config,
                 std::vector<std::string> topics);
     
@@ -37,7 +37,7 @@ private:
     std::mutex mtx_;
     mutable std::thread worker_;
     std::condition_variable cv_;
-    std::atomic_bool running_;
+    std::atomic_bool running_{true};
     std::vector<std::string> topics_;
-    std::unordered_map<std::string, DataPoints> data_;
+    std::unordered_map<std::string, DataPoints> cache_;
 };

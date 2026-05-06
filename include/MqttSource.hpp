@@ -1,5 +1,4 @@
 #pragma once
-
 #include <mutex>
 #include <string>
 #include <mqtt/async_client.h>

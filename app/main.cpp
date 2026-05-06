@@ -37,11 +37,13 @@
 #include "MqttCommandPublisher.hpp"
 #include "GenericActuator.hpp"
 #include "PlcWorker.hpp"
+#include "MqttClient.hpp"
 using json = nlohmann::json;
 
 int main()
 {
 
+    /*
     std::cout << "[Main] thread id = " 
           << std::this_thread::get_id() 
           << std::endl;
@@ -51,6 +53,15 @@ int main()
     config = loader.load();
     CompositionRoot root(loader);
     Application scada(config, loader, root);
-    scada.run();
+    scada.run();*/
+
+    std::string addr = "home-scada-client";
+    std::string id = "tcp://localhost:1883";
+
+    MqttClient client(addr ,id);
+
+
+
+
     return 0;
 }
