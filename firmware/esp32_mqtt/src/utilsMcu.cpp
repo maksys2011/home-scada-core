@@ -17,19 +17,17 @@ void utilsMcu::wifiMqtt::connect(std::string& ssid, std::string& password)
 }
 
 void utilsMcu::mqtt::reconnect(PubSubClient& mqttClient, 
-                            std::string& mqttClientId,
-                            const char* topic1,
-                            const char* topic2)
+    std::string& mqttClientId, 
+    const char* topic)
 {
     while (!mqttClient.connect(mqttClientId.c_str())){
         
-        Serial.println("[MQTT] connecte...");
+        Serial.println("[MQTT] connected...");
 
         if(mqttClient.connect(mqttClientId.c_str())){
             Serial.println("[MQTT] OK");
             
-            mqttClient.subscribe(topic1);
-            mqttClient.subscribe(topic2);
+            mqttClient.subscribe(topic);
             
             Serial.print("[MQTT] subscride: ");
             Serial.print(mqttClient.state());
@@ -47,7 +45,6 @@ void utilsMcu::mqtt::reconnect(PubSubClient& mqttClient,
 
 void utilsMcu::commandActuators::cmd(String cmdActuators, const int pin)
 {
-
     if(cmdActuators == "ON"){
         digitalWrite(pin, HIGH);
         Serial.printf("pin № %d HIGH\n", pin);

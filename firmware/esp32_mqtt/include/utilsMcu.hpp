@@ -18,8 +18,7 @@ namespace utilsMcu{
     namespace mqtt{
         void reconnect(PubSubClient& mqttClient, 
                     std::string& mqttClientId, 
-                    const char* topic1,
-                    const char* topic2);
+                    const char* topic);
     }
     
 }

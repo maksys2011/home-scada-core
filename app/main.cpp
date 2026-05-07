@@ -57,8 +57,13 @@ int main()
 
     std::string addr = "home-scada-client";
     std::string id = "tcp://localhost:1883";
+    std::vector<std::string> topics{
+        "home/bedroom2/sensor/light"
+    };
 
     MqttClient client(addr ,id);
+    client.connect(topics);
+    
 
 
 
