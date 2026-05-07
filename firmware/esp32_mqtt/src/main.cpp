@@ -5,10 +5,10 @@
 #include <string>
 #include "utilsMcu.hpp"
  
-std::string ssid = "Keenetic-3162-24";
-std::string password = "31082019am";
+std::string ssid = "...";
+std::string password = "...";
  
-const char* mqtt_server = "192.168.1.67";
+const char* mqtt_server = "...";
 const int mqtt_port = 1883;
  
 std::string mqtt_client_id = "esp32-home";
