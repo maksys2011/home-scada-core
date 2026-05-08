@@ -38,6 +38,7 @@
 #include "GenericActuator.hpp"
 #include "PlcWorker.hpp"
 #include "MqttClient.hpp"
+#include "MqttWorker.hpp"
 using json = nlohmann::json;
 
 int main()
@@ -55,14 +56,37 @@ int main()
     Application scada(config, loader, root);
     scada.run();*/
 
-    std::string addr = "home-scada-client";
-    std::string id = "tcp://localhost:1883";
+    std::string addr = "tcp://localhost:1883";
+    std::string id = "home-scada-client";
     std::vector<std::string> topics{
-        "home/bedroom2/sensor/light"
+        "home/kitchen/sensor/humidity",
+        "home/living_room/sensor/humidity",
+        "home/bedroom/sensor/humidity"
     };
 
     MqttClient client(addr ,id);
     client.connect(topics);
+    MqttWorker worker(client);
+    worker.start();
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    for(int i = 0; i < 10; i++){
+        for(auto topic : topics){
+
+           auto value = worker.getDataPoints(topic);
+
+           if(value){
+            std::cout << "value: " << (*value).value << std::endl;
+           }else{
+            std::cout << "value: " << 0.0 << std::endl;
+           }
+           std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    }
+
+
     
 
 

@@ -1,10 +1,14 @@
 #include "MqttWorker.hpp"
 
 MqttWorker::MqttWorker(
-    MqttClient &client, 
-    MqttSourceConfig &config) :
-    client_(client), config_(config)
+    MqttClient &client) :
+    client_(client)
 {}
+
+MqttWorker::~MqttWorker() noexcept
+{
+    stop();
+}
 
 bool MqttWorker::start()
 {
@@ -48,7 +52,7 @@ void MqttWorker::process()
     while(running_){
         auto msg = client_.tryConsume();
 
-        if (msg)
+        if (msg && *msg != nullptr)
         {
             auto topic = (*msg)->get_topic();
             auto new_value = (*msg)->to_string();
@@ -57,9 +61,15 @@ void MqttWorker::process()
 
             std::lock_guard<std::mutex> lock(mtx_);
 
-            cache_[topic] = {value, std::chrono::system_clock::now()};
+            DataPoint data;
 
+            data.value = value;
+            data.timestamp = std::chrono::system_clock::now();
+
+            cache_[topic] = data;
         }
+
+        std::this_thread::sleep_for(std::chrono::seconds(5));
     }
 }
 

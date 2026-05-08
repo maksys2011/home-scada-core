@@ -15,8 +15,8 @@
 class MqttWorker
 {
 public:
-    MqttWorker(MqttClient& client,
-                MqttSourceConfig& config);
+    MqttWorker(MqttClient& client);
+    ~MqttWorker() noexcept;
     
     bool start();
     void stop();
@@ -26,9 +26,8 @@ private:
     void process();
 
     MqttClient& client_;
-    MqttSourceConfig& config_;
     std::mutex mtx_;
     mutable std::thread worker_;
-    std::atomic_bool running_{true};
+    std::atomic_bool running_{false};
     std::unordered_map<std::string, DataPoint> cache_;
 };

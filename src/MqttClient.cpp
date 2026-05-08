@@ -29,9 +29,9 @@ bool MqttClient::connect(const std::vector<std::string>& topics)
         .finalize();
     try
     {
-        client_.connect(connection_options)->wait();
-        
         client_.start_consuming();
+
+        client_.connect(connection_options)->wait();
 
         for(const auto& topic : topics){
             client_.subscribe(topic, 1)->wait();
@@ -50,6 +50,6 @@ bool MqttClient::connect(const std::vector<std::string>& topics)
 
 std::optional<mqtt::const_message_ptr> MqttClient::tryConsume()
 {
-    auto msg = client_.try_consume_message_for(std::chrono::milliseconds(5));
+    auto msg = client_.try_consume_message_for(std::chrono::milliseconds(500));
     return msg;
 }
