@@ -74,33 +74,33 @@
     {
         "comment" : "source mqtt bedroom2",
         "type_source" : "Mqtt",
-        "name" : "bedroom2_temperature",
+        "name" : "kitchen",
         "source_id" : "507",
         "broker" : "tcp://localhost:1883",
         "client_id" : "home-scada-client",
-        "topic" : "home/bedroom2/sensor/temperature",
+        "topic" : "home/kitchen/sensor/humidity",
         "qos" : 1
     },
 
     {
         "comment" : "source mqtt bedroom2",
         "type_source" : "Mqtt",
-        "name" : "bedroom2_humidity",
+        "name" : "living_room_humidity",
         "source_id" : "508",
         "broker" : "tcp://localhost:1883",
         "client_id" : "home-scada-client",
-        "topic" : "home/bedroom2/sensor/humidity",
+        "topic" : "home/living_room/sensor/humidity",
         "qos" : 1
     },
 
     {
         "comment" : "source mqtt bedroom2",
         "type_source" : "Mqtt",
-        "name" : "bedroom2_light",
+        "name" : "bedroom",
         "source_id" : "509",
         "broker" : "tcp://localhost:1883",
         "client_id" : "home-scada-client",
-        "topic" : "home/bedroom2/sensor/light",
+        "topic" : "home/bedroom/sensor/humidity",
         "qos" : 1
     }
 ]

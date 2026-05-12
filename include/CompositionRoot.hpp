@@ -5,7 +5,6 @@
 #include <unordered_map>
 #include "ConfigLoader.hpp"
 
-
 class Sensor;
 class Actuator;
 class Logger;
@@ -29,11 +28,14 @@ class MqttCommandPublisher;
 class ITransport;
 class PlcWorker;
 struct ModbusReadPoint;
+class MqttClient;
+class MqttWorker;
+
 
 class CompositionRoot
 {
 public:
-    CompositionRoot() = default;
+    CompositionRoot() = delete;
     CompositionRoot(const ConfigLoader& cfg);
     ~CompositionRoot();
         
@@ -51,6 +53,9 @@ public:
     void initMqttCommandPublisher(const AppConfig& cfg);
     void initIactuators(const AppConfig& cfg);
 
+    void initMqttClient(const AppConfig& cfg);
+    void initMqttWorker();
+
     void init(const AppConfig& cfg);
 
     const std::vector<std::unique_ptr<Rule>>& getRuleById() const { 
@@ -63,8 +68,12 @@ public:
         return actuatorById_; };
     const std::unordered_map<std::string, std::unique_ptr<IActuator>>& getIActuatorById() const {
         return iActuatorById_; };
-    const std::unordered_map<std::string, std::unique_ptr<PlcWorker>>& getPlcWorkerById() const{
+    const std::unordered_map<std::string, std::unique_ptr<PlcWorker>>& getPlcWorkerById() const {
         return plcWorkerById_; };
+    const std::unordered_map<std::string, std::unique_ptr<Source>>& getSourceById() const {
+        return sourceById_; };
+    const std::unique_ptr<RuleEngine>& getEngine() { return engine_; };
+
     
     void printSensors() const;
     void printClients() const;
@@ -75,6 +84,8 @@ public:
 private:
     AppConfig configList_;
     ConfigLoader configs_;
+    std::unique_ptr<MqttClient> mqtt_client_;
+    std::unique_ptr<MqttWorker> mqtt_worker_;
     std::unique_ptr<RuleEngine> engine_;
     std::unique_ptr<Logger> logger_;
     std::unique_ptr<Archive> archive_;

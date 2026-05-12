@@ -87,5 +87,59 @@
         "hysteresis_" : 0.2,
         "enabled_" : false,
         "source_id" : "504"
+    },
+
+    {
+        "comment" : "MQTT_sensor_kitchen_humidity",
+        "id_": "10013",
+        "name_": "kitchen_humidity",
+        "type_": "Analog",
+        "unit" : "%",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "warnHigh_": 80.0,
+        "warnLow_": 10.0,
+        "alarmHigh_": 99.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 100,
+        "hysteresis_" : 3,
+        "source_id" : "505"
+    },
+
+    {
+        "comment" : "MQTT_sensor_living_room_humidity",
+        "id_": "10015",
+        "name_": "living_room_humidity",
+        "type_": "Analog",
+        "unit" : "%",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "warnHigh_": 80.0,
+        "warnLow_": 10.0,
+        "alarmHigh_": 99.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 100,
+        "hysteresis_" : 3,
+        "source_id" : "506"
+    },
+
+    {
+        "comment" : "MQTT_sensor_bedroom_humidity",
+        "id_": "10016",
+        "name_": "bedroom_humidity",
+        "type_": "Analog",
+        "unit" : "%",
+        "physicalMin_" : 0.0,
+        "physicalMax_" : 100.0,
+        "noiseEpsilon_" : 0.5,
+        "warnHigh_": 80.0,
+        "warnLow_": 10.0,
+        "alarmHigh_": 99.0,
+        "alarmLow_": 5.0,
+        "deadband_" : 100,
+        "hysteresis_" : 3,
+        "source_id" : "507"
     }
 ]

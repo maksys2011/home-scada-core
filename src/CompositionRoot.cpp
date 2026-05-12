@@ -18,6 +18,9 @@
 #include "IActuator.hpp"
 #include "ITransport.hpp"
 #include "GenericActuator.hpp"
+#include "MqttClient.hpp"
+#include "MqttWorker.hpp"
+#include "MqttSource.hpp"
 
 CompositionRoot::CompositionRoot(const ConfigLoader& cfg) 
     : configs_(cfg)
@@ -50,9 +53,11 @@ void CompositionRoot::initSensors(const AppConfig& cfg)
     if(!logger_){
         throw std::runtime_error("logger is not initialized");
     }
+
     if(!archive_){
         throw std::runtime_error("archive is not initialized");
     }
+
     if(!pgArchive_){
         throw std::runtime_error("pgArchive is not initialized");
     }
@@ -154,31 +159,40 @@ void CompositionRoot::initPlcWorker(const AppConfig& cfg)
 void CompositionRoot::initSources(const AppConfig& cfg)
 {
     if(modbusClientById_.empty()){
-
-        std::cout << "client size=" << modbusClientById_.size() << std::endl;
-
-        std::cout << "no client" << std::endl;
-
         throw std::runtime_error("No TCP clients available");
     }
 
-    for(const auto& config : cfg.modbusSourceConfigs_){
+    for(const auto& it : cfg.sourceConfigs_){
 
-        auto idClient = config.getClientId();
-        auto it = clientById_.find(idClient);
-        auto plcWorker = plcWorkerById_.find(idClient);
+        if(it->getTypeSource() == "Modbus"){
 
-        if(it == clientById_.end()){
-            throw std::runtime_error("No TCP clients available");
+            auto modbusSourceConfig = dynamic_cast<ModbusSourceConfig*>(it.get());
+            auto idClient = modbusSourceConfig->getClientId();
+            auto it = clientById_.find(idClient);
+            auto plcWorker = plcWorkerById_.find(idClient);
+
+            if(it == clientById_.end()){
+                throw std::runtime_error("No TCP clients available");
+            }
+
+            sourceById_.emplace(modbusSourceConfig->getSourceId(),
+            std::make_unique<ModbusSource>(*modbusSourceConfig, *(it->second),*(plcWorker->second)));  
+
+        }else if(it->getTypeSource() == "Mqtt"){
+
+            auto mqttSourceConfig = dynamic_cast<MqttSourceConfig*>(it.get());
+            
+            sourceById_.emplace(mqttSourceConfig->getSourceId(),
+            std::make_unique<MqttSource> (*(mqttSourceConfig), *(mqtt_worker_)));
+
         }
-
-        sourceById_.emplace(config.getSourceId(),
-        std::make_unique<ModbusSource>(config, *(it->second), *(plcWorker->second)));
     }
 }
 
 void CompositionRoot::initRules(const AppConfig &cfg)
 {
+    std::cout << "numbers rule= " << cfg.ruleConfigs_.size() << std::endl;
+
     for(const auto& config : cfg.ruleConfigs_){
         const RuleType type = config->getRuleType();
         const auto& sensor = sensorById_.find(config->getSensorId());
@@ -212,6 +226,8 @@ void CompositionRoot::initRules(const AppConfig &cfg)
             }
         }
     }
+
+    std::cout << "init rule=" << ruleById_.size() << std::endl;
 }
 
 void CompositionRoot::initModbusClient(const AppConfig &cfg)
@@ -251,12 +267,27 @@ void CompositionRoot::initIactuators(const AppConfig &cfg)
     }
 }
 
+void CompositionRoot::initMqttClient(const AppConfig& cfg)
+{
+    mqtt_client_ = std::make_unique<MqttClient>(cfg.addr, cfg.id);
+}
+
+void CompositionRoot::initMqttWorker()
+{
+    if(!mqtt_client_) {
+        throw std::runtime_error("MQTT client is not initialized");
+    };
+    mqtt_worker_ = std::make_unique<MqttWorker>((*mqtt_client_));
+}
+
 void CompositionRoot::init(const AppConfig& cfg)
 {
     initLogger();
     initArchive();
     initPgArchive();
     initClients(cfg);
+    initMqttClient(cfg);
+    initMqttWorker();
     initModbusClient(cfg);
     initPlcWorker(cfg);
     initSources(cfg);

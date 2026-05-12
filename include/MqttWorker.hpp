@@ -8,6 +8,7 @@
 #include <chrono>
 #include <unordered_map>
 #include <optional>
+#include <mqtt/async_client.h>
 #include "MqttSourceConfig.hpp"
 #include "MqttClient.hpp"
 #include "DataPoint.hpp"

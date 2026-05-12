@@ -137,6 +137,7 @@ std::vector<std::unique_ptr<RuleConfig>> scada::factory::loadPolymorphic(
 std::unique_ptr<SourceConfig> scada::source::create(const json &j)
 {
     std::string typeSource = j.at("type_source").get<std::string>();
+
     if(typeSource == "Modbus"){
         auto cfg = std::make_unique<ModbusSourceConfig>();
         cfg->fromJson(j);

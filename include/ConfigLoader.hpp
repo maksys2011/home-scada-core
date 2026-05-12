@@ -1,11 +1,9 @@
 #pragma once
-
 #include <string>
 #include <vector>
 #include <filesystem>
 #include <nlohmann/json.hpp>
 #include <memory>
-
 #include "SensorConfig.hpp"
 #include "ActuatorConfig.hpp"
 #include "RuleConfig.hpp"
@@ -16,7 +14,6 @@
 #include "MqttSourceConfig.hpp"
 #include "Source.hpp"
 #include "SourceConfig.hpp"
-
 using json = nlohmann::json;
 
 struct AppPath
@@ -42,6 +39,8 @@ struct AppConfig
     std::vector<ModbusClientConfig> modbusClientConfig_;
     std::vector<MqttSourceConfig> mqttSourceConfig_;
     std::vector<std::unique_ptr<SourceConfig>> sourceConfigs_;
+    std::string addr = "tcp://localhost:1883";
+    std::string id = "home-scada-client";
 
     AppConfig() = default;
     AppConfig(AppConfig&&) = default;

@@ -52,5 +52,42 @@
         "slave_id" : 1,
         "startAddress" : 4,
         "register_type" : "HoldingRegister"
+    },
+
+    {
+        "comment" : "source mqtt room1",
+        "type_source" : "Mqtt",
+        "name" : "kitchen",
+        "source_id" : "505",
+        "broker" : "tcp://localhost:1883",
+        "client_id" : "home-scada-client",
+        "topic" : "home/kitchen/sensor/humidity",
+        "qos" : 1
+    },
+
+    {
+        "comment" : "source mqtt room1",
+        "type_source" : "Mqtt",
+        "name" : "living_room",
+        "source_id" : "506",
+        "broker" : "tcp://localhost:1883",
+        "client_id" : "home-scada-client",
+        "topic" : "home/living_room/sensor/humidity",
+        "qos" : 1
+    },
+
+    {
+        "comment" : "source mqtt room1",
+        "type_source" : "Mqtt",
+        "name" : "bedroom",
+        "source_id" : "507",
+        "broker" : "tcp://localhost:1883",
+        "client_id" : "home-scada-client",
+        "topic" : "home/bedroom/sensor/humidity",
+        "qos" : 1
     }
+
+
+
+
 ]

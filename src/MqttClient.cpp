@@ -1,8 +1,7 @@
 #include "MqttClient.hpp"
 #include <iostream>
 
-MqttClient::MqttClient(const std::string &addr, 
-    const std::string &id) :
+MqttClient::MqttClient(const std::string &addr, const std::string &id) :
     client_(addr, id)
 {}
 

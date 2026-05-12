@@ -156,7 +156,6 @@ void SensorConfig::fromJson(const json &j)
     }
 }
 
-//void SensorConfig::fromJson(const std::string &path)
 void SensorConfig::fromJson(const std::filesystem::path& path)
 {
     std::ifstream file(path);

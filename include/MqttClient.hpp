@@ -23,8 +23,7 @@ public:
     bool connection_check() const  {return isConnected_; };
     
     std::optional<mqtt::const_message_ptr> tryConsume();
-
-
+    
 private:
     mqtt::async_client client_;
     bool isConnected_ = false;
