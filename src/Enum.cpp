@@ -117,6 +117,7 @@ std::string RuleTypeToString(const RuleType type)
     {
     case RuleType::Thermostat: return "Thermostat";
     case RuleType::Light: return "Light";
+    case RuleType::Humidifier: return "Humidifier";
     }
 
     return std::string();

@@ -58,6 +58,11 @@ int main()
     std::cout << "number of actuators=" << root.getActuatorById().size() << std::endl;
     std::cout << "numder of rules=" << root.getEngine()->getSize() << std::endl;
     
+    for(const auto& actuator : root.getActuatorById()){
+        actuator.second->print();
+        std::cout << std::endl;
+    }
+
     //Application scada(config, loader, root);
     //scada.run();
 

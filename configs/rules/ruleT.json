@@ -57,5 +57,18 @@
         "actuator_id" : "35005",
         "minTemp" : 22.0,
         "maxTemp" : 24.0 
+    },
+
+    {
+        "name_rule": "humidifier_rules",
+        "type": "Humidity",
+        "rule_id": "6",
+        "sensor_name": "humidity_hallway",
+        "sensor_id": "10012",
+        "actuator_name": "humidifier_device",
+        "actuator_id": "35006",
+        "minHumidity": 40.0,
+        "maxHumidity": 60.0,
+        "delta": 2.0
     }
 ] 

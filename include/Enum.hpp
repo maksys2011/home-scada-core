@@ -52,7 +52,8 @@ enum class ModbusRegisterType
 enum class RuleType
 {
     Thermostat,
-    Light
+    Light,
+    Humidifier 
 };
 
 enum class SourceType

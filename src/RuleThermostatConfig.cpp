@@ -21,8 +21,10 @@ void RuleThermostatConfig::fromJson(const json &j)
 void RuleThermostatConfig::fromJson(const std::filesystem::path &path)
 {
     std::ifstream file = scada::utils::create_json_ifstream(path);
+    
     json j;
     file >> j;
+    
     fromJson(j);
 }
 

@@ -61,6 +61,7 @@ add_executable(home-scada
     src/PlcWorker.cpp
     src/MqttClient.cpp
     src/MqttWorker.cpp
+    src/RuleHumidifierConfig.cpp
 
     tests/tester.cpp
     tests/testSource.cpp
