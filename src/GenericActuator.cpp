@@ -1,22 +1,30 @@
 #include "GenericActuator.hpp"
+#include "ModbusActuatorConfig.hpp"
+#include "MqttActuatorConfig.hpp"
 #include <iostream>
 
 GenericActuator::GenericActuator (
-	const ActuatorConfig& config,
+	std::shared_ptr<BaseActuatorConfig> cfg,
 	std::shared_ptr<ITransport> transport) :
-	config_(config),
-	transport_(transport){
+	cfg_(std::move(cfg)),
+	transport_(transport)
+{
 
-	typeCmd = config_.getCmd();
-	expectedIndex_  = config_.getExpectedIndex();
+	if (!cfg_) {
+    	throw std::runtime_error("Configuration pointer is null in GenericActuator");
+	}
+
+	typeCmd = cfg_->getCmd();
+	expectedIndex_  = cfg_->getExpectedIndex();
 }
 
 bool GenericActuator::execute(
-	CommandType cmd, 
-	const CommandValue& val){
-	
-	if(val.index() != expectedIndex_){
-		std::cerr << "[Actuator Error] ID: " << config_.getId() 
+    CommandType cmd,
+    const CommandValue &val)
+{
+
+    if(val.index() != expectedIndex_){
+		std::cerr << "[Actuator Error] ID: " << cfg_->getIdActuator()
                   		<< " - Wrong data type index. Expected: " << expectedIndex_ 
                  		<< " Got: " << val.index() << std::endl;
 		success_ = false;
@@ -27,15 +35,36 @@ bool GenericActuator::execute(
 		return false;
 	}
 
-    std::string target = std::to_string(config_.getStartAddress());
 
-	if(transport_ && transport_->send(target, val)){
-		success_ = true;
-		return true;
+	auto connection_type = cfg_->getConnectionType();
+
+	if(connection_type == ActuatorConnectionType::Modbus){
+
+		auto config = dynamic_cast<ModbusActuatorConfig*>(cfg_.get());
+
+	   	std::string target = std::to_string(config->getStartAddress());
+
+		if(transport_ && transport_->send(target, val)){
+			success_ = true;
+			return true;
+		}
+
+		success_ = false;
+		return false;
+
+	}else if(connection_type == ActuatorConnectionType::Mqtt){
+		
+		auto config_mqtt = dynamic_cast<MqttActuatorConfig*>(cfg_.get());
+
+		std::string target = config_mqtt->getTopic();
+
+		if(transport_ && transport_->send(target, val)){
+			success_ = true;
+			return true;
+		}
 	}
 
-	success_ = false;
-	return false;	
+	return false;
 }
 
 void GenericActuator::setState(bool state)

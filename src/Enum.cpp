@@ -151,6 +151,26 @@ std::string ParceCommandTypeToString(const CommandType &type)
     }
 }
 
+ActuatorConnectionType ParceActuatorConnectionType(const std::string &type_connection)
+{
+    if(type_connection == "Modbus") return ActuatorConnectionType::Modbus;
+    else if(type_connection == "Mqtt") return ActuatorConnectionType::Mqtt;
+    else if(type_connection == "OpcUa") return ActuatorConnectionType::OpcUa;
+    return ActuatorConnectionType::Unknown;
+    
+}
+
+std::string ParceActuatorConnectionTypeToString(const ActuatorConnectionType &type_connection)
+{
+    switch (type_connection)
+    {
+    case ActuatorConnectionType::Modbus: return "Modbus";
+    case ActuatorConnectionType::Mqtt: return "Mqtt";
+    case ActuatorConnectionType::OpcUa: return "OpcUa";
+    default: return "Unknown";
+    }
+}
+
 std::string ParseSourceTypeToString(SourceType &type)
 {
     switch (type)

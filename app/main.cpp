@@ -39,10 +39,31 @@
 #include "PlcWorker.hpp"
 #include "MqttClient.hpp"
 #include "MqttWorker.hpp"
+#include "ModbusActuatorConfig.hpp"
+#include "BaseActuatorConfig.hpp"
 using json = nlohmann::json;
 
 int main()
 {
+
+    std::filesystem::path path = "../configs/clients/plcClient.json";
+    ModbusClientConfig config;
+    config.fromJson(path);
+    ModbusClient client(config);
+    client.connect();
+    for(int i = 0; i < 10; i++){
+       uint16_t value = client.readHolding(1); 
+       std::cout << "value= " << value << std::endl;
+       std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
+    
+
+
+
+
+
+
+    /*
     std::cout << "[Main] thread id = " 
           << std::this_thread::get_id() 
           << std::endl;
@@ -52,20 +73,8 @@ int main()
     configs = loader.load();
     CompositionRoot root(loader);
     root.init(configs);
-
-    std::cout << "number of sensors=" << root.getSensorById().size() << std::endl;
-    std::cout << "number of sources=" << root.getSourceById().size() << std::endl;
-    std::cout << "number of actuators=" << root.getActuatorById().size() << std::endl;
-    std::cout << "numder of rules=" << root.getEngine()->getSize() << std::endl;
-    
-    for(const auto& actuator : root.getActuatorById()){
-        actuator.second->print();
-        std::cout << std::endl;
-    }
-
-    //Application scada(config, loader, root);
-    //scada.run();
-
-    
+    Application app(configs,loader,root);
+    app.run();
+    */
     return 0;
 }

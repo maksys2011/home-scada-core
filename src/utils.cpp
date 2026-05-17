@@ -104,6 +104,10 @@ std::unique_ptr<RuleConfig> scada::factory::create(const json& j)
         auto cfg = std::make_unique<RuleThermostatConfig>();
         cfg->fromJson(j);
         return cfg;
+    }else if(type == "humidifier rules"){
+        auto cfg = std::make_unique<RuleHumidifierConfig>();
+        cfg->fromJson(j);
+        return cfg;
     }else{
         throw std::runtime_error("Unknown rule type");
     }
@@ -173,5 +177,47 @@ std::vector<std::unique_ptr<SourceConfig>> scada::source::loadPolymorphic(
         throw std::runtime_error(msg2);
     }
 
+    return configs;
+}
+
+std::vector<std::shared_ptr<BaseActuatorConfig>> scada::config::loadPolymorphic(const std::string &msg1, const std::string &msg2, const std::filesystem::path &pathFile)
+{
+    std::vector<std::shared_ptr<BaseActuatorConfig>> configs;
+
+    std::ifstream file = scada::utils::create_json_ifstream(pathFile);
+
+    json j;
+    file >> j;
+
+    if(j.is_array()){
+        for(const auto& item : j){
+
+            std::string transport = scada::utils::check_the_key<std::string>(item, "transport");
+
+            if(transport == "Modbus"){
+                auto config = std::make_shared<ModbusActuatorConfig>();
+                config->fromJson(item);
+                configs.push_back(config);
+            }else if(transport == "Mqtt"){
+                auto config_mqtt = std::make_shared<MqttActuatorConfig>();
+                config_mqtt->fromJson(item);
+                configs.push_back(config_mqtt);
+            }
+            
+        }
+    }else if(j.is_object()){
+
+        std::string transport = scada::utils::check_the_key<std::string>(j, "transport");
+        
+        if(transport == "Modbus"){
+            auto config = std::make_shared<ModbusActuatorConfig>();
+            config->fromJson(j);
+            configs.push_back(config);
+        }else if(transport == "Mqtt"){
+            auto config_mqtt = std::make_shared<MqttActuatorConfig>();
+            config_mqtt->fromJson(j);
+            configs.push_back(config_mqtt);
+        }
+    }
     return configs;
 }

@@ -39,6 +39,7 @@ void MqttCommandPublisher::disconnect()
 
     try
     {
+        client_.stop_consuming();
         client_.disconnect()->wait();
         isConnected_ = false;
         std::cout << "[MQTT CMD] Disconnected\n";

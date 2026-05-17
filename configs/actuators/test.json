@@ -8,5 +8,6 @@
     "minValue": 0.0,
     "maxValue": 100.0,
     "commandType": "Turn",
-    "expectedIndex": "bool"
+    "expectedIndex": "bool",
+    "transport": "Modbus"
   }

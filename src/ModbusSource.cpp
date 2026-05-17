@@ -25,6 +25,8 @@ void ModbusSource::disconnect()
 
 double ModbusSource::readValue()
 {
+    std::cout << "+++" << std::endl;
+
     auto value = plc_.getDataPoint(config_.getStartAddress());
 
     if(!value){

@@ -50,6 +50,7 @@ std::optional<DataPoint> MqttWorker::getDataPoints(const std::string& topic)
 void MqttWorker::process()
 {
     while(running_){
+        
         auto msg = client_.tryConsume();
 
         if (msg && *msg != nullptr)

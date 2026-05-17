@@ -31,7 +31,6 @@ struct ModbusReadPoint;
 class MqttClient;
 class MqttWorker;
 
-
 class CompositionRoot
 {
 public:
@@ -74,7 +73,10 @@ public:
         return sourceById_; };
     const std::unique_ptr<RuleEngine>& getEngine() { return engine_; };
 
-    
+    const std::unordered_map<std::string, std::shared_ptr<ModbusClient>> getClientModbus() const {
+        return modbusClientById_;
+    }
+
     void printSensors() const;
     void printClients() const;
     void printSources() const;
@@ -101,5 +103,4 @@ private:
     std::unordered_map<std::string, std::unique_ptr<IActuator>> iActuatorById_;
     std::unordered_map<std::string, std::unique_ptr<PlcWorker>> plcWorkerById_;
     std::unordered_map<std::string, std::vector<ModbusReadPoint>> list_of_registers_;
-
 };

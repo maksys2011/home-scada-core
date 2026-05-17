@@ -6,7 +6,7 @@
 #include "Enum.hpp"
 using json = nlohmann::json;
 
-class RuleHumidifierConfig : RuleConfig
+class RuleHumidifierConfig : public RuleConfig
 {
 public:
     void fromJson(const json& j) override;

@@ -191,7 +191,6 @@ void CompositionRoot::initSources(const AppConfig& cfg)
 
 void CompositionRoot::initRules(const AppConfig &cfg)
 {
-    std::cout << "numbers rule= " << cfg.ruleConfigs_.size() << std::endl;
 
     for(const auto& config : cfg.ruleConfigs_){
         const RuleType type = config->getRuleType();
@@ -226,8 +225,6 @@ void CompositionRoot::initRules(const AppConfig &cfg)
             }
         }
     }
-
-    std::cout << "init rule=" << ruleById_.size() << std::endl;
 }
 
 void CompositionRoot::initModbusClient(const AppConfig &cfg)
@@ -245,25 +242,39 @@ void CompositionRoot::initMqttCommandPublisher(const AppConfig &cfg)
 
 void CompositionRoot::initIactuators(const AppConfig &cfg)
 {
-    for(const auto& config : cfg.actuatorConfigs_){
+    for(const auto& config : cfg.baseActuatorConfig_){
 
         std::shared_ptr<ITransport> transport;
-
-        if(config.getTransport() == "Modbus"){
+        
+        auto connect_type = config->getConnectionType();
+        
+        if(connect_type == ActuatorConnectionType::Modbus){
             
-            auto client = modbusClientById_.find(config.getIdClient());
+            auto client = modbusClientById_.find(config->getClient_id());
             
             if(client == modbusClientById_.end()){
-
                 throw std::runtime_error("Modbus client not found");
             }
-            transport = std::make_shared<ModbusTransport>(*(client->second));
-        }else {
-            throw std::runtime_error("Unknown transport type for actuator: " + config.getTransport());
-        }
 
-        iActuatorById_.emplace(
-            config.getId(), std::make_unique<GenericActuator>(config, transport));   
+            transport = std::make_shared<ModbusTransport>(*(client->second));
+
+            iActuatorById_.emplace(config->getIdActuator(),
+                std::make_unique<GenericActuator>(config, transport));
+
+        }else if(connect_type == ActuatorConnectionType::Mqtt){
+
+            if(!mqtt_client_){
+                throw std::runtime_error("MQTT client is not initialized (nullptr)");
+            }
+
+            transport = std::make_shared<MqttTransport>(*(mqtt_client_));
+
+            iActuatorById_.emplace(config->getIdActuator(),
+                std::make_unique<GenericActuator>(config, transport));   
+        }else{
+
+            throw std::runtime_error("Transport initialization failed: no such connection type");
+        }
     }
 }
 
@@ -292,7 +303,7 @@ void CompositionRoot::init(const AppConfig& cfg)
     initPlcWorker(cfg);
     initSources(cfg);
     initSensors(cfg);
-    initActuators(cfg);
+    //initActuators(cfg);
     initIactuators(cfg);    
     initRules(cfg);
 }

@@ -6,13 +6,18 @@
 #include <memory>
 #include <vector>
 #include <fstream>
-
+#include <thread>
+#include <chrono>
 #include "RuleConfig.hpp"
 #include "RuleConfigLight.hpp"
 #include "RuleThermostatConfig.hpp"
+#include "RuleHumidifierConfig.hpp"
 #include "Source.hpp"
 #include "ModbusSourceConfig.hpp"
 #include "MqttSourceConfig.hpp"
+#include "BaseActuatorConfig.hpp"
+#include "ModbusActuatorConfig.hpp"
+#include "MqttActuatorConfig.hpp"
 
 using json = nlohmann::json;
 
@@ -25,7 +30,12 @@ namespace scada
         T check_the_key(const json& j, const std::string& key){
             auto it = j.find(key);
             if(it == j.end()){
+
+                std::cerr << "\n[Config Error] Failed while looking for key: \"" << key << "\"" << std::endl;
+                std::cerr << "[Current JSON context]:\n" << j.dump(4) << std::endl;
+
                 throw std::runtime_error("there is no required key= " + key);
+                
         }
             return it->get<T>();
         };
@@ -97,6 +107,13 @@ namespace scada
             const std::filesystem::path& pathFile);
     }
 
+    namespace config
+    {
+        std::vector<std::shared_ptr<BaseActuatorConfig>> loadPolymorphic(
+            const std::string& msg1, 
+            const std::string& msg2,
+            const std::filesystem::path& pathFile);
+    }
 }
 
 

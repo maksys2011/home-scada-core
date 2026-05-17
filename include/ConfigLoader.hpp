@@ -14,6 +14,9 @@
 #include "MqttSourceConfig.hpp"
 #include "Source.hpp"
 #include "SourceConfig.hpp"
+#include "BaseActuatorConfig.hpp"
+#include "ModbusActuatorConfig.hpp"
+#include "MqttActuatorConfig.hpp"
 using json = nlohmann::json;
 
 struct AppPath
@@ -28,6 +31,7 @@ struct AppPath
     std::filesystem::path fileCfgModbusSource;
     std::filesystem::path fileCfgMqttSource;
     std::filesystem::path fileCfgSource;
+    std::filesystem::path fileCfgBaseActuatorConfig;
 };
 
 struct AppConfig
@@ -39,6 +43,7 @@ struct AppConfig
     std::vector<ModbusClientConfig> modbusClientConfig_;
     std::vector<MqttSourceConfig> mqttSourceConfig_;
     std::vector<std::unique_ptr<SourceConfig>> sourceConfigs_;
+    std::vector<std::shared_ptr<BaseActuatorConfig>> baseActuatorConfig_;
     std::string addr = "tcp://localhost:1883";
     std::string id = "home-scada-client";
 
@@ -66,4 +71,5 @@ private:
     std::vector<ModbusClientConfig> loadModbusClient();
     std::vector<MqttSourceConfig> loadSourceMqtt();
     std::vector<std::unique_ptr<SourceConfig>> loadSourceConfig();
+    std::vector<std::shared_ptr<BaseActuatorConfig>> loadBaseActuatorConfig();
 };

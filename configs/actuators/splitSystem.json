@@ -67,5 +67,50 @@
     "commandType": "Turn",
     "expectedIndex": "bool",
     "transport" : "Modbus"
+  },
+
+  {
+    "actuator_type": "humidity_system",
+    "location": "kitchen",
+    "client_id": "200",
+    "id": "35006",
+    "broker" : "home-scada-client",
+    "topic" : "home/kitchen/sensor/humidity",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool",
+    "transport" : "Mqtt"
+  },
+
+  {
+    "actuator_type": "humidity_system",
+    "location": "living_room",
+    "client_id": "200",
+    "id": "35007",
+    "broker" : "home-scada-client",
+    "topic" : "home/living_room/actuator/h_system/5",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool",
+    "transport" : "Mqtt"
+  },
+
+  {
+    "actuator_type": "humidity_system",
+    "location": "bedroom",
+    "client_id": "200",
+    "id": "35008",
+    "broker" : "home-scada-client",
+    "topic" : "home/bedroom/actuator/h_system/12",
+    "type": "AnalogOut",
+    "minValue": 0.0,
+    "maxValue": 100.0,
+    "commandType": "Turn",
+    "expectedIndex": "bool",
+    "transport" : "Mqtt"
   }
 ]

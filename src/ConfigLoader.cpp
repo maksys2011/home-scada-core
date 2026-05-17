@@ -15,7 +15,8 @@ ConfigLoader::ConfigLoader()
     paths_.fileCfgSource       = "../configs/sources/sourceT.json";
     paths_.fileCfgModbusSource = "../configs/sources/sourceT.json";
     paths_.fileCfgModbusClient = "../configs/clients/plcClient.json";
-    paths_.fileCfgMqttSource   = "../configs/sources/SourceConfigMqtt.json";   
+    paths_.fileCfgMqttSource   = "../configs/sources/SourceConfigMqtt.json"; 
+    paths_.fileCfgBaseActuatorConfig = "../configs/actuators/splitSystem.json";   
 }
 
 std::vector<SensorConfig> ConfigLoader::loadSensors()
@@ -67,6 +68,13 @@ std::vector<std::unique_ptr<SourceConfig>> ConfigLoader::loadSourceConfig()
     return scada::source::loadPolymorphic(msg1, msg2, paths_.fileCfgSource);
 }
 
+std::vector<std::shared_ptr<BaseActuatorConfig>> ConfigLoader::loadBaseActuatorConfig()
+{
+    std::string msg1 = "ActuatorConfig: cannot open config file: ";
+    std::string msg2 = "ActuatorConfig: config must be object or array";
+    return scada::config::loadPolymorphic(msg1, msg2, paths_.fileCfgBaseActuatorConfig);
+}
+
 AppPath ConfigLoader::getPaths() const
 {
     return paths_;
@@ -76,12 +84,13 @@ AppConfig ConfigLoader::load()
 {
     AppConfig cfg;
     cfg.sensorConfigs_       = loadSensors();
-    cfg.actuatorConfigs_     = loadActuators();
+    //cfg.actuatorConfigs_     = loadActuators();
     //cfg.modbusSourceConfigs_ = loadSourceModbus();
     cfg.ruleConfigs_         = loadRules();
     cfg.modbusClientConfig_  = loadModbusClient();
     //cfg.mqttSourceConfig_    = loadSourceMqtt();
     cfg.sourceConfigs_       = loadSourceConfig();
+    cfg.baseActuatorConfig_  = loadBaseActuatorConfig();
 
     return cfg;
 }

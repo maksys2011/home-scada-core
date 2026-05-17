@@ -99,3 +99,7 @@ SourceType ParceSourceType(const std::string& type);
 CommandType ParceCommandType(const std::string& type);
 
 std::string ParceCommandTypeToString(const CommandType& type);
+
+ActuatorConnectionType ParceActuatorConnectionType (const std::string& type_connection);
+
+std::string ParceActuatorConnectionTypeToString (const ActuatorConnectionType& type_connection);

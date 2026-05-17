@@ -60,13 +60,39 @@
     },
 
     {
-        "name_rule": "humidifier_rules",
-        "type": "Humidity",
+        "name_rule": "humidifier rules",
+        "type": "Humidifier",
         "rule_id": "6",
-        "sensor_name": "humidity_hallway",
-        "sensor_id": "10012",
-        "actuator_name": "humidifier_device",
+        "sensor_name": "kitchen_humidity",
+        "sensor_id": "10013",
+        "actuator_name": "humidifier_system",
         "actuator_id": "35006",
+        "minHumidity": 40.0,
+        "maxHumidity": 60.0,
+        "delta": 2.0
+    },
+
+    {
+        "name_rule": "humidifier rules",
+        "type": "Humidifier",
+        "rule_id": "7",
+        "sensor_name": "living_room_humidity",
+        "sensor_id": "10015",
+        "actuator_name": "humidifier_system",
+        "actuator_id": "35007",
+        "minHumidity": 40.0,
+        "maxHumidity": 60.0,
+        "delta": 2.0
+    },
+
+    {
+        "name_rule": "humidifier rules",
+        "type": "Humidifier",
+        "rule_id": "8",
+        "sensor_name": "bedroom_humidity",
+        "sensor_id": "10016",
+        "actuator_name": "humidifier_system",
+        "actuator_id": "35008",
         "minHumidity": 40.0,
         "maxHumidity": 60.0,
         "delta": 2.0

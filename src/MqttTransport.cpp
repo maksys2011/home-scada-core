@@ -1,6 +1,9 @@
 #include "MqttTransport.hpp"
 
-bool MqttTransport::send(const std::string& target, const TransportValue& val)
+MqttTransport::MqttTransport(MqttClient &client) : client_(client)
+{}
+
+bool MqttTransport::send(const std::string &target, const TransportValue &val)
 {
     std::string payLoad{};
 

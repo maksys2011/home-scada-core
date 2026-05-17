@@ -24,6 +24,10 @@ void Application::run()
 {
     init();
 
+    for(const auto& client : root_.getClientModbus()){
+        client.second->connect();
+    }
+
     for(const auto& plcWorker : root_.getPlcWorkerById()){
         plcWorker.second->start();
     } 
@@ -64,7 +68,10 @@ void Application::updateSensors()
 {
     for(const auto& [key, sensor] : root_.getSensorById()){
         sensor->update();
+        std::cout << "value " << *sensor->state().lastValue() << std::endl;
     }
+
+    
 }
 
 void Application::evaluateRules()
@@ -121,7 +128,7 @@ void Application::renderConsole()
     for(const auto& [key, actuator] : root_.getIActuatorById()){ 
 
         std::string state = actuator->getState() ? "ON" : "OFF";
-        const std::string& name = actuator->getName();
+        const std::string& name = actuator->getId();
 
         std::string color = actuator->getState() ? "\033[32m" : "\033[31m";
 
