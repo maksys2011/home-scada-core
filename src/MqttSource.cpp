@@ -11,9 +11,11 @@ MqttSource::~MqttSource()
 
 double MqttSource::readValue()
 {
+
     auto new_value = worker_.getDataPoints(config_.getTopic());
 
     if(new_value){
+        
         return new_value->value;
     }
 

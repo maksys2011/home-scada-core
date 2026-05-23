@@ -66,7 +66,7 @@
     },
 
     {
-        "comment" : "source mqtt room1",
+        "comment" : "source mqtt room2",
         "type_source" : "Mqtt",
         "name" : "living_room",
         "source_id" : "506",
@@ -77,7 +77,7 @@
     },
 
     {
-        "comment" : "source mqtt room1",
+        "comment" : "source mqtt room3",
         "type_source" : "Mqtt",
         "name" : "bedroom",
         "source_id" : "507",

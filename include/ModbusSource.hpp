@@ -10,7 +10,6 @@ class ModbusSource : public Source
 {
 public:    
     ModbusSource(const ModbusSourceConfig& config, 
-        ModbusClient& client,
         PlcWorker& plc);
     ~ModbusSource() override;
 
@@ -22,6 +21,5 @@ public:
 
 private:
     ModbusSourceConfig config_;
-    ModbusClient& client_;
     PlcWorker& plc_;
 };

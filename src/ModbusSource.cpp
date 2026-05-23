@@ -2,11 +2,11 @@
 #include <iostream>
 
 ModbusSource::ModbusSource(const ModbusSourceConfig& config, 
-    ModbusClient& client,
+    //ModbusClient& client,
     PlcWorker& plc)
     :
     config_(std::move(config)),
-    client_(client),
+    //client_(client),
     plc_(plc)
 {}
 
@@ -15,17 +15,15 @@ ModbusSource::~ModbusSource()
 
 bool ModbusSource::connect()
 {
-    return client_.connect();
+    return true;
 }
 
 void ModbusSource::disconnect()
 {
-    client_.disconnect();
 }
 
 double ModbusSource::readValue()
 {
-    std::cout << "+++" << std::endl;
 
     auto value = plc_.getDataPoint(config_.getStartAddress());
 
@@ -34,7 +32,7 @@ double ModbusSource::readValue()
     }
     
     return value->value;
-    //return plc_.getDataPoint(config_.getStartAddress());
+
 
 /*
    switch (config_.getTypeRegister())
@@ -65,6 +63,7 @@ double ModbusSource::readValue()
 
 void ModbusSource::writeValue(double value)
 {
+    /*
     switch (config_.getTypeRegister())
     {
         case ModbusRegisterType::Coil:
@@ -84,6 +83,7 @@ void ModbusSource::writeValue(double value)
         default:
              throw std::runtime_error("Unsupported write type");
     }
+    */
 }
 
 void ModbusSource::print()

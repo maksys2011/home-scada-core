@@ -9,6 +9,8 @@
 #include "Actuator.hpp"
 #include "IActuator.hpp"
 #include "PlcWorker.hpp"
+#include "MqttWorker.hpp"
+#include "MqttClient.hpp"
 
 Application::Application(
     const AppConfig &cfg, 
@@ -24,19 +26,32 @@ void Application::run()
 {
     init();
 
-    for(const auto& client : root_.getClientModbus()){
+    // modbus client connect 
+
+    for(const auto& client : root_.getClient()){
         client.second->connect();
     }
+
+    // mqtt client connect
+
+    auto& mqtt_client = root_.getClientMqtt();
+
+    mqtt_client->connect(root_.getMqttCollectionTopics());
+
 
     for(const auto& plcWorker : root_.getPlcWorkerById()){
         plcWorker.second->start();
     } 
 
+    auto& plcWorkerMqtt = root_.getMqttWorker();
+
+    plcWorkerMqtt->start();
+
     try
     {
-        for(size_t i = 0; i < 50; ++i){  
+        for(size_t i = 0; i < 10; ++i){  
             tick();
-            std::this_thread::sleep_for(std::chrono::seconds(2));
+            std::this_thread::sleep_for(std::chrono::seconds(3));
         }
     }
     catch(const std::exception& e)
@@ -44,18 +59,25 @@ void Application::run()
         for(const auto& plcWorker : root_.getPlcWorkerById()){
             plcWorker.second->stop();
         }
+
+        plcWorkerMqtt->stop();
+
         throw;
     }
 
     for(const auto& plcWorker : root_.getPlcWorkerById()){
         plcWorker.second->stop();
     }
+
+    plcWorkerMqtt->stop();
 }
 
 void Application::tick()
 {
     updateSensors();
+
     evaluateRules();
+
     renderConsole();
 }
 
@@ -67,11 +89,10 @@ void Application::init()
 void Application::updateSensors()
 {
     for(const auto& [key, sensor] : root_.getSensorById()){
-        sensor->update();
-        std::cout << "value " << *sensor->state().lastValue() << std::endl;
-    }
 
-    
+        sensor->update();
+        
+    }  
 }
 
 void Application::evaluateRules()

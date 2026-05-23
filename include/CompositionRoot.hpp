@@ -59,23 +59,40 @@ public:
 
     const std::vector<std::unique_ptr<Rule>>& getRuleById() const { 
         return ruleById_; };
+    
     const std::unordered_map<std::string, std::unique_ptr<Sensor>>& getSensorById() const {
         return sensorById_; };
+    
     const std::unique_ptr<RuleEngine>& getRuleEngine() const { 
         return engine_; };
+    
     const std::unordered_map<std::string, std::unique_ptr<Actuator>>& getActuatorById() const { 
         return actuatorById_; };
+    
     const std::unordered_map<std::string, std::unique_ptr<IActuator>>& getIActuatorById() const {
         return iActuatorById_; };
+    
     const std::unordered_map<std::string, std::unique_ptr<PlcWorker>>& getPlcWorkerById() const {
         return plcWorkerById_; };
+    
     const std::unordered_map<std::string, std::unique_ptr<Source>>& getSourceById() const {
         return sourceById_; };
+    
     const std::unique_ptr<RuleEngine>& getEngine() { return engine_; };
 
-    const std::unordered_map<std::string, std::shared_ptr<ModbusClient>> getClientModbus() const {
+    const std::unordered_map<std::string, std::shared_ptr<ModbusClient>>& getClientModbus() const {
         return modbusClientById_;
-    }
+    };
+
+    const std::unordered_map<std::string, std::unique_ptr<ModbusClient>>& getClient() const {
+        return clientById_;
+    };
+
+    std::unique_ptr<MqttWorker>& getMqttWorker() { return mqtt_worker_; };
+    
+    std::unique_ptr<MqttClient>& getClientMqtt() { return mqtt_client_; };
+    
+    std::vector<std::string> getMqttCollectionTopics() const {return mqtt_collection_topics_; };
 
     void printSensors() const;
     void printClients() const;
@@ -88,6 +105,7 @@ private:
     ConfigLoader configs_;
     std::unique_ptr<MqttClient> mqtt_client_;
     std::unique_ptr<MqttWorker> mqtt_worker_;
+    std::vector<std::string> mqtt_collection_topics_;
     std::unique_ptr<RuleEngine> engine_;
     std::unique_ptr<Logger> logger_;
     std::unique_ptr<Archive> archive_;

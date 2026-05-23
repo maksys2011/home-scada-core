@@ -19,6 +19,10 @@ class MqttClient
 public:
     MqttClient(const std::string& addr,
                 const std::string& id);
+    MqttClient(const MqttClient&) = delete;
+    MqttClient& operator=(const MqttClient&) = delete; 
+    
+    
     ~MqttClient();
 
     bool connect(const std::vector<std::string>& topics);

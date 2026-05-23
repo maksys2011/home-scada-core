@@ -17,8 +17,15 @@ class MqttWorker
 {
 public:
     MqttWorker(MqttClient& client);
-    ~MqttWorker() noexcept;
     
+    MqttWorker(const MqttWorker&) = delete;
+    MqttWorker& operator=(const MqttWorker&) = delete;
+
+    MqttWorker(MqttWorker&&) = delete;
+    MqttWorker& operator=(MqttWorker&&) = delete;
+
+    ~MqttWorker() noexcept;
+
     bool start();
     void stop();
     std::optional<DataPoint> getDataPoints(const std::string& topic);

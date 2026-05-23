@@ -7,7 +7,9 @@ MqttClient::MqttClient(const std::string &addr, const std::string &id) :
 
 MqttClient::~MqttClient()
 {
+
     disconnect();
+
 }
 
 bool MqttClient::connect(const std::vector<std::string>& topics)

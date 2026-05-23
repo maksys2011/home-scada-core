@@ -35,12 +35,13 @@ void MqttWorker::stop()
 }
 
 std::optional<DataPoint> MqttWorker::getDataPoints(const std::string& topic)
-{
+{    
     std::lock_guard<std::mutex> lock(mtx_);
 
     auto it = cache_.find(topic);
 
     if(it == cache_.end()){
+
         return std::nullopt;
     }
 
@@ -49,25 +50,29 @@ std::optional<DataPoint> MqttWorker::getDataPoints(const std::string& topic)
 
 void MqttWorker::process()
 {
-    while(running_){
+          
+    while(running_)
+    {
         
         auto msg = client_.tryConsume();
 
         if (msg && *msg != nullptr)
         {
+
             auto topic = (*msg)->get_topic();
             auto new_value = (*msg)->to_string();
 
             double value = std::stod(new_value);
-
+            
             std::lock_guard<std::mutex> lock(mtx_);
-
+            
             DataPoint data;
 
             data.value = value;
             data.timestamp = std::chrono::system_clock::now();
 
             cache_[topic] = data;
+
         }
 
         std::this_thread::sleep_for(std::chrono::seconds(5));

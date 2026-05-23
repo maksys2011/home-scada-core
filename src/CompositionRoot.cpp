@@ -106,6 +106,9 @@ void CompositionRoot::initClients(const AppConfig& cfg)
         clientById_.emplace(config.getClientId(),
         std::make_unique<ModbusClient>(config)
         );
+
+        std::cout << " port: " << config.getPort() << std::endl;
+        std::cout << " ip : " << config.getIp() << std::endl;
     }
 }
 
@@ -167,8 +170,11 @@ void CompositionRoot::initSources(const AppConfig& cfg)
         if(it->getTypeSource() == "Modbus"){
 
             auto modbusSourceConfig = dynamic_cast<ModbusSourceConfig*>(it.get());
+
             auto idClient = modbusSourceConfig->getClientId();
+            
             auto it = clientById_.find(idClient);
+            
             auto plcWorker = plcWorkerById_.find(idClient);
 
             if(it == clientById_.end()){
@@ -176,14 +182,18 @@ void CompositionRoot::initSources(const AppConfig& cfg)
             }
 
             sourceById_.emplace(modbusSourceConfig->getSourceId(),
-            std::make_unique<ModbusSource>(*modbusSourceConfig, *(it->second),*(plcWorker->second)));  
+            
+            std::make_unique<ModbusSource>(*modbusSourceConfig,*(plcWorker->second)));  
 
         }else if(it->getTypeSource() == "Mqtt"){
 
             auto mqttSourceConfig = dynamic_cast<MqttSourceConfig*>(it.get());
             
             sourceById_.emplace(mqttSourceConfig->getSourceId(),
+
             std::make_unique<MqttSource> (*(mqttSourceConfig), *(mqtt_worker_)));
+
+            mqtt_collection_topics_.push_back(mqttSourceConfig->getTopic());
 
         }
     }
@@ -303,7 +313,7 @@ void CompositionRoot::init(const AppConfig& cfg)
     initPlcWorker(cfg);
     initSources(cfg);
     initSensors(cfg);
-    //initActuators(cfg);
+    initActuators(cfg);
     initIactuators(cfg);    
     initRules(cfg);
 }
