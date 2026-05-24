@@ -9,6 +9,7 @@ void RuleHumidifierConfig::fromJson(const json &j)
     id_actuator_ = scada::utils::check_the_key<std::string>(j, "actuator_id");
     minHumidity_ = scada::utils::check_the_key<double>(j, "minHumidity");
     maxHumidity_ = scada::utils::check_the_key<double>(j, "maxHumidity");
+    type_ = ParseRuleType(scada::utils::check_the_key<std::string>(j, "type"));
 
     if(!validate()){
         throw std::runtime_error(

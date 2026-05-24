@@ -10,6 +10,14 @@ enum class SensorType
     Counter    /// int64_t
 };
 
+enum class SensorUnit
+{
+    UNKNOWN = 0,
+    LUX,        
+    CELSIUS,     
+    PERCENTAGE 
+};
+
 enum class ActuatorType
 {
     Relay, 
@@ -103,3 +111,7 @@ std::string ParceCommandTypeToString(const CommandType& type);
 ActuatorConnectionType ParceActuatorConnectionType (const std::string& type_connection);
 
 std::string ParceActuatorConnectionTypeToString (const ActuatorConnectionType& type_connection);
+
+SensorUnit ParseSensorUnit (const std::string& sensor_unit);
+
+std::string ParseSensorUnitToString(const SensorUnit& sensor_unit);

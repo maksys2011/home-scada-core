@@ -15,7 +15,8 @@ RuleThermostat::RuleThermostat(
 
 void RuleThermostat::evaluate()
 {
-    auto valueOpt = sensor_.lastValue();
+   auto valueOpt = sensor_.lastValue();
+    
     if(!valueOpt){
         return;
     }

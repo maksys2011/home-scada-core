@@ -1,7 +1,8 @@
-#include <SensorConfig.hpp>
+#include "SensorConfig.hpp"
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include "utils.hpp"
 using json = nlohmann::json;
 
 SensorConfig::SensorConfig(
@@ -154,6 +155,8 @@ void SensorConfig::fromJson(const json &j)
             "there is no required key= source_id"
         );
     }
+
+    unit_ = ParseSensorUnit(scada::utils::check_the_key<std::string>(j, "unit"));
 }
 
 void SensorConfig::fromJson(const std::filesystem::path& path)

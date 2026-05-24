@@ -62,8 +62,8 @@ bool MqttCommandPublisher::publishCommand(const std::string &topic, const std::s
     {
         client_.publish(topic, payLoad.c_str(), payLoad.size(), 1, false)->wait();
 
-        std::cout << "[MQTT CMD] Published: " << topic 
-                    << " -> " << payLoad << '\n';
+        // std::cout << "[MQTT CMD] Published: " << topic 
+        //            << " -> " << (payLoad == "1" ? "ON" : "OFF") << '\n';
     }
     catch(const std::exception& e)
     {

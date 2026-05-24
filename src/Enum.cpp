@@ -108,6 +108,7 @@ RuleType ParseRuleType(const std::string& type)
 {
     if(type == "Thermostat") return RuleType::Thermostat;
     else if(type == "Light") return RuleType::Light;
+    else if(type == "Humidifier") return RuleType::Humidifier;
     else throw std::runtime_error("No suitable type rule found");
 }
 
@@ -169,6 +170,27 @@ std::string ParceActuatorConnectionTypeToString(const ActuatorConnectionType &ty
     case ActuatorConnectionType::OpcUa: return "OpcUa";
     default: return "Unknown";
     }
+}
+
+SensorUnit ParseSensorUnit(const std::string &sensor_unit)
+{
+    if(sensor_unit == "celsius") return SensorUnit::CELSIUS;
+    else if(sensor_unit == "lux") return SensorUnit::LUX;
+    else if(sensor_unit == "percentage") return SensorUnit::PERCENTAGE;
+    else if(sensor_unit == "unknown") return SensorUnit::UNKNOWN;
+    return SensorUnit();
+}
+
+std::string ParseSensorUnitToString(const SensorUnit &sensor_unit)
+{
+    switch (sensor_unit)
+    {
+    case SensorUnit::CELSIUS: return "celsius";
+    case SensorUnit::LUX: return "lux";
+    case SensorUnit::PERCENTAGE: return "percentage";
+    case SensorUnit::UNKNOWN: return "unknown";
+    }
+    return std::string();
 }
 
 std::string ParseSourceTypeToString(SourceType &type)

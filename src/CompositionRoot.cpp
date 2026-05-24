@@ -21,6 +21,7 @@
 #include "MqttClient.hpp"
 #include "MqttWorker.hpp"
 #include "MqttSource.hpp"
+#include "RuleHumidifer.hpp"
 
 CompositionRoot::CompositionRoot(const ConfigLoader& cfg) 
     : configs_(cfg)
@@ -231,6 +232,13 @@ void CompositionRoot::initRules(const AppConfig &cfg)
             
             engine_->addRule(
                 std::make_unique<RuleControlLight>(state, *(actuator->second), lightConfig));
+                break;
+            }
+        case RuleType::Humidifier:{
+
+            const auto& humidiferConfig = static_cast<RuleHumidifierConfig&> (*config);
+
+            engine_->addRule(std::make_unique<RuleHumidifer>(state, *(actuator->second), humidiferConfig));
                 break;
             }
         }

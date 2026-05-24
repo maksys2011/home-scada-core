@@ -28,6 +28,7 @@ private:
         double hysteresis_;
         bool enabled_;
         std::string source_id_;
+        SensorUnit unit_ = SensorUnit::UNKNOWN;
 
 public:
         SensorConfig() = default;
@@ -65,6 +66,7 @@ public:
         double deadband() const {return deadband_;}
         double hysteresis() const {return hysteresis_;}
         const std::string& getSourceId() const { return source_id_; };
+        SensorUnit getSensorUnit() const { return unit_; };
 
         bool validate() const;
         bool validateValue(double v) const;

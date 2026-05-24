@@ -30,6 +30,7 @@ bool MqttClient::connect(const std::vector<std::string>& topics)
 
         client_.start_consuming();
         isConnected_ = true;
+        std::cout << "[MqttClient] connected\n";
         return true;
     }
     catch(const std::exception& e)
@@ -81,8 +82,8 @@ bool MqttClient::publishCommand(const std::string &topic, const std::string &pay
     {
         client_.publish(topic, payLoad.c_str(), payLoad.size(), 1, false)->wait();
 
-        std::cout << "[MQTT CMD] Published: " << topic 
-                    << " -> " << payLoad << '\n';
+        // std::cout << "[MQTT CMD] Published: " << topic 
+        //            << " -> " << payLoad << '\n';
     }
     catch(const std::exception& e)
     {

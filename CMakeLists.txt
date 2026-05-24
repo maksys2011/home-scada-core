@@ -64,6 +64,7 @@ add_executable(home-scada
     src/RuleHumidifierConfig.cpp
     src/ModbusActuatorConfig.cpp
     src/MqttActuatorConfig.cpp
+    src/RuleHumidifer.cpp
 
     tests/tester.cpp
     tests/testSource.cpp

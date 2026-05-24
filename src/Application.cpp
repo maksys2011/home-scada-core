@@ -49,6 +49,17 @@ void Application::run()
 
     try
     {
+        std::cout << "=== START SYSTEM SMART HOME === " << std::endl;
+        
+        std::cout << "number of sensors: " << root_.getSensorById().size() << std::endl;
+
+        std::cout << "number of actuators: " << root_.getIActuatorById().size() << std::endl;
+
+        std::cout << "number of sources: " << root_.getSourceById().size() << std::endl;
+
+        std::cout << "number of rules: " << root_.getEngine()->getSize() << std::endl;
+
+
         for(size_t i = 0; i < 10; ++i){  
             tick();
             std::this_thread::sleep_for(std::chrono::seconds(3));
@@ -129,7 +140,18 @@ void Application::renderConsole()
             continue;
         }
 
-        std::string unit = (type == "light") ? "lx" : "°C";
+        std::string sensor_unit = ParseSensorUnitToString(sensor->config().getSensorUnit());
+
+        std::string unit{};
+        
+        if(sensor_unit == "celsius"){
+            unit = "°C";
+        }else if(sensor_unit == "lux"){
+            unit = "lx";
+        }else if(sensor_unit == "percentage"){
+            unit = "%";
+        }
+
         std::string color = (type == "light") ? "\033[33m" : "\033[36m";
 
         std::cout << std::left << std::setw(25) << name
@@ -140,7 +162,7 @@ void Application::renderConsole()
             << "\n";
     }
     std::cout << "\n================ ACTUATORS ================\n";
-    std::cout << std::left << std::setw(25) << "NAME"
+    std::cout << std::left << std::setw(25) << "ID-ACTUATOR"
         << std::setw(10) << "STATE"
         << "\n";
 
@@ -149,6 +171,7 @@ void Application::renderConsole()
     for(const auto& [key, actuator] : root_.getIActuatorById()){ 
 
         std::string state = actuator->getState() ? "ON" : "OFF";
+
         const std::string& name = actuator->getId();
 
         std::string color = actuator->getState() ? "\033[32m" : "\033[31m";
