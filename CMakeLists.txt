@@ -19,8 +19,16 @@ find_package(PostgreSQL REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(MODBUS REQUIRED libmodbus)
 
+#Google test
+include(FetchContent)
+
+enable_testing()
+
+include(GoogleTest)
+
 # Third-party libraries
 add_subdirectory(third_party/paho.mqtt.cpp)
+add_subdirectory(third_party/googletest)
 
 # Main executable
 add_executable(home-scada
@@ -65,9 +73,6 @@ add_executable(home-scada
     src/ModbusActuatorConfig.cpp
     src/MqttActuatorConfig.cpp
     src/RuleHumidifer.cpp
-
-    tests/tester.cpp
-    tests/testSource.cpp
 )
 
 target_include_directories(home-scada PUBLIC
@@ -89,25 +94,7 @@ target_link_libraries(home-scada PRIVATE
 target_compile_options(home-scada PRIVATE ${MODBUS_CFLAGS_OTHER})
 target_link_options(home-scada PRIVATE ${MODBUS_LDFLAGS_OTHER})
 
-add_executable(modbus-test
-    tests/modbus_test.cpp
-)
-
-target_include_directories(modbus-test PRIVATE
-    ${MODBUS_INCLUDE_DIRS}
-)
-
-target_compile_options(modbus-test PRIVATE
-    ${MODBUS_CFLAGS_OTHER}
-)
-
-target_link_libraries(modbus-test PRIVATE
-    ${MODBUS_LINK_LIBRARIES}
-)
-
-target_link_options(modbus-test PRIVATE
-    ${MODBUS_LDFLAGS_OTHER}
-)
+add_subdirectory(tests)
 
 
 

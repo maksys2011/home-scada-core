@@ -15,7 +15,6 @@
 #include "Archive.hpp"
 #include "SensorManager.hpp"
 #include "SmoothRandomSource.hpp"
-#include "testSource.hpp"
 #include "ArchiveReader.hpp"
 #include "ArchiveReport.hpp"
 #include "RuleThermostatConfig.hpp"
@@ -90,6 +89,11 @@ int main()
     //root.init(configs);
     Application app(configs,loader,root);
     app.run();
-    
+
+
+
+
+
+
     return 0;
 }
