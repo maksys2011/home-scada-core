@@ -3,13 +3,29 @@
 #include "ActuatorConfig.hpp"
 #include "Enum.hpp"
 #include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
-TEST(ActuatorConfigTest, StoresBasicFields)
+static json makeJsonActuatorConfig(){
+    json j = {
+        {"actuator_type" , "split_system"},
+        {"location" , "kitchen"},
+        {"client_id" , "100"},
+        {"startAddress" , 0},
+        {"id" , "35001"},
+        {"type" , "AnalogOut"},
+        {"minValue" , 0.0},
+        {"maxValue" ,  100.0},
+        {"commandType" , "Turn"},
+        {"expectedIndex" , "bool"},
+        {"transport" , "Modbus"}
+    };
+    return j;
+}
+
+TEST(ActuatorConfigTest, Init)
 {
-    std::filesystem::path path = "../configs/actuators/test.json";
     ActuatorConfig cfg;
-    cfg.fromJson(path);
-
+    cfg.fromJson(makeJsonActuatorConfig());
 
     EXPECT_EQ(cfg.getIdClient(), "100");
     EXPECT_EQ(cfg.getStartAddress(), 0);
@@ -20,3 +36,32 @@ TEST(ActuatorConfigTest, StoresBasicFields)
     EXPECT_EQ(cfg.getCmd(), CommandType::Turn);
     EXPECT_EQ(cfg.getTransport(), "Modbus");
 }
+
+TEST(ActuatorConfigTest, Validate50_50)
+{
+    auto j = makeJsonActuatorConfig();
+    j["minValue"] =  50.0;
+    j["maxValue"] =  50.0;
+
+    ActuatorConfig cfg;
+    cfg.fromJson(j);
+
+    EXPECT_TRUE(cfg.validate());
+}
+
+TEST(ActuatorConfigTest, Validate100_50)
+{
+    auto j = makeJsonActuatorConfig();
+    j["minValue"] =  100.0;
+    j["maxValue"] =  50.0;
+
+    ActuatorConfig cfg;
+    cfg.fromJson(j);
+
+    EXPECT_FALSE(cfg.validate());
+}
+
+
+
+
+

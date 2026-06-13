@@ -1,8 +1,10 @@
 add_executable(
     tests
     actuator_config_test.cpp
+    sensor_config_test.cpp
 
     ../src/ActuatorConfig.cpp
+    ../src/SensorConfig.cpp
     ../src/Enum.cpp
     ../src/utils.cpp
     ../src/RuleConfigLight.cpp
