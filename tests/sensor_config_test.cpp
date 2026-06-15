@@ -27,6 +27,8 @@ static json makeJsonSensorConfig()
     return j;
 }
 
+// TEST 4
+
 TEST(SensorConfigTest, Init)
 {
     SensorConfig cfg;
@@ -48,12 +50,16 @@ TEST(SensorConfigTest, Init)
     EXPECT_EQ(cfg.getSourceId(), "500");
 }
 
+// TEST 5
+
 TEST(SensorConfigTest, FileNotFound)
 {
     std::filesystem::path path = "non_existent_file.json";
     SensorConfig cfg;
     EXPECT_THROW(cfg.fromJson(path), std::runtime_error);
 }
+
+// TEST 6
 
 TEST(SensorConfigTest, EdgeCases)
 {
@@ -62,6 +68,8 @@ TEST(SensorConfigTest, EdgeCases)
     cfg.fromJson(j);
     EXPECT_TRUE(cfg.validate());
 }
+
+// TEST 7
 
 TEST(SensorConfigTest, InvalidEdgeCase)
 {
@@ -72,12 +80,24 @@ TEST(SensorConfigTest, InvalidEdgeCase)
     EXPECT_FALSE(cfg.validate());
 }
 
+// TEST 8
+
 TEST(SensorConfigTest, MissingIdField)
 {
     auto j = makeJsonSensorConfig();
     j.erase("id_");
     SensorConfig cfg;
     EXPECT_THROW(cfg.fromJson(j), std::runtime_error);
+}
+
+// TEST 9
+
+TEST(SensorConfigTest, TypeMismatch)
+{
+    auto j = makeJsonSensorConfig();
+    j["id_"] = true;
+    SensorConfig cfg;
+    EXPECT_THROW(cfg.fromJson(j), json::exception);
 }
 
 

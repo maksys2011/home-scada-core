@@ -2,18 +2,7 @@ add_executable(
     tests
     actuator_config_test.cpp
     sensor_config_test.cpp
-
-    ../src/ActuatorConfig.cpp
-    ../src/SensorConfig.cpp
-    ../src/Enum.cpp
-    ../src/utils.cpp
-    ../src/RuleConfigLight.cpp
-    ../src/RuleThermostatConfig.cpp
-    ../src/RuleHumidifierConfig.cpp
-    ../src/ModbusSourceConfig.cpp
-    ../src/MqttSourceConfig.cpp
-    ../src/ModbusActuatorConfig.cpp
-    ../src/MqttActuatorConfig.cpp
+    modbus_client_test_integration.cpp
 )
 
 target_link_libraries(
@@ -21,6 +10,7 @@ target_link_libraries(
     PRIVATE
     GTest::gtest_main
     GTest::gmock_main
+    scada_core_lib
 )
 
 target_include_directories(

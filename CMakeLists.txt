@@ -30,9 +30,7 @@ include(GoogleTest)
 add_subdirectory(third_party/paho.mqtt.cpp)
 add_subdirectory(third_party/googletest)
 
-# Main executable
-add_executable(home-scada
-    app/main.cpp
+add_library(scada_core_lib STATIC
 
     src/Sensor.cpp
     src/SensorConfig.cpp
@@ -73,9 +71,15 @@ add_executable(home-scada
     src/ModbusActuatorConfig.cpp
     src/MqttActuatorConfig.cpp
     src/RuleHumidifer.cpp
+
 )
 
-target_include_directories(home-scada PUBLIC
+# Main executable
+add_executable(home-scada
+    app/main.cpp
+)
+
+target_include_directories(scada_core_lib PUBLIC 
     include
     src
     tests
@@ -84,11 +88,18 @@ target_include_directories(home-scada PUBLIC
     ${MODBUS_INCLUDE_DIRS}
 )
 
-target_link_libraries(home-scada PRIVATE
+target_link_libraries(scada_core_lib PUBLIC
     nlohmann_json::nlohmann_json
+    paho-mqttpp3-shared
+    ${MODBUS_LINK_LIBRARIES}
+)
+
+target_link_libraries(home-scada PRIVATE 
+    scada_core_lib
+    nlohmann_json::nlohmann_json
+    paho-mqttpp3-shared
     ${PostgreSQL_LIBRARIES}
     ${MODBUS_LINK_LIBRARIES}
-    paho-mqttpp3-shared
 )
 
 target_compile_options(home-scada PRIVATE ${MODBUS_CFLAGS_OTHER})
