@@ -74,10 +74,10 @@ enum class SourceType
 
 enum class CommandType
 {
-    Unknown = 0,
-    Turn,
-    SetPosition,
-    Reset
+    Unknown = 0,    // дефолтное значение 
+    Turn,           // действие включение/отключение
+    SetPosition,    // установка позиции
+    Reset           // сброс настроек
 };
 
 SensorType ParseSensorType(const std::string &typeStr);

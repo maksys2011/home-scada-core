@@ -3,22 +3,25 @@
 #include  <string>
 #include <Enum.hpp>
 #include <memory>
+#include "ISensorState.hpp"
 
 class SensorConfig;
 class Logger;
 class Archive;
 class PgArchive;
 
-class SensorState {
+class SensorState : public ISensorState
+{
 public:
     explicit SensorState(
         const SensorConfig& config, 
         Logger* logger, 
         Archive* arch,
         PgArchive& pgArchive);
+
     void processValue(double raw);
     State status() const;
-    std::optional<double>lastValue() const;
+    std::optional<double>lastValue() const override;
     double getdebounceLimit() const {return debounceLimit;}
     void print();
     State classifyDataQuality(double raw) const;
@@ -34,4 +37,5 @@ private:
     Logger* logger_;
     Archive* arch_;
     PgArchive& pgArchive_;
+    double value_ = 0;
 };

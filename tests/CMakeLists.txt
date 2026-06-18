@@ -3,6 +3,7 @@ add_executable(
     actuator_config_test.cpp
     sensor_config_test.cpp
     modbus_client_test_integration.cpp
+    rule_thermostat_test_integration.cpp
 )
 
 target_link_libraries(

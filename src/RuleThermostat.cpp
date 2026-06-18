@@ -3,9 +3,11 @@
 #include "Actuator.hpp"
 #include "RuleThermostatConfig.hpp"
 #include "IActuator.hpp"
+#include "ISensorState.hpp"
 
 RuleThermostat::RuleThermostat(
-    SensorState &sensor, 
+    ISensorState& sensor,
+    // SensorState &sensor,
     IActuator& actuator, 
     const RuleThermostatConfig &ruleCfg):
     sensor_(sensor),
@@ -15,6 +17,7 @@ RuleThermostat::RuleThermostat(
 
 void RuleThermostat::evaluate()
 {
+    
    auto valueOpt = sensor_.lastValue();
     
     if(!valueOpt){
