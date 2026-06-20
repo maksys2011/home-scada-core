@@ -18,6 +18,7 @@ class PgArchive : public Archive
 {
 public:
     PgArchive(const std::string& connInfo);
+    PgArchive() = default;
     ~PgArchive();
 
     void appendArchive(

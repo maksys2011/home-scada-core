@@ -22,8 +22,6 @@ static json makeJsonActuatorConfig(){
     return j;
 }
 
-// TEST 1
-
 TEST(ActuatorConfigTest, Init)
 {
     ActuatorConfig cfg;
@@ -39,8 +37,6 @@ TEST(ActuatorConfigTest, Init)
     EXPECT_EQ(cfg.getTransport(), "Modbus");
 }
 
-// TEST 2
-
 TEST(ActuatorConfigTest, Validate50_50)
 {
     auto j = makeJsonActuatorConfig();
@@ -52,8 +48,6 @@ TEST(ActuatorConfigTest, Validate50_50)
 
     EXPECT_TRUE(cfg.validate());
 }
-
-// TEST 3
 
 TEST(ActuatorConfigTest, Validate100_50)
 {

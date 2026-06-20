@@ -18,7 +18,7 @@ public:
     explicit  Sensor(const SensorConfig& config, 
                     Logger* logger, 
                     Archive* arch,
-                    PgArchive& pgArchive,
+                    PgArchive* pgArchive,
                     Source* source);
 
     void updateValue(double rawValue);

@@ -80,6 +80,14 @@ enum class CommandType
     Reset           // сброс настроек
 };
 
+enum class PersistenseMode
+{
+    Enabled,
+    Disabled
+};
+
+
+
 SensorType ParseSensorType(const std::string &typeStr);
 
 std::string SensorTypeToString(const SensorType type);

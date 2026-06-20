@@ -118,3 +118,56 @@ TEST(RuleThermostatIntegrationTest,  EmptySensorValueDoesNotChangeActuator)
 
     EXPECT_FALSE(actuator.getState());
 }
+
+TEST(RuleThermostatIntegrationTest, TargetTemperature_LowerBound)
+{
+    FakeSensorState sensor(21);
+    FakeActuator actuator;
+    RuleThermostatConfig cfg;
+
+    EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
+
+    RuleThermostat rule(sensor, actuator, cfg);
+
+    EXPECT_FALSE(actuator.getState());
+
+    rule.evaluate();
+
+    EXPECT_FALSE(actuator.getState());
+
+}
+
+TEST(RuleThermostatIntegrationTest, WhenTempEqualsMin_ActuatorShouldStayOff)
+{
+    FakeSensorState sensor(21);
+    FakeActuator actuator;
+    RuleThermostatConfig cfg;
+
+    EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
+
+    RuleThermostat rule(sensor, actuator, cfg);
+
+    EXPECT_FALSE(actuator.getState());
+
+    rule.evaluate();
+
+    EXPECT_FALSE(actuator.getState());
+
+}
+
+TEST(RuleThermostatIntegrationTest, AtMinTemperature_ActuatorIsInactive)
+{
+    FakeSensorState sensor(22);
+    FakeActuator actuator;
+    RuleThermostatConfig cfg;
+
+    EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
+
+    RuleThermostat rule(sensor, actuator, cfg);
+
+    EXPECT_FALSE(actuator.getState());
+
+    rule.evaluate();
+
+    EXPECT_FALSE(actuator.getState());
+}

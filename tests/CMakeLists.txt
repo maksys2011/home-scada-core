@@ -4,6 +4,7 @@ add_executable(
     sensor_config_test.cpp
     modbus_client_test_integration.cpp
     rule_thermostat_test_integration.cpp
+    sensor_state_test_unit.cpp
 )
 
 target_link_libraries(

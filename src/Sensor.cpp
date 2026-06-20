@@ -10,7 +10,7 @@ Sensor::Sensor(
     const SensorConfig& config, 
     Logger *logger, 
     Archive *arch,
-    PgArchive& pgArchive, 
+    PgArchive* pgArchive, 
     Source *source) 
         : config_(config),
         state_(config, logger, arch, pgArchive),

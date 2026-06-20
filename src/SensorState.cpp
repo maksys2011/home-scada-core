@@ -10,16 +10,31 @@ SensorState::SensorState(
     const SensorConfig &config, 
     Logger* logger, 
     Archive* arch,
-    PgArchive& pgArchive)
-    : config_(config),
+    PgArchive* pgArchive)
+    : 
+        config_(config),
         currentState(State::OK),
         pendingState(State::OK),
         debounceCounter(0),
         debounceLimit(1),
         logger_(logger),
         arch_(arch),
-        pgArchive_(pgArchive)
+        pgArchive_(pgArchive),
+        mode_(PersistenseMode::Enabled)
 {}
+SensorState::SensorState(const SensorConfig& config)
+    :
+        config_(config),
+        currentState(State::OK),
+        pendingState(State::OK),
+        debounceCounter(0),
+        debounceLimit(1),
+        logger_ (nullptr),
+        arch_(nullptr),
+        pgArchive_(nullptr),
+        mode_(PersistenseMode::Disabled)
+{}
+
 void SensorState::processValue(double raw)
 {
     bool isFirst = !lastValue_.has_value();
@@ -37,7 +52,7 @@ void SensorState::processValue(double raw)
     lastValue_ = raw;
     State newState = classifyAlarmState(raw);
         
-    if(arch_){
+    if(mode_== PersistenseMode::Enabled && arch_){
         arch_->appendArchive(
             config_.getId(),
             config_.getName(),
@@ -46,9 +61,10 @@ void SensorState::processValue(double raw)
         );
     }
     
-    pgArchive_.appendArchive(
-        config_.getId(), config_.getName(), raw, currentState
-    );
+    if (mode_ == PersistenseMode::Enabled && pgArchive_){
+        pgArchive_->appendArchive(
+        config_.getId(), config_.getName(), raw, currentState);
+    }
 
     if (currentState == State::WARN && newState == State::OK) {
         if (raw >= (config_.getWarnHigh() - config_.hysteresis()) ||
@@ -85,7 +101,7 @@ void SensorState::processValue(double raw)
     pendingState = currentState;
     debounceCounter = 0;
 
-    if (logger_) {
+    if (mode_ == PersistenseMode::Enabled && logger_) {
         logger_->logStateChange(
             config_.getId(),
             oldState,

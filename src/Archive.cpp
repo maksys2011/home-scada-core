@@ -26,7 +26,11 @@ Archive::~Archive()
     }
 }
 
-void Archive::appendArchive(const std::string &Id, const std::string &nameSensor, double value, State state)
+void Archive::appendArchive(
+    const std::string &Id, 
+    const std::string &nameSensor, 
+    double value, 
+    State state)
 {
     if(!file_.is_open()) return;
 

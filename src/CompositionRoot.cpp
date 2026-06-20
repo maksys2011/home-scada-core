@@ -74,7 +74,7 @@ void CompositionRoot::initSensors(const AppConfig& cfg)
                 configSensor,
                 logger_.get(),
                 archive_.get(),
-                *pgArchive_,
+                pgArchive_.get(),
                 source->second.get()
             )
         );

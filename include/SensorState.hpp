@@ -17,7 +17,8 @@ public:
         const SensorConfig& config, 
         Logger* logger, 
         Archive* arch,
-        PgArchive& pgArchive);
+        PgArchive* pgArchive);
+    SensorState(const SensorConfig& config);
 
     void processValue(double raw);
     State status() const;
@@ -36,6 +37,7 @@ private:
     size_t debounceLimit;
     Logger* logger_;
     Archive* arch_;
-    PgArchive& pgArchive_;
+    PgArchive* pgArchive_;
     double value_ = 0;
+    PersistenseMode mode_ = PersistenseMode::Enabled;
 };
