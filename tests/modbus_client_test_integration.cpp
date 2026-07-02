@@ -126,8 +126,6 @@ class Server
     std::atomic_bool stop_;
 };
 
-// TEST 10
-
 TEST(ModbusClientIntegrationTest, ModbusClientConnect)
 {
     ModbusClientConfig cfg;
@@ -137,8 +135,6 @@ TEST(ModbusClientIntegrationTest, ModbusClientConnect)
 
     EXPECT_FALSE(client.connect());
 }
-
-// TEST 11
 
 TEST(ModbusClientIntegrationTest, ModbusClientConnectToServer)
 {
@@ -170,8 +166,6 @@ TEST(ModbusClientIntegrationTest, ModbusClientConnectToServer)
 
     worker.join();
 }
-
-// TEST 12
 
 TEST(ModbusClientIntegrationTest, ReadHoldingRegister)
 {
@@ -206,8 +200,6 @@ TEST(ModbusClientIntegrationTest, ReadHoldingRegister)
     worker.join();
 }
 
-// TEST 13
-
 TEST(ModbusClientIntegrationTest, ReadInputRegister)
 {
     ModbusClientConfig cfg;
@@ -238,8 +230,6 @@ TEST(ModbusClientIntegrationTest, ReadInputRegister)
 
     worker.join();
 }
-
-// TEST 14
 
 TEST(ModbusClientIntegrationTest, ReadCoilRegister)
 {
@@ -272,8 +262,6 @@ TEST(ModbusClientIntegrationTest, ReadCoilRegister)
     worker.join();
 }
 
-// TEST 15
-
 TEST(ModbusClientIntegrationTest, ReadDiscreteRegister)
 {
     ModbusClientConfig cfg;
@@ -304,8 +292,6 @@ TEST(ModbusClientIntegrationTest, ReadDiscreteRegister)
 
     worker.join();
 }
-
-// TEST 16
 
 TEST(ModbusClientIntegrationTest, WriteRegister)
 {  

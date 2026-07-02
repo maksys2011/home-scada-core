@@ -13,18 +13,21 @@ class RuleControlLight : public Rule
 {
 public:
     RuleControlLight(
-        SensorState& sensor,
+        ISensorState& sensor,
         IActuator& actuator,
-        const RuleConfigLight& config);
+        const RuleConfigLight& config,
+        int start_position_ = 0);
 
     void evaluate() override;
+    bool getIsSuccess() { return isSuccess_; };
 
 private:
-    SensorState& sensor_;
+    ISensorState& sensor_;
     IActuator& actuator_;
     const RuleConfigLight& config_;
-    ControlMode selected_;
-    size_t currentPosition_;
-    size_t targetPosition_;
-    size_t currentTime_;
+    ControlMode selected_ = ControlMode::Auto;
+    int currentPosition_ = 0;
+    size_t targetPosition_ = 0;
+    size_t currentTime_ = 0;
+    bool isSuccess_ = false;
 };

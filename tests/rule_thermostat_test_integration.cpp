@@ -6,6 +6,7 @@
 #include "IActuator.hpp"
 #include "ITransport.hpp"
 #include "Enum.hpp"
+#include "scada_core_testing_utils.hpp"
 
 static json makeJsonRuleThermostat()
 {
@@ -23,54 +24,20 @@ static json makeJsonRuleThermostat()
     return j;
 }
 
-class FakeSensorState : public ISensorState
-{
-public:
-    FakeSensorState(std::optional<double> val)
-    {
-        lastValue_ = val;
-    }
-
-    std::optional<double> lastValue() const override { return lastValue_; };
-
-private:
-
-    std::optional<double> lastValue_;
-};
-
-class FakeActuator : public IActuator
-{
-public:
-
-    const std::string& getId() const override{ return id_; };
-    bool execute(CommandType cmd, const CommandValue& val) override { return true; };
-    virtual CommandType getCmd() const override { return typeCmd_; };
-    bool getState() const override { return state_; };
-	void setState(bool state) override { state_ = state;};
-    void setTypeCmd(CommandType typeCmd) { typeCmd_ = typeCmd; };
-	void print() const override {};
-
-
-private:
-    std::string id_;
-    CommandType typeCmd_ = CommandType::Unknown;
-    bool state_ = false;
-
-};
-
 TEST(RuleThermostatTest, Init)
 {
-    FakeSensorState sensor(20.2);
-    FakeActuator actuator;
+    scada_core_testing_utils::FakeSensorState sensor(20.2);
+    scada_core_testing_utils::FakeActuator actuator;
     RuleThermostatConfig cfg;
+    
     EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
     EXPECT_NO_THROW(RuleThermostat(sensor, actuator, cfg));
 }
 
 TEST(RuleThermostatIntegrationTest,  TurnOnCommandActuator)
 {
-    FakeSensorState sensor(15.0);
-    FakeActuator actuator;
+    scada_core_testing_utils::FakeSensorState sensor(15.0);
+    scada_core_testing_utils::FakeActuator actuator;
     RuleThermostatConfig cfg;
 
     EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
@@ -86,8 +53,8 @@ TEST(RuleThermostatIntegrationTest,  TurnOnCommandActuator)
 
 TEST(RuleThermostatIntegrationTest,  TurnOffCommandActuator)
 {
-    FakeSensorState sensor(25.0);
-    FakeActuator actuator;
+    scada_core_testing_utils::FakeSensorState sensor(25.0);
+    scada_core_testing_utils::FakeActuator actuator;
     RuleThermostatConfig cfg;
 
     EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
@@ -104,8 +71,8 @@ TEST(RuleThermostatIntegrationTest,  TurnOffCommandActuator)
 TEST(RuleThermostatIntegrationTest,  EmptySensorValueDoesNotChangeActuator)
 {
     std::optional<double> val;
-    FakeSensorState sensor(val);
-    FakeActuator actuator;
+    scada_core_testing_utils::FakeSensorState sensor(val);
+    scada_core_testing_utils::FakeActuator actuator;
     RuleThermostatConfig cfg;
 
     EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
@@ -121,8 +88,8 @@ TEST(RuleThermostatIntegrationTest,  EmptySensorValueDoesNotChangeActuator)
 
 TEST(RuleThermostatIntegrationTest, TargetTemperature_LowerBound)
 {
-    FakeSensorState sensor(21);
-    FakeActuator actuator;
+    scada_core_testing_utils::FakeSensorState sensor(21.0);
+    scada_core_testing_utils::FakeActuator actuator;
     RuleThermostatConfig cfg;
 
     EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
@@ -139,8 +106,8 @@ TEST(RuleThermostatIntegrationTest, TargetTemperature_LowerBound)
 
 TEST(RuleThermostatIntegrationTest, WhenTempEqualsMin_ActuatorShouldStayOff)
 {
-    FakeSensorState sensor(21);
-    FakeActuator actuator;
+    scada_core_testing_utils::FakeSensorState sensor(21.0);
+    scada_core_testing_utils::FakeActuator actuator;
     RuleThermostatConfig cfg;
 
     EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));
@@ -157,8 +124,8 @@ TEST(RuleThermostatIntegrationTest, WhenTempEqualsMin_ActuatorShouldStayOff)
 
 TEST(RuleThermostatIntegrationTest, AtMinTemperature_ActuatorIsInactive)
 {
-    FakeSensorState sensor(22);
-    FakeActuator actuator;
+    scada_core_testing_utils::FakeSensorState sensor(22.0);
+    scada_core_testing_utils::FakeActuator actuator;
     RuleThermostatConfig cfg;
 
     EXPECT_NO_THROW(cfg.fromJson(makeJsonRuleThermostat()));

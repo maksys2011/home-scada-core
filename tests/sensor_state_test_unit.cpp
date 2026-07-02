@@ -30,7 +30,7 @@ json makeJsonSensorConfig()
     return j;
 }
 
-TEST(SensorStateUnitTest, InfInput)
+TEST(SensorStateTest, InfInput)
 {
     SensorConfig cfg;
     EXPECT_NO_THROW(cfg.fromJson(makeJsonSensorConfig()));
@@ -41,7 +41,7 @@ TEST(SensorStateUnitTest, InfInput)
     EXPECT_TRUE(state.classifyDataQuality(infiniteSample) == State::INVALID);
 }
 
-TEST(SensorStateUnitTest, ClassifyNoiseEpsilonValue)
+TEST(SensorStateTest, ClassifyNoiseEpsilonValue)
 {
     double raw = 20;
     double next_raw = 20.1;
@@ -60,6 +60,69 @@ TEST(SensorStateUnitTest, ClassifyNoiseEpsilonValue)
     EXPECT_TRUE(*state.lastValue() == raw);
     EXPECT_TRUE(state.status() == State::OK);
 }
+
+TEST(SensorStateTest, StatusReturnOk)
+{
+    double raw = 0;
+
+    SensorConfig cfg;
+    EXPECT_NO_THROW(cfg.fromJson(makeJsonSensorConfig()));
+
+    SensorState state(cfg);
+
+    state.classifyAlarmState(raw);
+
+    state.processValue(raw);
+
+    EXPECT_EQ(state.status(), State::OK);
+}
+
+TEST(SensorStateTest, StatusReturnWarn)
+{
+    double raw = 9;
+    double next_raw = 8;
+
+    SensorConfig cfg;
+    EXPECT_NO_THROW(cfg.fromJson(makeJsonSensorConfig()));
+
+    SensorState state(cfg);
+    state.processValue(raw);
+
+    EXPECT_EQ(state.status(), State::OK);
+
+    state.processValue(next_raw);
+
+    EXPECT_EQ(state.status(), State::WARN);
+
+    state.processValue(next_raw);
+
+    EXPECT_EQ(state.status(), State::WARN);
+}
+
+TEST(SensorStateTest, StatusReturnAlarm)
+{
+    double raw = 96;
+    double next_raw = 97;
+    double after_next = 98;
+
+    SensorConfig cfg;
+    EXPECT_NO_THROW(cfg.fromJson(makeJsonSensorConfig()));
+
+    SensorState state(cfg);
+    state.processValue(raw);
+
+    EXPECT_EQ(state.status(), State::OK);
+
+    state.processValue(next_raw);
+
+    EXPECT_EQ(state.status(), State::ALARM);
+
+    state.processValue(after_next);
+
+    EXPECT_EQ(state.status(), State::ALARM);
+}
+
+
 
 
 

@@ -44,40 +44,7 @@ using json = nlohmann::json;
 
 int main()
 {
-
     /*
-    std::filesystem::path path = "../configs/clients/plcClient.json";
-    ModbusClientConfig config;
-    config.fromJson(path);
-    ModbusClient client(config);
-    client.connect();
-    
-    std::vector<ModbusReadPoint> read;
-    for(int i = 0; i < 4; i++){
-        ModbusReadPoint tmp;
-        tmp.count = 1;
-        tmp.regType = ModbusRegisterType::HoldingRegister;
-        tmp.slaveId = 0;
-        tmp.startAddress = i;
-        read.push_back(tmp);
-    }
-    PlcWorker plc(client, read);
-    plc.start();
-
-    for(int i = 0; i < 10; i++){
-        for(int startAddress = 0; startAddress < 4; startAddress++){
-            auto value = plc.getDataPoint(startAddress);
-            std::cout << "regiter address = " << startAddress << " value= " << value->value << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(1)); 
-        }
-
-        std::this_thread::sleep_for(std::chrono::seconds(5));
-    }
-    plc.stop();
-    */
-
-
-
     std::cout << "[Main] thread id = " 
           << std::this_thread::get_id() 
           << std::endl;
@@ -88,7 +55,40 @@ int main()
     CompositionRoot root(loader);
     //root.init(configs);
     Application app(configs,loader,root);
-    app.run();
+    app.run(); */
+
+
+    json j = {
+        {"id_" , "10001"},
+        {"name_" , "temperature_kitchen"},
+        {"type_" , "Analog"},
+        {"unit" , "celsius"},
+        {"physicalMin_" , 0.0},
+        {"physicalMax_" , 100.0},
+        {"noiseEpsilon_" , 0.5},
+        {"staleTimeout_" , 500},
+        {"warnHigh_" , 50.5},
+        {"warnLow_" , 10},
+        {"alarmHigh_", 95.0},
+        {"alarmLow_", 5.0},
+        {"deadband_" , 0.5},
+        {"hysteresis_" , 0.2},
+        {"enabled_" , false},
+        {"source_id" , "500"}};
+    
+    SensorConfig cfg;
+    cfg.fromJson(j);
+    SensorState state(cfg);
+
+    std::cout << "value= " << "---" << " state= " << StateToString(state.status()) << std::endl;
+    state.processValue(95);
+    std::cout << "value= " << 95 << " state= " << StateToString(state.status()) << std::endl;
+    state.processValue(96);
+    std::cout << "value= " << 96 << " state= " << StateToString(state.status()) << std::endl;
+    state.processValue(97);
+    std::cout << "value= " << 97 << " state= " << StateToString(state.status()) << std::endl;
+
+    
 
 
 

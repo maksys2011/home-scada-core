@@ -65,11 +65,12 @@ void SensorState::processValue(double raw)
         pgArchive_->appendArchive(
         config_.getId(), config_.getName(), raw, currentState);
     }
-
+ 
     if (currentState == State::WARN && newState == State::OK) {
         if (raw >= (config_.getWarnHigh() - config_.hysteresis()) ||
             raw <= (config_.getWarnLow() + config_.hysteresis())) {
             newState = State::WARN;
+            std::cout << "currenstate == warn" << std::endl;
         }
     }
 

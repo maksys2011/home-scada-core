@@ -4,16 +4,20 @@
 #include "Actuator.hpp"
 #include "Sensor.hpp"
 #include "IActuator.hpp"
+#include "ISensorState.hpp"
 
 
 RuleControlLight::RuleControlLight(
-    SensorState &sensor, 
+    ISensorState &sensor, 
     IActuator &actuator, 
-    const RuleConfigLight &config)
+    const RuleConfigLight &config,
+    int start_position)
     :
     sensor_(sensor),
     actuator_(actuator),
-    config_(config)
+    config_(config),
+    currentPosition_(start_position)
+
 {}
 
 void RuleControlLight::evaluate()
@@ -34,19 +38,35 @@ void RuleControlLight::evaluate()
     bool isnight =(currentTime_ >= night.fromHour || currentTime_ < night.toHour);
     const TimeWindow& window = isnight ? night : day;
 
-    /*
+    auto command = actuator_.getCmd();
+
+    //isSuccess_ = actuator_.execute(command, 10);
+
+    std::cerr << "current position" << currentPosition_ << std::endl;
+
     if(window.fixedPosition == -1){
         if(value < min) {
-            actuator_.setPosition(currentPosition_ + 10);
-            currentPosition_ += 10;
-            return;}
+            
+            if(currentPosition_ >= 91){
+                return;
+            }else{
+                currentPosition_ += 10;
+            }
+
+            std::cout << "current position" << currentPosition_ << std::endl;
+
+            isSuccess_ =  actuator_.execute(command, currentPosition_);
+
+        }
         else if(value > max){
-            actuator_.setPosition(currentPosition_ - 10);
-            currentPosition_ -= 10;
-            return;
+
+            if(currentPosition_ >= 10){
+                currentPosition_ -= 10;
+            }
+
+            //std::cout << "current position" << currentPosition_ << std::endl;
+            
+            isSuccess_ = actuator_.execute(command, currentPosition_);
         }
     }
-    
-    std::cout << "[ACTUATOR]= " << actuator_.config().getId() << " fixedPosition "  << window.fixedPosition << "\n";
-    */
 }
