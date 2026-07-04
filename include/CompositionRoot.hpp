@@ -30,6 +30,8 @@ class PlcWorker;
 struct ModbusReadPoint;
 class MqttClient;
 class MqttWorker;
+class QtGuiSubscriber;
+class Dispatcher;
 
 class CompositionRoot
 {
@@ -41,6 +43,11 @@ public:
     void initLogger();
     void initArchive();
     void initPgArchive();
+    void initSubscriber();
+    void initDispatcher();
+
+    void addSubscriber();
+
     void initSensors(const AppConfig& cfg);
     void initActuators(const AppConfig& cfg);
     void initClients(const AppConfig& cfg);
@@ -94,6 +101,8 @@ public:
     
     std::vector<std::string> getMqttCollectionTopics() const {return mqtt_collection_topics_; };
 
+    std::unique_ptr<Dispatcher>& getDispatsher() { return dispatcher_; };
+
     void printSensors() const;
     void printClients() const;
     void printSources() const;
@@ -103,13 +112,20 @@ public:
 private:
     AppConfig configList_;
     ConfigLoader configs_;
+    
     std::unique_ptr<MqttClient> mqtt_client_;
     std::unique_ptr<MqttWorker> mqtt_worker_;
     std::vector<std::string> mqtt_collection_topics_;
+    
     std::unique_ptr<RuleEngine> engine_;
+    
     std::unique_ptr<Logger> logger_;
     std::unique_ptr<Archive> archive_;
     std::unique_ptr<PgArchive> pgArchive_;
+    std::unique_ptr<QtGuiSubscriber> qtSubscriber_;
+
+    std::unique_ptr<Dispatcher> dispatcher_; 
+
     std::unordered_map<std::string, std::unique_ptr<Sensor>> sensorById_;
     std::unordered_map<std::string, std::unique_ptr<Actuator>> actuatorById_;
     std::unordered_map<std::string, std::unique_ptr<ModbusClient>> clientById_;

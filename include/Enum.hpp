@@ -86,7 +86,11 @@ enum class PersistenseMode
     Disabled
 };
 
-
+enum class ValidData
+{
+    YES,
+    NO
+};
 
 SensorType ParseSensorType(const std::string &typeStr);
 

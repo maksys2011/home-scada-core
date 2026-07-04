@@ -1,12 +1,8 @@
-add_executable(
-    tests
-    actuator_config_test.cpp
-    sensor_config_test.cpp
-    modbus_client_test_integration.cpp
-    rule_thermostat_test_integration.cpp
-    sensor_state_test_unit.cpp
-    rule_control_light_integration.cpp
-    scada_core_testing_utils.hpp
+file(GLOB_RECURSE TESTS_FULES 
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+
+add_executable(tests
+    ${TESTS_FULES}
 )
 
 target_link_libraries(

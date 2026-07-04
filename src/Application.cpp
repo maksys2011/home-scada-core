@@ -11,6 +11,7 @@
 #include "PlcWorker.hpp"
 #include "MqttWorker.hpp"
 #include "MqttClient.hpp"
+#include "Dispatcher.hpp"
 
 Application::Application(
     const AppConfig &cfg, 
@@ -49,19 +50,12 @@ void Application::run()
 
     try
     {
-        std::cout << "=== START SYSTEM SMART HOME === " << std::endl;
-        
-        std::cout << "number of sensors: " << root_.getSensorById().size() << std::endl;
-
-        std::cout << "number of actuators: " << root_.getIActuatorById().size() << std::endl;
-
-        std::cout << "number of sources: " << root_.getSourceById().size() << std::endl;
-
-        std::cout << "number of rules: " << root_.getEngine()->getSize() << std::endl;
-
+        auto& dispather = root_.getDispatsher();
 
         for(size_t i = 0; i < 10; ++i){  
+
             tick();
+
             std::this_thread::sleep_for(std::chrono::seconds(3));
         }
     }
@@ -86,6 +80,18 @@ void Application::run()
 void Application::tick()
 {
     updateSensors();
+
+    auto& dispather = root_.getDispatsher();
+
+    for(const auto& sensor : root_.getSensorById()){
+        
+        const auto& sensorstate = sensor.second->state();
+
+        const auto snapshot = sensorstate.getSnapShot();    
+
+        dispather->publishetValid(snapshot);
+
+    }
 
     evaluateRules();
 

@@ -59,6 +59,12 @@ void SensorState::processValue(double raw)
             raw,
             currentState
         );
+
+        snapshot_.valid = ValidData::YES;
+        snapshot_.id = config_.getId();
+        snapshot_.lastValue = lastValue_;
+        snapshot_.currentState = currentState;
+        snapshot_.timestamp = std::chrono::system_clock::now();
     }
     
     if (mode_ == PersistenseMode::Enabled && pgArchive_){
@@ -109,7 +115,7 @@ void SensorState::processValue(double raw)
             currentState,
             raw
         );
-    }   
+    }  
 }
 
 State SensorState::status() const

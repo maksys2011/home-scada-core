@@ -22,6 +22,8 @@
 #include "MqttWorker.hpp"
 #include "MqttSource.hpp"
 #include "RuleHumidifer.hpp"
+#include "QtGuiSubscriber.hpp"
+#include "Dispatcher.hpp"
 
 CompositionRoot::CompositionRoot(const ConfigLoader& cfg) 
     : configs_(cfg)
@@ -47,6 +49,25 @@ void CompositionRoot::initPgArchive()
 {
     const std::string connInfo = "dbname=homescada user=maksys2011";
     pgArchive_ = std::make_unique<PgArchive>(connInfo);
+}
+
+void CompositionRoot::initSubscriber()
+{
+    qtSubscriber_ = std::make_unique<QtGuiSubscriber>();
+}
+
+void CompositionRoot::initDispatcher()
+{
+    dispatcher_ = std::make_unique<Dispatcher>();
+}
+
+void CompositionRoot::addSubscriber()
+{
+    if(dispatcher_){
+        if(qtSubscriber_){
+            dispatcher_->addSubscriber(qtSubscriber_.get());
+        }
+    }
 }
 
 void CompositionRoot::initSensors(const AppConfig& cfg)
@@ -314,6 +335,9 @@ void CompositionRoot::init(const AppConfig& cfg)
     initLogger();
     initArchive();
     initPgArchive();
+    initSubscriber();
+    initDispatcher();
+    addSubscriber();
     initClients(cfg);
     initMqttClient(cfg);
     initMqttWorker();

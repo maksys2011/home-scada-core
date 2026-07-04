@@ -30,53 +30,14 @@ include(GoogleTest)
 add_subdirectory(third_party/paho.mqtt.cpp)
 add_subdirectory(third_party/googletest)
 
-add_library(scada_core_lib STATIC
+file(GLOB_RECURSE SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
-    src/Sensor.cpp
-    src/SensorConfig.cpp
-    src/SensorState.cpp
-    src/RandomSource.cpp
-    src/Actuator.cpp
-    src/ActuatorConfig.cpp
-    src/Enum.cpp
-    src/Logger.cpp
-    src/SensorManager.cpp
-    src/Archive.cpp
-    src/ArchiveReader.cpp
-    src/ArchiveReport.cpp
-    src/RuleThermostatConfig.cpp
-    src/RuleEngine.cpp
-    src/ConfigLoader.cpp
-    src/RuleThermostat.cpp
-    src/RuleControlLight.cpp
-    src/RuleConfigLight.cpp
-    src/ModbusSource.cpp
-    src/ModbusSourceConfig.cpp
-    src/utils.cpp
-    src/ModbusClient.cpp
-    src/ModbusClientConfig.cpp
-    src/CompositionRoot.cpp
-    src/Application.cpp
-    src/PgArchive.cpp
-    src/MqttSourceConfig.cpp
-    src/MqttSource.cpp
-    src/MqttCommandPublisher.cpp
-    src/ModbusTransport.cpp
-    src/MqttTransport.cpp
-    src/GenericActuator.cpp
-    src/PlcWorker.cpp
-    src/MqttClient.cpp
-    src/MqttWorker.cpp
-    src/RuleHumidifierConfig.cpp
-    src/ModbusActuatorConfig.cpp
-    src/MqttActuatorConfig.cpp
-    src/RuleHumidifer.cpp
-
-)
+add_library(scada_core_lib STATIC ${SRC_FILES})
 
 # Main executable
 add_executable(home-scada
     app/main.cpp
+    ${SRC_FILES}
 )
 
 target_include_directories(scada_core_lib PUBLIC 

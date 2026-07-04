@@ -1,9 +1,12 @@
 #pragma once
-#include  <optional>
-#include  <string>
-#include <Enum.hpp>
+
+#include <optional>
+#include <string>
 #include <memory>
+
+#include "Enum.hpp"
 #include "ISensorState.hpp"
+#include "TelemetrySnapshot.hpp"
 
 class SensorConfig;
 class Logger;
@@ -27,6 +30,7 @@ public:
     void print();
     State classifyDataQuality(double raw) const;
     State classifyAlarmState(double raw) const;
+    TelemetrySnapshot getSnapShot() const override{ return snapshot_; };
 
 private:
     const SensorConfig& config_;
@@ -40,4 +44,5 @@ private:
     PgArchive* pgArchive_;
     double value_ = 0;
     PersistenseMode mode_ = PersistenseMode::Enabled;
+    TelemetrySnapshot snapshot_;
 };

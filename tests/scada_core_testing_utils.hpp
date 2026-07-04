@@ -1,6 +1,8 @@
 #pragma once
 #include "IActuator.hpp"
 #include "ISensorState.hpp"
+#include "TelemetrySnapshot.hpp"
+#include "ITelemetrySubscriber.hpp"
 
 namespace scada_core_testing_utils
 {
@@ -33,12 +35,14 @@ public:
 
     std::optional<double> lastValue() const override { return lastValue_; };
 
+    TelemetrySnapshot getSnapShot() const override{ return snapshot_; };
+
     void setLastValue(double value){
         lastValue_ = value;
     }
 
 private:
-
+    TelemetrySnapshot snapshot_;
     std::optional<double> lastValue_;
 };
 
@@ -69,4 +73,25 @@ private:
     int current_position = 0;
 
 };
+
+class FakeSubscriber : public ITelemetrySubscriber
+{
+private:
+    TelemetrySnapshot snapshot_;
+    bool call = false;
+public:
+    FakeSubscriber() = default;
+    void onTelemetry(const TelemetrySnapshot& snapshot) override{
+        if(snapshot.valid == ValidData::YES){
+            snapshot_ = snapshot;
+            call = true;
+        }
+    };
+    const TelemetrySnapshot& getSnapshot() { return snapshot_; };
+    bool getCall() { return call; };
+    
+};
+
+
+
 }
